@@ -1,0 +1,170 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T07.03 - Resistencias en serie</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* (Mismo CSS que antes) */
+            .container { max-width: 900px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; margin: 20px auto; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+            .header-left { display: flex; flex-direction: column; justify-content: center; }
+            .header-left h1 { font-size: 1.8em; margin: 0; }
+            .header-left p { margin: 6px 0 0 0; font-size: 1em; }
+            .header-sub { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+            .header-sub img { max-height: 30px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.2); padding: 2px; }
+            .header-sub .codigo { font-weight: 600; font-size: 1.1em; letter-spacing: 0.5px; color: #ffecb0; }
+            .header-sub .texto { font-size: 1em; font-weight: 300; }
+            .header-right img { max-height: 70px; max-width: 180px; object-fit: contain; display: block; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 4px; }
+            .section { padding: 25px 30px; margin: 15px; border-radius: 12px; border-left: 5px solid; }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 { font-size: 1.3em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box { background: #edf2f7; border: 2px solid #cbd5e0; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; font-size: 1.1em; }
+            .step { background: white; border-left: 4px solid #a0aec0; padding: 15px; margin: 12px 0; border-radius: 0 8px 8px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .step-num { display: inline-block; background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+            .note { background: #fffbeb; border: 1px solid #f6e05e; border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 0.95em; color: #744210; }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+            details { margin: 30px 15px 20px 15px; background: #ffffff; border: 2px solid #667eea; border-radius: 20px; padding: 0.2rem 0.2rem 0.5rem 0.2rem; box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2); transition: all 0.2s; }
+            details summary { list-style: none; display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; cursor: pointer; font-size: 1.2rem; font-weight: 600; color: #2d3748; background: #f0f4ff; border-radius: 18px; user-select: none; transition: background 0.2s; }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down { font-size: 1.6rem; color: #667eea; transition: transform 0.3s ease; }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame { background: #667eea; color: white; padding: 0.1rem 0.8rem; border-radius: 40px; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.5px; }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card { background: #f9fcff; border: 1px solid #dce7f2; border-radius: 18px; padding: 1.2rem 1.8rem 1.8rem 1.8rem; margin: 1.8rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+            .exercise-card .ex-title { display: flex; align-items: baseline; gap: 0.5rem; font-weight: 600; font-size: 1.1rem; color: #2d3748; margin-bottom: 0.4rem; }
+            .exercise-card .ex-title .badge { background: #667eea; color: white; border-radius: 40px; padding: 0.05rem 0.9rem; font-size: 0.85rem; }
+            .exercise-card .enunciado { background: #f1f6fd; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.6rem 0 1rem 0; border-left: 4px solid #667eea; }
+            .exercise-card .solucion { background: #eef3f9; padding: 0.8rem 1.5rem; border-radius: 14px; border: 1px solid #d3e0ee; margin-top: 0.8rem; }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica { background: #e6f0fa; padding: 1rem 1.8rem; border-radius: 40px; margin-top: 1.8rem; font-weight: 500; color: #1a365d; border-left: 6px solid #667eea; }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40" height="auto">
+                    <span class="codigo">#T07.03.- </span>
+                    <span class="texto">Resistencia equivalente en serie</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la ley de Ohm y de las características de un circuito serie (misma intensidad, tensiones que se suman), demostrar que la resistencia equivalente de \(n\) resistencias en serie es la suma de todas ellas.</p>
+            <div class="formula-box">\[ R_{eq} = R_1 + R_2 + \cdots + R_n \]</div>
+			<img src="../imagenes/U07c03 - Resistencias en serie.png" alt="_._._" width="800">
+        </div>
+    
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Obtener la expresión que permite simplificar un circuito serie, facilitando el cálculo de la corriente total y la tensión en cada elemento. Es fundamental para entender cómo se comportan los receptores conectados uno a continuación de otro.</p>
+        </div>
+    
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Circuito serie</strong>
+                <p>En una conexión en serie, todos los elementos son recorridos por la misma intensidad \(I\): \(I = I_1 = I_2 = \cdots = I_n\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Tensión total</strong>
+                <p>La tensión total proporcionada por el generador se reparte entre las resistencias:</p>
+                <div class="formula-box">\[ V = V_1 + V_2 + \cdots + V_n \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Aplicación de la ley de Ohm</strong>
+                <p>Sustituimos cada \(V_i = I \cdot R_i\) (pues la intensidad es común):</p>
+                <div class="formula-box">\[ V = I \cdot R_1 + I \cdot R_2 + \cdots + I \cdot R_n = I \cdot (R_1 + R_2 + \cdots + R_n) \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Resistencia equivalente</strong>
+                <p>Si definimos \(R_{eq}\) como la resistencia que, conectada a la misma tensión \(V\), produce la misma intensidad \(I\), entonces por ley de Ohm \(V = I \cdot R_{eq}\). Comparando:</p>
+                <div class="formula-box">\[ I \cdot R_{eq} = I \cdot (R_1 + R_2 + \cdots + R_n) \quad \Rightarrow \quad R_{eq} = R_1 + R_2 + \cdots + R_n \]</div>
+            </div>
+        </div>
+    
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">\[ R_{eq} = \sum_{i=1}^{n} R_i \]</div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La resistencia equivalente en serie es siempre mayor que cada una de las resistencias individuales. Esto implica que, al añadir resistencias en serie, la corriente total disminuye (para una tensión fija). Es importante que el alumnado relacione este resultado con el concepto de "oposición total" al paso de la corriente.
+            </div>
+        </div>
+    
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Resistencias en serie</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 1</span><span>Dos resistencias en serie</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Se conectan en serie \(R_1 = 20\,\Omega\) y \(R_2 = 30\,\Omega\) a una pila de \(12\,\mathrm{V}\). Calcula la resistencia equivalente, la intensidad total y la tensión en cada resistencia.</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(R_{eq} = 20 + 30 = 50\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(I = \frac{12}{50} = 0.24\,\mathrm{A}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(V_1 = I\cdot R_1 = 0.24\cdot 20 = 4.8\,\mathrm{V}\), \(V_2 = 0.24\cdot 30 = 7.2\,\mathrm{V}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R_{eq}=50\,\Omega\), \(I=0.24\,\mathrm{A}\), \(V_1=4.8\,\mathrm{V}\), \(V_2=7.2\,\mathrm{V}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 2</span><span>Tres resistencias en serie</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Un circuito serie está formado por resistencias de \(10\,\Omega\), \(15\,\Omega\) y \(25\,\Omega\) alimentadas por \(24\,\mathrm{V}\). Halla la caída de tensión en la resistencia de \(15\,\Omega\).</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(R_{eq} = 10+15+25 = 50\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(I = \frac{24}{50} = 0.48\,\mathrm{A}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(V_{15} = I\cdot 15 = 0.48\cdot 15 = 7.2\,\mathrm{V}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(7.2\,\mathrm{V}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 3</span><span>Determinación de una resistencia desconocida</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Una resistencia \(R\) se conecta en serie con otra de \(40\,\Omega\) a \(100\,\mathrm{V}\). Si la intensidad es de \(2\,\mathrm{A}\), ¿cuánto vale \(R\)?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(R_{eq} = \frac{V}{I} = \frac{100}{2} = 50\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(R_{eq} = R + 40 \Rightarrow R = 50 - 40 = 10\,\Omega\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R = 10\,\Omega\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La suma de tensiones en serie es una consecuencia directa de la conservación de la energía (la energía por unidad de carga se reparte). Es un buen momento para introducir el concepto de "divisor de tensión" y mostrar que la resistencia mayor absorbe la mayor parte de la tensión.
+                </div>
+            </div>
+        </details>
+    </div>
+    </body>
+    </html>

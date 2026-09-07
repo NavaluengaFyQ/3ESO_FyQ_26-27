@@ -1,0 +1,611 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T08.03 - Teorema de conservación de la energía mecánica</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+    
+            /* =========================================================
+               ESTILOS PARA EL BLOQUE DESPLEGABLE
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+            .boton-inicio {
+                display:inline-block;
+                padding:12px 24px;
+                background:#0078D4;
+                color:white;
+                text-decoration:none;
+                border-radius:12px;
+                font-weight:bold;
+            }
+            .footer-mensaje {
+                font-size: clamp(0.95rem, 3vw, 1.2rem);
+                color: #2d3748;
+                margin-top: 0;
+                margin-bottom: 12px;
+                padding: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="icono">
+                    <span class="codigo">#T08.03.- </span>
+                    <span class="texto">Teorema de conservación de la energía mecánica</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>
+                La <strong>energía mecánica</strong> de un sistema se define como la suma de su energía cinética (\(E_c\)) y sus energías potenciales (\(E_p\), gravitatoria y/o elástica). A partir del teorema de trabajo-energía cinética y de la definición de fuerzas conservativas, se deduce el <strong>teorema de conservación de la energía mecánica</strong>, que establece la relación entre el trabajo realizado por fuerzas no conservativas y la variación de la energía mecánica.
+            </p>
+            <div class="formula-box">
+                \[
+                W_{\text{nc}} = \Delta E_m = \Delta E_c + \Delta E_p
+                \]
+            </div>
+            <p>
+                Cuando \(W_{\text{nc}} = 0\), la energía mecánica se conserva:
+            </p>
+            <div class="formula-box">
+                \[
+                E_m = \text{constante} \quad \Longleftrightarrow \quad E_{c0} + E_{p0} = E_{c} + E_{p}
+                \]
+            </div>
+			<img src="../imagenes/U08c03 - Teorema de conservación de la energía mecánica.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>
+                Comprender que la energía mecánica no siempre se conserva; solo lo hace cuando no actúan fuerzas no conservativas (rozamiento, resistencia del aire, etc.) o cuando su trabajo total es nulo. Este teorema permite resolver problemas de dinámica de manera sencilla, evitando el cálculo directo de aceleraciones, y es una herramienta fundamental para entender muchos fenómenos cotidianos.
+            </p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de energía mecánica</strong>
+                <p>
+                    La energía mecánica total de un sistema es la suma de todas las energías cinéticas y potenciales (gravitatoria y elástica) que posee:
+                </p>
+                <div class="formula-box">
+                    \[
+                    E_m = E_c + E_p
+                    \]
+                </div>
+                <p>Donde \(E_p\) incluye todas las formas de energía potencial (gravitatoria \(mgh\), elástica \(\frac{1}{2}kx^2\), etc.).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Teorema de trabajo-energía cinética</strong>
+                <p>
+                    El trabajo total realizado sobre un cuerpo es igual a la variación de su energía cinética:
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_{\text{total}} = \Delta E_c
+                    \]
+                </div>
+                <p>
+                    Este teorema es válido tanto para fuerzas conservativas como no conservativas.
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Descomposición del trabajo total</strong>
+                <p>
+                    El trabajo total se puede descomponer en la suma del trabajo realizado por fuerzas conservativas (\(W_c\)) y el trabajo realizado por fuerzas no conservativas (\(W_{\text{nc}}\)):
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_{\text{total}} = W_c + W_{\text{nc}}
+                    \]
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Relación entre trabajo conservativo y energía potencial</strong>
+                <p>
+                    Para una fuerza conservativa, el trabajo que realiza al mover un cuerpo de un punto A a un punto B es igual a la disminución de la energía potencial asociada:
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_c = -\Delta E_p = -(E_{pB} - E_{pA}) = E_{pA} - E_{pB}
+                    \]
+                </div>
+                <p>
+                    Esta propiedad es la que define a una fuerza conservativa (por ejemplo, el peso o la fuerza elástica).
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Sustitución en el teorema de trabajo-energía</strong>
+                <p>
+                    Sustituimos \(W_c = -\Delta E_p\) en la expresión del trabajo total:
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_{\text{nc}} - \Delta E_p = \Delta E_c
+                    \]
+                </div>
+                <p>
+                    Reordenando:
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_{\text{nc}} = \Delta E_c + \Delta E_p
+                    \]
+                </div>
+                <p>
+                    Pero \(\Delta E_c + \Delta E_p = \Delta (E_c + E_p) = \Delta E_m\). Por tanto:
+                </p>
+                <div class="formula-box">
+                    \[
+                    W_{\text{nc}} = \Delta E_m
+                    \]
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">6</span>
+                <strong>Caso particular: conservación de la energía mecánica</strong>
+                <p>
+                    Si no actúan fuerzas no conservativas o su trabajo total es nulo (\(W_{\text{nc}} = 0\)), entonces:
+                </p>
+                <div class="formula-box">
+                    \[
+                    \Delta E_m = 0 \quad \Longrightarrow \quad E_m = \text{constante}
+                    \]
+                </div>
+                <p>
+                    Es decir:
+                </p>
+                <div class="formula-box">
+                    \[
+                    E_{cA} + E_{pA} = E_{cB} + E_{pB}
+                    \]
+                </div>
+                <p>La energía mecánica se conserva a lo largo del movimiento.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">7</span>
+                <strong>Interpretación práctica</strong>
+                <ul>
+                    <li>Si \(W_{\text{nc}} > 0\), la energía mecánica aumenta (se añade energía al sistema).</li>
+                    <li>Si \(W_{\text{nc}} < 0\), la energía mecánica disminuye (se disipa, por ejemplo, por rozamiento).</li>
+                    <li>En caída libre sin rozamiento, en un péndulo ideal o en un muelle sin rozamiento, \(W_{\text{nc}} = 0\) y la energía mecánica se conserva.</li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                <strong>Teorema general:</strong> \[ W_{\text{nc}} = \Delta E_m \]
+                <br><br>
+                <strong>Conservación de la energía mecánica (cuando \(W_{\text{nc}} = 0\)):</strong>
+                \[
+                E_{c0} + E_{p0} = E_{c} + E_{p}
+                \]
+                <br>
+                \[
+                \frac{1}{2} m v_0^2 + m g h_0 + \frac{1}{2} k x_0^2 = \frac{1}{2} m v^2 + m g h + \frac{1}{2} k x^2
+                \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> El error más común es aplicar la conservación de la energía mecánica cuando hay rozamiento. El alumnado debe aprender a identificar primero si hay fuerzas no conservativas y, si las hay, calcular su trabajo (o suponerlo despreciable). Enfatizar que la energía mecánica <em>no</em> es una constante universal, sino una herramienta que se aplica solo en condiciones ideales, ayuda a evitar este error.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Teorema de conservación de la energía mecánica</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Caída libre desde un edificio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una piedra de 2 kg se deja caer desde el reposo desde lo alto de un edificio de 30 m. Despreciando el rozamiento con el aire, calcula la velocidad con que llega al suelo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Solo actúa el peso (fuerza conservativa). \(W_{\text{nc}} = 0\). Se conserva la energía mecánica.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Inicial: \(v_0 = 0\), \(h_0 = 30\). \(E_{c0} = 0\), \(E_{p0} = m g h_0\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Final: \(h = 0\), \(v = ?\). \(E_c = \frac{1}{2} m v^2\), \(E_p = 0\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(m g h_0 = \frac{1}{2} m v^2 \Rightarrow v = \sqrt{2 g h_0} = \sqrt{2 \times 9,8 \times 30} \approx 24,2\,\text{m/s}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(24,2\,\text{m/s}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Lanzamiento vertical hacia arriba</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se lanza una pelota de 0,5 kg verticalmente hacia arriba con una velocidad de 20 m/s. Calcula la altura máxima que alcanza usando conservación de la energía.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Sin rozamiento, \(W_{\text{nc}} = 0\), energía mecánica constante.</div>
+                        <div class="paso"><strong>Paso 2:</strong> En el lanzamiento: \(h_0 = 0\), \(v_0 = 20\). \(E_{c0} = \frac{1}{2} \times 0,5 \times 20^2 = 100\,\text{J}\), \(E_{p0} = 0\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> En la altura máxima: \(v = 0\), \(E_c = 0\), \(E_p = m g h_{\text{max}}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(100 = m g h_{\text{max}} \Rightarrow h_{\text{max}} = \frac{100}{0,5 \times 9,8} \approx 20,4\,\text{m}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(20,4\,\text{m}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Péndulo simple</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una bola de 1 kg se suelta desde el reposo en un péndulo de 2 m de longitud cuando la cuerda forma 60° con la vertical. ¿Con qué velocidad pasa por el punto más bajo? (Dato: \(\cos 60° = 0,5\)).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> La tensión no realiza trabajo (es perpendicular al movimiento). El peso es conservativo. Se conserva \(E_m\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Altura inicial respecto al punto más bajo: \(h_0 = L - L \cos 60° = 2 - 2 \times 0,5 = 1\,\text{m}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> En el punto más bajo: \(h = 0\). \(E_{p0} = m g h_0 = 1 \times 9,8 \times 1 = 9,8\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(9,8 = \frac{1}{2} \times 1 \times v^2 \Rightarrow v = \sqrt{19,6} \approx 4,43\,\text{m/s}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(4,43\,\text{m/s}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Plano inclinado sin rozamiento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un bloque de 3 kg se desliza desde el reposo por un plano inclinado de 5 m de altura hasta la base. Calcula su velocidad al llegar abajo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> El peso es conservativo, la normal no trabaja. \(W_{\text{nc}} = 0\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(E_{p0} = m g h_0 = 3 \times 9,8 \times 5 = 147\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(147 = \frac{1}{2} \times 3 \times v^2 \Rightarrow v^2 = 98 \Rightarrow v \approx 9,9\,\text{m/s}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(9,9\,\text{m/s}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Caída con rozamiento (energía perdida)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un objeto de 0,2 kg se deja caer desde 8 m de altura. Al llegar al suelo, su velocidad es de 10 m/s. ¿Cuánta energía se ha perdido por el rozamiento con el aire?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Energía inicial (potencial): \(E_{p0} = 0,2 \times 9,8 \times 8 = 15,68\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Energía final (cinética): \(E_c = \frac{1}{2} \times 0,2 \times 10^2 = 10\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Energía perdida = \(E_{p0} - E_c = 15,68 - 10 = 5,68\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Esta energía se ha disipado en forma de calor (rozamiento con el aire).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(5,68\,\text{J}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Resorte que lanza un objeto</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un muelle de constante \(k = 500\,\text{N/m}\) se comprime 0,1 m y se utiliza para lanzar una bola de 0,05 kg desde el reposo sobre una superficie sin rozamiento. Calcula la velocidad de la bola al salir del muelle.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Energía elástica inicial: \(E_{pe0} = \frac{1}{2} k x^2 = \frac{1}{2} \times 500 \times (0,1)^2 = 2,5\,\text{J}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Al soltarse, toda la energía elástica se convierte en cinética: \(2,5 = \frac{1}{2} \times 0,05 \times v^2\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(2,5 = 0,025 v^2 \Rightarrow v^2 = 100 \Rightarrow v = 10\,\text{m/s}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(10\,\text{m/s}\).</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La conservación de la energía mecánica es un atajo maravilloso, pero solo cuando no hay rozamiento ni otras fuerzas disipativas. La "trampa" mental es querer aplicarla siempre. Enseñar a identificar primero si el trabajo de las fuerzas no conservativas es despreciable o no es la habilidad clave que debe desarrollar el alumnado.
+                </div>
+            </div>
+        </details>
+    
+        <!-- ============================================ -->
+        <!-- BLOQUE "ES HORA DE"                          -->
+        <!-- ============================================ -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p class="footer-mensaje">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" class="boton-inicio">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

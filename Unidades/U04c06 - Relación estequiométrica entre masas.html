@@ -1,0 +1,497 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T04.06 - Relación estequiométrica entre masas</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+            /* Bloque desplegable */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="icono">
+                    <span class="codigo">#T04.06.- </span>
+                    <span class="texto">Relación estequiométrica entre masas</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de una ecuación química ajustada y de las masas moleculares de los compuestos implicados, demostrar que existe una relación de proporcionalidad directa entre las masas de reactivos y productos, de modo que, conociendo la masa de una sustancia, se puede calcular la masa de cualquier otra que interviene en la reacción.</p>
+            <div class="formula-box">
+                \[
+                \frac{\text{masa de A (dato)}}{\text{masa de A (según coeficientes)}} = \frac{\text{masa de B (incógnita)}}{\text{masa de B (según coeficientes)}}
+                \]
+                <p style="font-weight:normal; margin-top:8px;">Donde las "masas según coeficientes" se calculan como: \( (\text{coeficiente estequiométrico}) \times (\text{masa molecular}) \).</p>
+            </div>
+            <p>Ejemplo general: para la reacción \( aA + bB \rightarrow cC + dD \), la relación entre A y C es: \( \frac{m_A}{a \cdot M_A} = \frac{m_C}{c \cdot M_C} \).</p>
+            <img src="../imagenes/U04c06 - Relación estequiométrica entre masas.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Establecer el método de cálculo de cantidades de reactivos o productos a partir de las masas de otras sustancias que participan en una reacción química. Este es el núcleo de la estequiometría y se usa en innumerables aplicaciones: desde calcular la cantidad de producto que se obtiene en una reacción industrial, hasta determinar la masa de contaminante generado en una combustión.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Escribir y ajustar la reacción química</strong>
+                <p>Este paso es imprescindible. Sin los coeficientes estequiométricos correctos, no se puede establecer la relación proporcional entre las masas.</p>
+                <p>Ejemplo: \( 2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O} \).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Calcular las masas moleculares de los compuestos implicados</strong>
+                <p>Usando la tabla periódica, se calcula la masa molecular de cada sustancia (en u). Luego, se expresa en gramos (numéricamente igual para un mol).</p>
+                <ul>
+                    <li>\( M_m(\text{H}_2) = 2 \, \text{u} \)</li>
+                    <li>\( M_m(\text{O}_2) = 32 \, \text{u} \)</li>
+                    <li>\( M_m(\text{H}_2\text{O}) = 18 \, \text{u} \)</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Establecer la proporción en masa según los coeficientes</strong>
+                <p>Se multiplica la masa molecular de cada compuesto por su coeficiente estequiométrico. Así se obtiene la "masa equivalente" que participa en la reacción según la ecuación ajustada.</p>
+                <div class="formula-box">
+                    \[
+                    \text{Relación en masa: } (2 \times 2) \, \text{g de H}_2 : (1 \times 32) \, \text{g de O}_2 : (2 \times 18) \, \text{g de H}_2\text{O}
+                    \]
+                    <p>Es decir: \( 4 \, \text{g H}_2 : 32 \, \text{g O}_2 : 36 \, \text{g H}_2\text{O} \).</p>
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Plantear una regla de tres</strong>
+                <p>Si se conoce la masa de una de las sustancias, se puede calcular la masa de cualquier otra usando la proporción anterior. La relación es directamente proporcional (si se duplica la masa de un reactivo, se duplica la masa del producto).</p>
+                <p>Ejemplo: ¿Qué masa de oxígeno reacciona con 10 g de H₂?</p>
+                <div class="formula-box">
+                    \[
+                    \frac{4 \, \text{g H}_2}{32 \, \text{g O}_2} = \frac{10 \, \text{g H}_2}{x \, \text{g O}_2} \quad \Rightarrow \quad x = \frac{10 \times 32}{4} = 80 \, \text{g O}_2
+                    \]
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Verificación con la ley de conservación de la masa</strong>
+                <p>Se puede comprobar que la masa total de reactivos (10 g + 80 g = 90 g) es igual a la masa total de productos (que serían 90 g de agua, calculable de forma similar).</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                \frac{m_A}{a \cdot M_A} = \frac{m_B}{b \cdot M_B}
+                \]
+                <p style="font-weight:normal; margin-top:8px;">Donde \( a, b \) son los coeficientes estequiométricos y \( M_A, M_B \) las masas moleculares.</p>
+                <p style="font-weight:normal;">Ejemplo: \( \frac{m_{\text{H}_2}}{2 \cdot 2} = \frac{m_{\text{O}_2}}{1 \cdot 32} \).</p>
+            </div>
+            <div class="note">
+                <strong>Observaciones sobre el alumnado:</strong> El error más común es olvidar multiplicar por los coeficientes estequiométricos al establecer la relación. También se suele confundir la masa molecular (en u) con la masa en gramos de un mol. Es fundamental recordar que la proporción se establece entre las masas que corresponden a los moles indicados por la ecuación ajustada. Se recomienda usar siempre unidades de gramos y trabajar con moles si es necesario.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE CON EJERCICIOS RESUELTOS               -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Relación estequiométrica entre masas</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Combustión del metano</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El metano (CH₄) arde según la reacción: \( \text{CH}_4 + 2\text{O}_2 \rightarrow \text{CO}_2 + 2\text{H}_2\text{O} \). Calcula la masa de CO₂ que se produce al quemar 32 g de CH₄. Masas: C=12, H=1, O=16.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Masas moleculares: \( M(\text{CH}_4) = 12 + 4 = 16 \, \text{u} \); \( M(\text{CO}_2) = 12 + 32 = 44 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Relación en masa según coeficientes: 1 mol CH₄ produce 1 mol CO₂, pero en masas: \( 16 \, \text{g CH}_4 \rightarrow 44 \, \text{g CO}_2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Regla de tres: \( \frac{16}{44} = \frac{32}{x} \) → \( x = \frac{32 \times 44}{16} = 88 \, \text{g CO}_2 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se producen 88 g de CO₂.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Obtención de amoniaco (Haber-Bosch)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La síntesis industrial del amoniaco es: \( \text{N}_2 + 3\text{H}_2 \rightarrow 2\text{NH}_3 \). ¿Qué masa de N₂ se necesita para obtener 34 g de NH₃? Masas: N=14, H=1.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M(\text{N}_2) = 28 \, \text{u} \); \( M(\text{NH}_3) = 14 + 3 = 17 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Según la ecuación: \( 1 \, \text{mol N}_2 \rightarrow 2 \, \text{moles NH}_3 \). En masas: \( 28 \, \text{g N}_2 \rightarrow 2 \times 17 = 34 \, \text{g NH}_3 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( \frac{28}{34} = \frac{x}{34} \) → \( x = 28 \, \text{g N}_2 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se necesitan 28 g de N₂.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Descomposición del clorato de potasio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El clorato de potasio (KClO₃) se descompone en KCl y O₂ según: \( 2\text{KClO}_3 \rightarrow 2\text{KCl} + 3\text{O}_2 \). Calcula la masa de O₂ que se obtiene al descomponer 245 g de KClO₃. Masas: K=39, Cl=35.5, O=16.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M(\text{KClO}_3) = 39 + 35.5 + 48 = 122.5 \, \text{u} \); \( M(\text{O}_2) = 32 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Relación: \( 2 \times 122.5 = 245 \, \text{g KClO}_3 \) producen \( 3 \times 32 = 96 \, \text{g O}_2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( \frac{245}{96} = \frac{245}{x} \) → \( x = 96 \, \text{g O}_2 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se obtienen 96 g de O₂.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Reacción de sodio con agua</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El sodio reacciona con agua según: \( 2\text{Na} + 2\text{H}_2\text{O} \rightarrow 2\text{NaOH} + \text{H}_2 \). ¿Qué masa de H₂ se produce a partir de 46 g de Na? Masas: Na=23, H=1, O=16.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M(\text{Na}) = 23 \, \text{u} \); \( M(\text{H}_2) = 2 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Relación: \( 2 \times 23 = 46 \, \text{g Na} \) producen \( 1 \times 2 = 2 \, \text{g H}_2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( \frac{46}{2} = \frac{46}{x} \) → \( x = 2 \, \text{g H}_2 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se producen 2 g de H₂.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Combustión del octano (gasolina)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La combustión del octano (C₈H₁₈) es: \( 2\text{C}_8\text{H}_{18} + 25\text{O}_2 \rightarrow 16\text{CO}_2 + 18\text{H}_2\text{O} \). Calcula la masa de CO₂ emitida al quemar 228 g de octano. Masas: C=12, H=1, O=16.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M(\text{C}_8\text{H}_{18}) = 8 \times 12 + 18 \times 1 = 114 \, \text{u} \); \( M(\text{CO}_2) = 44 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( 2 \times 114 = 228 \, \text{g octano} \) producen \( 16 \times 44 = 704 \, \text{g CO}_2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( \frac{228}{704} = \frac{228}{x} \) → \( x = 704 \, \text{g CO}_2 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se emiten 704 g de CO₂ (0.704 kg).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Reacción de neutralización (ácido-base)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El hidróxido de sodio (NaOH) reacciona con ácido sulfúrico: \( 2\text{NaOH} + \text{H}_2\text{SO}_4 \rightarrow \text{Na}_2\text{SO}_4 + 2\text{H}_2\text{O} \). ¿Qué masa de H₂SO₄ se necesita para neutralizar 80 g de NaOH? Masas: Na=23, O=16, H=1, S=32.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M(\text{NaOH}) = 23+16+1 = 40 \, \text{u} \); \( M(\text{H}_2\text{SO}_4) = 2+32+64 = 98 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( 2 \times 40 = 80 \, \text{g NaOH} \) reaccionan con \( 1 \times 98 = 98 \, \text{g H}_2\text{SO}_4 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( \frac{80}{98} = \frac{80}{x} \) → \( x = 98 \, \text{g H}_2\text{SO}_4 \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se necesitan 98 g de H₂SO₄.</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Observaciones claves:</strong> La estequiometría de masas es una regla de tres basada en la proporción que dan los coeficientes de la ecuación ajustada. La "trampa" mental es olvidar que los coeficientes multiplican a las masas moleculares. Siempre verificar que la ecuación esté ajustada antes de hacer cualquier cálculo. Practicar con diferentes reacciones ayuda a interiorizar el método.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br> Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

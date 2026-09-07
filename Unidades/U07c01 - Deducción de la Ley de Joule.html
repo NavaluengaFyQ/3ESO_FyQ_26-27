@@ -1,0 +1,427 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T07.01 - Deducción de la Ley de Joule</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            /* DESPLEGABLE */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40" height="auto">
+                    <span class="codigo">#T07.01.- </span>
+                    <span class="texto">Deducción de la Ley de Joule</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de las definiciones de potencia eléctrica y de la ley de Ohm, demostrar que el calor disipado por efecto Joule en una resistencia viene dado por:</p>
+            <div class="formula-box">\[ Q = I^{2} \cdot R \cdot t \]</div>
+			<img src="../imagenes/U07c01 - Deducción de la Ley de Joule.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Obtener la expresión de la energía eléctrica transformada en calor en un conductor, fundamental para entender el calentamiento de los aparatos eléctricos, las pérdidas en las líneas de transmisión y los riesgos de sobrecalentamiento. Esta deducción relaciona magnitudes eléctricas básicas (intensidad, resistencia, tiempo) con el efecto térmico, y es clave en el diseño de sistemas eléctricos seguros.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de potencia eléctrica</strong>
+                <p>La potencia eléctrica \(P\) de un aparato es la energía transformada por unidad de tiempo. En un circuito, la potencia se expresa como el producto de la tensión \(V\) y la intensidad \(I\):</p>
+                <div class="formula-box">\[ P = V \cdot I \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Ley de Ohm</strong>
+                <p>Para un conductor óhmico, la tensión entre sus extremos y la intensidad que lo atraviesa son directamente proporcionales:</p>
+                <div class="formula-box">\[ V = I \cdot R \]</div>
+                <p>donde \(R\) es la resistencia del conductor.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Sustitución en la potencia</strong>
+                <p>Reemplazamos la expresión de \(V\) en la fórmula de la potencia:</p>
+                <div class="formula-box">\[ P = (I \cdot R) \cdot I = I^{2} \cdot R \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Relación entre energía y potencia</strong>
+                <p>La energía (o calor) disipada es igual a la potencia multiplicada por el tiempo durante el cual circula la corriente:</p>
+                <div class="formula-box">\[ Q = P \cdot t \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Expresión final de la Ley de Joule</strong>
+                <p>Sustituyendo la potencia obtenida en el paso 3:</p>
+                <div class="formula-box">\[ Q = I^{2} \cdot R \cdot t \]</div>
+                <p>Esta es la forma habitual de la ley de Joule, que indica que el calor generado en un conductor es directamente proporcional al cuadrado de la intensidad, a la resistencia y al tiempo.</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">\[ Q = I^{2} \cdot R \cdot t \]</div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La ley de Joule muestra que, para una misma intensidad, una resistencia mayor genera más calor (por ejemplo, un cable fino se calienta más que uno grueso). También explica por qué un cortocircuito (resistencia muy baja) produce una corriente elevada que puede generar un incendio. Es esencial que el alumnado comprenda que el calor disipado no depende directamente de la tensión, sino de la combinación de \(I\) y \(R\).
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                        -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO la Ley de Joule</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Calentamiento de un cable</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un cable de cobre de resistencia \(0.5 \, \Omega\) es recorrido por una corriente de \(10 \, \mathrm{A}\) durante \(5 \, \mathrm{min}\). Calcula el calor disipado en julios.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \(R = 0.5 \, \Omega\), \(I = 10 \, \mathrm{A}\), \(t = 5 \, \mathrm{min} = 300 \, \mathrm{s}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Aplicamos la ley de Joule: \(Q = I^{2} R t = (10)^2 \cdot 0.5 \cdot 300 = 100 \cdot 0.5 \cdot 300 = 15000 \, \mathrm{J}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(Q = 1.5 \times 10^{4} \, \mathrm{J}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Resistencia de un hervidor</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un hervidor eléctrico tiene una resistencia de \(20 \, \Omega\) y se conecta a \(220 \, \mathrm{V}\). ¿Cuánto calor genera en \(2 \, \mathrm{minutos}\)?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Primero calculamos la intensidad con la ley de Ohm: \(I = \frac{V}{R} = \frac{220}{20} = 11 \, \mathrm{A}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Tiempo en segundos: \(t = 2 \cdot 60 = 120 \, \mathrm{s}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Calor: \(Q = I^{2} R t = (11)^2 \cdot 20 \cdot 120 = 121 \cdot 20 \cdot 120 = 290400 \, \mathrm{J}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(Q \approx 2.90 \times 10^{5} \, \mathrm{J}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Comparación de calentamiento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Dos resistencias, \(R_1 = 10 \, \Omega\) y \(R_2 = 40 \, \Omega\), se conectan en serie a una batería de \(12 \, \mathrm{V}\). ¿Cuál de las dos disipa más calor en el mismo tiempo? Justifica.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> En serie, la intensidad es la misma para ambas. Resistencia equivalente \(R_e = 10 + 40 = 50 \, \Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Intensidad: \(I = \frac{12}{50} = 0.24 \, \mathrm{A}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Calor en cada una: \(Q_1 = I^2 R_1 t = (0.24)^2 \cdot 10 \cdot t = 0.576 \, t\) y \(Q_2 = (0.24)^2 \cdot 40 \cdot t = 2.304 \, t\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(Q_2 > Q_1\). La resistencia mayor disipa cuatro veces más calor (porque \(R_2 = 4 R_1\)).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Pérdidas en una línea de transmisión</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una línea de transmisión de \(0.2 \, \Omega\) transporta una corriente de \(50 \, \mathrm{A}\). ¿Qué potencia se pierde por efecto Joule? ¿Cuánta energía se pierde en una hora?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Potencia disipada: \(P = I^2 R = (50)^2 \cdot 0.2 = 2500 \cdot 0.2 = 500 \, \mathrm{W}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Energía en 1 h (3600 s): \(Q = P \cdot t = 500 \cdot 3600 = 1.8 \times 10^6 \, \mathrm{J}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Pérdida de potencia \(500 \, \mathrm{W}\), energía \(1.8 \, \mathrm{MJ}\) por hora.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Calentamiento de un filamento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El filamento de una bombilla tiene una resistencia de \(200 \, \Omega\) y por él circulan \(0.5 \, \mathrm{A}\). Si la bombilla está encendida durante \(10 \, \mathrm{min}\), ¿qué cantidad de calor desprende? ¿Qué temperatura aumentaría si el filamento tiene una masa de \(2 \, \mathrm{g}\) y calor específico \(0.13 \, \mathrm{J/(g\cdot K)}\)?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(t = 10 \cdot 60 = 600 \, \mathrm{s}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(Q = I^2 R t = (0.5)^2 \cdot 200 \cdot 600 = 0.25 \cdot 200 \cdot 600 = 30000 \, \mathrm{J}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Aumento de temperatura: \(\Delta T = \frac{Q}{m \cdot c_e} = \frac{30000}{2 \cdot 0.13} = \frac{30000}{0.26} \approx 115384 \, \mathrm{K}\) (valor irreal, pero muestra el enorme calentamiento del filamento).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(Q = 3.0 \times 10^4 \, \mathrm{J}\), \(\Delta T \approx 1.15 \times 10^5 \, \mathrm{K}\) (indica que el filamento se calienta muchísimo, pero en realidad la mayor parte de la energía se emite como luz y la resistencia varía con la temperatura).</div>
+                    </div>
+                </div>
+    
+                <!-- CLAVE DIDÁCTICA -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La ley de Joule relaciona el efecto térmico con el cuadrado de la intensidad, lo que explica por qué una pequeña reducción de la corriente (por ejemplo, usando mayor voltaje para la misma potencia) reduce drásticamente las pérdidas en las líneas de transmisión. También es la base del funcionamiento de fusibles y disyuntores, que protegen los circuitos ante sobreintensidades.
+                </div>
+            </div>
+        </details>
+    </div>
+    </body>
+    </html>

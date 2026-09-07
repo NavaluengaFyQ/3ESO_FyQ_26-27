@@ -1,0 +1,544 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T05.05 - Casos particulares del MRUA: Caída libre, lanzamiento vertical y frenado</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <!-- FontAwesome 6 (gratuita) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+    
+            /* =========================================================
+               ESTILOS PARA EL BLOQUE DESPLEGABLE
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="Cápsula">
+                    <span class="codigo">#T05.05.- </span>
+                    <span class="texto">Casos particulares del MRUA: Caída libre, lanzamiento vertical y frenado</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de las ecuaciones generales del Movimiento Rectilíneo Uniformemente Acelerado y particularizando la aceleración para tres situaciones físicas concretas, analizar las características de:</p>
+            <ul>
+                <li><strong>Caída libre:</strong> movimiento vertical con \( v_0 = 0 \) y \( a = -g \).</li>
+                <li><strong>Lanzamiento vertical hacia arriba:</strong> movimiento vertical con \( v_0 > 0 \), \( a = -g \) y condición de altura máxima \( v = 0 \).</li>
+                <li><strong>Frenado:</strong> movimiento horizontal con \( v_0 > 0 \), \( a < 0 \) y condición de parada total \( v = 0 \).</li>
+            </ul>
+            <p>Estableciendo el convenio de signos adecuado para cada caso, demostrar que las ecuaciones del MRUA adoptan las siguientes formas particulares:</p>
+            <div class="formula-box">
+                \[ \text{Caída libre: } v = -g t, \quad y = y_0 - \frac{1}{2} g t^2 \]
+                \[ \text{Lanzamiento vertical: } v = v_0 - g t, \quad y = y_0 + v_0 t - \frac{1}{2} g t^2 \]
+                \[ \text{Frenado: } v = v_0 - |a| \cdot t, \quad x = x_0 + v_0 t - \frac{1}{2} |a| t^2 \]
+            </div>
+			<img src="../imagenes/U05c05 - Casos particulares del MRUA_Caída libre, lanzamiento vertical y frenado.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Conectar la teoría abstracta del MRUA con la realidad cotidiana. Comprender por qué la gravedad frena un objeto que sube y acelera uno que baja, y por qué la distancia de frenado crece con el cuadrado de la velocidad. Aprender a <strong>elegir el sistema de referencia correcto</strong> y a interpretar el signo de la aceleración en cada situación.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Sistema de referencia para movimientos verticales</strong>
+                <p>Establecemos un sistema de referencia con el eje \( Oy \) vertical y <strong>orientado hacia arriba</strong>. El origen puede situarse en el suelo o en el punto de lanzamiento. Con este convenio:</p>
+                <ul>
+                    <li>La aceleración de la gravedad es <strong>siempre negativa</strong>: \( a = -g \), con \( g = 9,8 \, \text{m/s}^2 \).</li>
+                    <li>La velocidad es positiva si el cuerpo asciende y negativa si desciende.</li>
+                    <li>La posición \( y \) es positiva por encima del origen y negativa por debajo.</li>
+                </ul>
+                <div class="formula-box">\[ \text{Eje } Oy \text{ hacia arriba} \quad \Rightarrow \quad a = -g \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Caída libre (\( v_0 = 0 \), \( a = -g \))</strong>
+                <p>Un cuerpo en caída libre parte del reposo (\( v_0 = 0 \)) desde una altura \( y_0 \). Sustituyendo en las ecuaciones del MRUA:</p>
+                <div class="formula-box">\[ v = 0 - g t = -g t \]</div>
+                <div class="formula-box">\[ y = y_0 + 0 \cdot t - \frac{1}{2} g t^2 = y_0 - \frac{1}{2} g t^2 \]</div>
+                <div class="formula-box">\[ v^2 = 0^2 - 2g (y - y_0) \quad \Rightarrow \quad v^2 = -2g (y - y_0) \]</div>
+                <p>Como \( y < y_0 \) (cae), \( y - y_0 \) es negativo, por lo que \( v^2 \) es positivo. La velocidad de impacto es \( v = -\sqrt{2g (y_0 - y)} \).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Lanzamiento vertical hacia arriba (\( v_0 > 0 \), \( a = -g \))</strong>
+                <p>Un cuerpo se lanza hacia arriba con velocidad inicial \( v_0 > 0 \). La gravedad frena el movimiento hasta detenerlo en la altura máxima. Sustituyendo en las ecuaciones del MRUA:</p>
+                <div class="formula-box">\[ v = v_0 - g t \]</div>
+                <div class="formula-box">\[ y = y_0 + v_0 t - \frac{1}{2} g t^2 \]</div>
+                <div class="formula-box">\[ v^2 = v_0^2 - 2g (y - y_0) \]</div>
+                <p>En la altura máxima: \( v = 0 \). Por tanto:</p>
+                <div class="formula-box">\[ 0 = v_0 - g t_{\text{subida}} \quad \Rightarrow \quad t_{\text{subida}} = \frac{v_0}{g} \]</div>
+                <div class="formula-box">\[ 0 = v_0^2 - 2g (y_{\text{max}} - y_0) \quad \Rightarrow \quad y_{\text{max}} = y_0 + \frac{v_0^2}{2g} \]</div>
+                <p>El tiempo total de vuelo (hasta volver al punto de lanzamiento) es \( t_{\text{total}} = 2 \cdot t_{\text{subida}} \).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Frenado (\( v_0 > 0 \), \( a < 0 \))</strong>
+                <p>Un vehículo frena con aceleración constante negativa. Tomamos el eje \( Ox \) en la dirección del movimiento, por lo que la aceleración es \( a = -|a| \). Las ecuaciones quedan:</p>
+                <div class="formula-box">\[ v = v_0 - |a| \cdot t \]</div>
+                <div class="formula-box">\[ x = x_0 + v_0 t - \frac{1}{2} |a| t^2 \]</div>
+                <div class="formula-box">\[ v^2 = v_0^2 - 2|a| (x - x_0) \]</div>
+                <p>En la parada total: \( v = 0 \). La distancia de frenado es:</p>
+                <div class="formula-box">\[ 0 = v_0^2 - 2|a| \Delta x_{\text{frenado}} \quad \Rightarrow \quad \Delta x_{\text{frenado}} = \frac{v_0^2}{2|a|} \]</div>
+                <p>Esta expresión muestra que la distancia de frenado <strong>crece con el cuadrado de la velocidad</strong>: al doble de velocidad, la distancia de frenado se multiplica por cuatro.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Observaciones generales</strong>
+                <ul>
+                    <li>En todos los casos, la <strong>masa del cuerpo no influye</strong> en el movimiento (en ausencia de rozamiento).</li>
+                    <li>El signo de la velocidad y la posición depende del sistema de referencia elegido.</li>
+                    <li>La ecuación \( v^2 = v_0^2 + 2a \Delta x \) es especialmente útil para calcular distancias de frenado o velocidades de impacto.</li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                <p><strong>Caída libre (con eje Y hacia arriba):</strong></p>
+                \[ v = -g t \qquad y = y_0 - \frac{1}{2} g t^2 \qquad v^2 = -2g (y - y_0) \]
+                <hr>
+                <p><strong>Lanzamiento vertical (con eje Y hacia arriba):</strong></p>
+                \[ v = v_0 - g t \qquad y = y_0 + v_0 t - \frac{1}{2} g t^2 \qquad v^2 = v_0^2 - 2g (y - y_0) \]
+                <p><em>Altura máxima:</em> \( y_{\text{max}} = y_0 + \frac{v_0^2}{2g} \) &nbsp;&nbsp; <em>Tiempo de subida:</em> \( t_{\text{subida}} = \frac{v_0}{g} \)</p>
+                <hr>
+                <p><strong>Frenado (con eje X en el sentido del movimiento):</strong></p>
+                \[ v = v_0 - |a| t \qquad x = x_0 + v_0 t - \frac{1}{2} |a| t^2 \qquad v^2 = v_0^2 - 2|a| (x - x_0) \]
+                <p><em>Distancia de frenado:</em> \( \Delta x_{\text{frenado}} = \frac{v_0^2}{2|a|} \)</p>
+            </div>
+            <div class="note">
+                <strong>📌 Observación didáctica:</strong> La "trampa" mental más común es pensar que un cuerpo en caída libre "no tiene velocidad inicial" (cierto) y que la gravedad "lo empuja hacia abajo" (cierto), pero olvidar que la aceleración es constante y que la velocidad aumenta linealmente con el tiempo. En el lanzamiento vertical, el error típico es olvidar que el tiempo de subida es igual al de bajada (si el punto de lanzamiento y el de llegada coinciden). En el frenado, el error es no saber que la distancia de frenado depende del cuadrado de la velocidad, lo que convierte a la velocidad en un factor crítico en la seguridad vial.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Casos particulares del MRUA: Caída libre, lanzamiento vertical y frenado</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Caída libre desde un edificio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se deja caer una pelota desde la azotea de un edificio de \( 80 \, \text{m} \) de altura (\( y_0 = 80 \, \text{m} \), \( v_0 = 0 \)).</p>
+                        <ul>
+                            <li>a) ¿Cuánto tarda en llegar al suelo?</li>
+                            <li>b) ¿Con qué velocidad impacta?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( y_0 = 80 \, \text{m} \), \( y = 0 \), \( v_0 = 0 \), \( g = 9,8 \, \text{m/s}^2 \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> Usamos \( y = y_0 - \frac{1}{2} g t^2 \Rightarrow 0 = 80 - 4,9 t^2 \Rightarrow t^2 = 80 / 4,9 \approx 16,33 \Rightarrow t \approx 4,04 \, \text{s} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( v = -g t = -9,8 \cdot 4,04 \approx -39,6 \, \text{m/s} \) (el signo negativo indica que desciende).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 4,04 \, \text{s} \) b) \( 39,6 \, \text{m/s} \) hacia abajo.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Lanzamiento vertical hacia arriba desde el suelo</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se lanza una flecha verticalmente hacia arriba desde el suelo (\( y_0 = 0 \)) con \( v_0 = 30 \, \text{m/s} \).</p>
+                        <ul>
+                            <li>a) ¿Qué altura máxima alcanza?</li>
+                            <li>b) ¿Cuánto tarda en alcanzarla?</li>
+                            <li>c) ¿Cuánto tiempo tarda en volver al suelo?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v_0 = 30 \, \text{m/s} \), \( g = 9,8 \, \text{m/s}^2 \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( y_{\text{max}} = \frac{v_0^2}{2g} = \frac{900}{19,6} \approx 45,92 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( t_{\text{subida}} = \frac{v_0}{g} = \frac{30}{9,8} \approx 3,06 \, \text{s} \).</div>
+                        <div class="paso"><strong>Paso 4 (c):</strong> El tiempo total de vuelo es \( 2 \cdot t_{\text{subida}} = 2 \cdot 3,06 \approx 6,12 \, \text{s} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 45,92 \, \text{m} \) b) \( 3,06 \, \text{s} \) c) \( 6,12 \, \text{s} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Distancia de frenado en función de la velocidad</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un coche frena con una deceleración constante de \( 7 \, \text{m/s}^2 \).</p>
+                        <ul>
+                            <li>a) Si circula a \( 20 \, \text{m/s} \), ¿qué distancia recorre hasta detenerse?</li>
+                            <li>b) Si circula al doble de velocidad (\( 40 \, \text{m/s} \)), ¿cuál es la nueva distancia de frenado?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1 (a):</strong> \( \Delta x = \frac{v_0^2}{2|a|} = \frac{20^2}{2 \cdot 7} = \frac{400}{14} \approx 28,57 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 2 (b):</strong> \( \Delta x = \frac{40^2}{2 \cdot 7} = \frac{1600}{14} \approx 114,29 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Al duplicar la velocidad, la distancia de frenado se multiplica por 4 (\( 28,57 \times 4 = 114,29 \)).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 28,6 \, \text{m} \) b) \( 114,3 \, \text{m} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Lanzamiento desde un acantilado</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Desde el borde de un acantilado de \( 50 \, \text{m} \) de altura se lanza una piedra verticalmente hacia arriba con \( v_0 = 12 \, \text{m/s} \).</p>
+                        <ul>
+                            <li>a) ¿Qué altura máxima alcanza sobre el nivel del mar?</li>
+                            <li>b) ¿Cuánto tarda en llegar al agua?</li>
+                            <li>c) ¿Con qué velocidad impacta?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Origen en el nivel del mar: \( y_0 = 50 \, \text{m} \), \( v_0 = 12 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( y_{\text{max}} = y_0 + \frac{v_0^2}{2g} = 50 + \frac{144}{19,6} = 50 + 7,35 = 57,35 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> Llega al agua cuando \( y = 0 \). \( 0 = 50 + 12t - 4,9t^2 \Rightarrow 4,9t^2 - 12t - 50 = 0 \). Resolviendo: \( t = \frac{12 \pm \sqrt{144 + 980}}{9,8} = \frac{12 \pm 33,53}{9,8} \). Solución positiva: \( t = 4,65 \, \text{s} \).</div>
+                        <div class="paso"><strong>Paso 4 (c):</strong> \( v = v_0 - gt = 12 - 9,8 \cdot 4,65 = 12 - 45,57 = -33,57 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 57,35 \, \text{m} \) b) \( 4,65 \, \text{s} \) c) \( 33,6 \, \text{m/s} \) hacia abajo.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Frenado con tiempo de reacción</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un conductor circula a \( 108 \, \text{km/h} \) (\( 30 \, \text{m/s} \)). Tarda \( 0,8 \, \text{s} \) en reaccionar y frena con \( a = -6 \, \text{m/s}^2 \) hasta detenerse.</p>
+                        <ul>
+                            <li>a) Distancia recorrida durante el tiempo de reacción (MRU).</li>
+                            <li>b) Distancia de frenado.</li>
+                            <li>c) Distancia total desde que ve el peligro hasta que para.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1 (a):</strong> Durante la reacción va a \( v = 30 \, \text{m/s} \): \( x_1 = v \cdot t = 30 \cdot 0,8 = 24 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 2 (b):</strong> Distancia de frenado: \( \Delta x_2 = \frac{v_0^2}{2|a|} = \frac{30^2}{2 \cdot 6} = \frac{900}{12} = 75 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3 (c):</strong> Total: \( 24 + 75 = 99 \, \text{m} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 24 \, \text{m} \) b) \( 75 \, \text{m} \) c) \( 99 \, \text{m} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Caída libre en diferentes planetas</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se deja caer un objeto desde \( 20 \, \text{m} \) de altura en la Tierra (\( g_T = 9,8 \)), en la Luna (\( g_L = 1,62 \)) y en Júpiter (\( g_J = 24,79 \)).</p>
+                        <ul>
+                            <li>a) Calcula la velocidad de impacto en cada caso.</li>
+                            <li>b) ¿En qué planeta tarda menos en llegar al suelo?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Usamos \( v = \sqrt{2 g h} \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> Tierra: \( v = \sqrt{2 \cdot 9,8 \cdot 20} = \sqrt{392} \approx 19,8 \, \text{m/s} \). Luna: \( v = \sqrt{2 \cdot 1,62 \cdot 20} = \sqrt{64,8} \approx 8,05 \, \text{m/s} \). Júpiter: \( v = \sqrt{2 \cdot 24,79 \cdot 20} = \sqrt{991,6} \approx 31,49 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> El tiempo es \( t = \sqrt{\frac{2h}{g}} \). Júpiter tiene la mayor \( g \), por lo que tarda menos tiempo.</div>
+                        <div class="paso"><strong>Resultados:</strong> a) Tierra: \( 19,8 \, \text{m/s} \), Luna: \( 8,05 \, \text{m/s} \), Júpiter: \( 31,5 \, \text{m/s} \) b) Júpiter.</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La "trampa" en estos casos es <strong>el signo de la aceleración</strong>. En caída libre y lanzamiento vertical, con eje Y hacia arriba, la gravedad es siempre negativa (\( -g \)). En el frenado, la aceleración es negativa porque se opone al movimiento. Otro error frecuente es pensar que la masa influye en la caída: en ausencia de rozamiento, todos los cuerpos caen con la misma aceleración (¡experimento de Galileo!). Por último, la distancia de frenado crece con el cuadrado de la velocidad, lo que convierte el exceso de velocidad en un factor de riesgo exponencial.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

@@ -1,0 +1,176 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T07.02 - Ley de Coulomb</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* (Mismo CSS que el bloque anterior) */
+            .container { max-width: 900px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; margin: 20px auto; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+            .header-left { display: flex; flex-direction: column; justify-content: center; }
+            .header-left h1 { font-size: 1.8em; margin: 0; }
+            .header-left p { margin: 6px 0 0 0; font-size: 1em; }
+            .header-sub { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+            .header-sub img { max-height: 30px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.2); padding: 2px; }
+            .header-sub .codigo { font-weight: 600; font-size: 1.1em; letter-spacing: 0.5px; color: #ffecb0; }
+            .header-sub .texto { font-size: 1em; font-weight: 300; }
+            .header-right img { max-height: 70px; max-width: 180px; object-fit: contain; display: block; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 4px; }
+            .section { padding: 25px 30px; margin: 15px; border-radius: 12px; border-left: 5px solid; }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 { font-size: 1.3em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box { background: #edf2f7; border: 2px solid #cbd5e0; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; font-size: 1.1em; }
+            .step { background: white; border-left: 4px solid #a0aec0; padding: 15px; margin: 12px 0; border-radius: 0 8px 8px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .step-num { display: inline-block; background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+            .note { background: #fffbeb; border: 1px solid #f6e05e; border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 0.95em; color: #744210; }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+            details { margin: 30px 15px 20px 15px; background: #ffffff; border: 2px solid #667eea; border-radius: 20px; padding: 0.2rem 0.2rem 0.5rem 0.2rem; box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2); transition: all 0.2s; }
+            details summary { list-style: none; display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; cursor: pointer; font-size: 1.2rem; font-weight: 600; color: #2d3748; background: #f0f4ff; border-radius: 18px; user-select: none; transition: background 0.2s; }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down { font-size: 1.6rem; color: #667eea; transition: transform 0.3s ease; }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame { background: #667eea; color: white; padding: 0.1rem 0.8rem; border-radius: 40px; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.5px; }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card { background: #f9fcff; border: 1px solid #dce7f2; border-radius: 18px; padding: 1.2rem 1.8rem 1.8rem 1.8rem; margin: 1.8rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+            .exercise-card .ex-title { display: flex; align-items: baseline; gap: 0.5rem; font-weight: 600; font-size: 1.1rem; color: #2d3748; margin-bottom: 0.4rem; }
+            .exercise-card .ex-title .badge { background: #667eea; color: white; border-radius: 40px; padding: 0.05rem 0.9rem; font-size: 0.85rem; }
+            .exercise-card .enunciado { background: #f1f6fd; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.6rem 0 1rem 0; border-left: 4px solid #667eea; }
+            .exercise-card .solucion { background: #eef3f9; padding: 0.8rem 1.5rem; border-radius: 14px; border: 1px solid #d3e0ee; margin-top: 0.8rem; }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica { background: #e6f0fa; padding: 1rem 1.8rem; border-radius: 40px; margin-top: 1.8rem; font-weight: 500; color: #1a365d; border-left: 6px solid #667eea; }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40" height="auto">
+                    <span class="codigo">#T07.02.- </span>
+                    <span class="texto">Ley de Coulomb</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>La fuerza eléctrica entre dos cargas puntuales \(q_1\) y \(q_2\) separadas una distancia \(r\) es directamente proporcional al producto de las cargas e inversamente proporcional al cuadrado de la distancia. Expresar esta ley matemáticamente e interpretar el significado de la constante \(K\).</p>
+            <div class="formula-box">\[ F = K \cdot \frac{q_1 \cdot q_2}{r^2} \]</div>
+			<img src="../imagenes/U07c02 - Ley de Coulomb.png" alt="_._._" width="800">
+        </div>
+    
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender la estructura de la interacción eléctrica fundamental, análoga a la gravitatoria, y el papel de la constante de Coulomb. Esta ley es la base de toda la electrostática y permite calcular fuerzas entre cargas, entender el concepto de campo eléctrico y explicar fenómenos como la atracción/repulsión.</p>
+        </div>
+    
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Observación experimental</strong>
+                <p>Mediante la balanza de torsión, Coulomb comprobó que la fuerza entre dos cargas:</p>
+                <ul>
+                    <li>Es directamente proporcional al producto de las cargas: \(F \propto q_1 \cdot q_2\).</li>
+                    <li>Es inversamente proporcional al cuadrado de la distancia: \(F \propto \frac{1}{r^2}\).</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Combinación de proporcionalidades</strong>
+                <p>Combinando ambas dependencias se obtiene:</p>
+                <div class="formula-box">\[ F \propto \frac{q_1 \cdot q_2}{r^2} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Introducción de la constante de proporcionalidad</strong>
+                <p>Para convertir la proporcionalidad en igualdad, se introduce una constante \(K\) que depende del medio (en el vacío \(K = 9\cdot10^9 \, \mathrm{N\cdot m^2/C^2}\)):</p>
+                <div class="formula-box">\[ F = K \cdot \frac{q_1 \cdot q_2}{r^2} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Signo de la fuerza</strong>
+                <ul>
+                    <li>Si \(q_1\) y \(q_2\) tienen el mismo signo, \(F > 0\) (repulsiva).</li>
+                    <li>Si tienen signos opuestos, \(F < 0\) (atractiva).</li>
+                </ul>
+                <p>El signo se obtiene automáticamente al incluir el signo de las cargas en el producto.</p>
+            </div>
+        </div>
+    
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">\[ F = K \cdot \frac{q_1 \cdot q_2}{r^2} \quad \text{con} \quad K = 9\cdot10^9 \, \mathrm{N\cdot m^2/C^2} \]</div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La ley de Coulomb es formalmente idéntica a la ley de gravitación universal, pero con cargas en lugar de masas. La diferencia clave es que la fuerza eléctrica puede ser atractiva o repulsiva, mientras que la gravitatoria es siempre atractiva. La constante \(K\) es enorme comparada con \(G\), lo que explica por qué las fuerzas eléctricas son mucho más intensas que las gravitatorias a escala atómica.
+            </div>
+        </div>
+    
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO la Ley de Coulomb</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 1</span><span>Fuerza entre dos cargas iguales</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Dos cargas puntuales de \( +3 \, \mu\mathrm{C}\) están separadas \(20 \, \mathrm{cm}\). Calcula la fuerza que se ejercen mutuamente. ¿Es atractiva o repulsiva?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(q_1 = q_2 = 3\times10^{-6}\,\mathrm{C}\), \(r = 0.20\,\mathrm{m}\), \(K = 9\times10^9\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F = 9\times10^9 \cdot \frac{(3\times10^{-6})^2}{(0.20)^2} = 9\times10^9 \cdot \frac{9\times10^{-12}}{0.04} = 9\times10^9 \cdot 2.25\times10^{-10} = 2.025\,\mathrm{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(F = 2.03\,\mathrm{N}\) (repulsiva, cargas iguales).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 2</span><span>Fuerza atractiva entre cargas opuestas</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Una carga de \(-5\,\mu\mathrm{C}\) y otra de \(+2\,\mu\mathrm{C}\) se encuentran a \(15\,\mathrm{cm}\). ¿Con qué fuerza se atraen?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(q_1 = -5\times10^{-6}\), \(q_2 = +2\times10^{-6}\), \(r = 0.15\,\mathrm{m}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F = 9\times10^9 \cdot \frac{(-5\times10^{-6})(2\times10^{-6})}{0.15^2} = 9\times10^9 \cdot \frac{-10\times10^{-12}}{0.0225} = 9\times10^9 \cdot (-4.44\times10^{-10}) = -4.00\,\mathrm{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(F = 4.00\,\mathrm{N}\) (atractiva, signo negativo).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 3</span><span>Distancia para una fuerza determinada</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Dos cargas de \(6\,\mu\mathrm{C}\) y \(4\,\mu\mathrm{C}\) se repelen con una fuerza de \(2\,\mathrm{N}\). ¿A qué distancia se encuentran?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Despejamos \(r^2 = K \frac{q_1 q_2}{F}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(r^2 = 9\times10^9 \cdot \frac{(6\times10^{-6})(4\times10^{-6})}{2} = 9\times10^9 \cdot \frac{24\times10^{-12}}{2} = 9\times10^9 \cdot 12\times10^{-12} = 0.108\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(r = \sqrt{0.108} \approx 0.329\,\mathrm{m} = 32.9\,\mathrm{cm}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(r \approx 33\,\mathrm{cm}\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La ley de Coulomb es vectorial, pero en estos ejercicios se trabaja con el módulo. Es importante que el alumnado distinga entre el signo de la fuerza (que indica atracción o repulsión) y el módulo (siempre positivo). La analogía con la ley de gravitación ayuda a comprender la estructura matemática, pero se debe enfatizar la diferencia de signos.
+                </div>
+            </div>
+        </details>
+    </div>
+    </body>
+    </html>

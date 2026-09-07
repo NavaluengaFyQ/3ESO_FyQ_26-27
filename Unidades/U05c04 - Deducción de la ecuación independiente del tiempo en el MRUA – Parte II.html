@@ -1,0 +1,492 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T05.04 - Ecuación independiente del tiempo en el MRUA (Parte II)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <!-- FontAwesome 6 (gratuita) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+    
+            /* =========================================================
+               ESTILOS PARA EL BLOQUE DESPLEGABLE
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="Cápsula">
+                    <span class="codigo">#T05.04.- </span>
+                    <span class="texto">Ecuación independiente del tiempo en el MRUA (Parte II)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de las dos ecuaciones fundamentales del MRUA:</p>
+            <div class="formula-box">\[ v = v_0 + a \cdot t \qquad \text{y} \qquad x = x_0 + v_0 \cdot t + \frac{1}{2} a \cdot t^2 \]</div>
+            <p>demostrar que existe una relación directa entre la velocidad, la aceleración y el desplazamiento que es <strong>independiente del tiempo</strong>:</p>
+            <div class="formula-box">\[ v^2 = v_0^2 + 2 \cdot a \cdot (x - x_0) \]</div>
+            <p>o, equivalentemente, \[ v^2 = v_0^2 + 2 \cdot a \cdot \Delta x \]</p>
+			<img src="../imagenes/U05c04 - Deducción de la ecuación independiente del tiempo en el MRUA – Parte II.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Obtener una ecuación que relaciona velocidad, aceleración y desplazamiento <strong>sin necesidad de conocer el tiempo</strong>. Esta ecuación es extremadamente útil en problemas donde el tiempo no es un dato ni se pide, como en el cálculo de distancias de frenado, alturas máximas en lanzamientos verticales o velocidades de impacto en caída libre.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Partimos de la ecuación de la velocidad</strong>
+                <p>De la primera ecuación fundamental despejamos el tiempo \( t \):</p>
+                <div class="formula-box">\[ v = v_0 + a \cdot t \quad \Rightarrow \quad t = \frac{v - v_0}{a} \]</div>
+                <p>Esta expresión es válida siempre que \( a \neq 0 \).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Sustitución en la ecuación de posición</strong>
+                <p>Sustituimos \( t \) en la segunda ecuación fundamental, tomando \( x_0 = 0 \) para simplificar (luego generalizaremos):</p>
+                <div class="formula-box">\[ x = v_0 \cdot t + \frac{1}{2} a \cdot t^2 \]</div>
+                <p>Reemplazamos \( t \) por su expresión en términos de \( v \):</p>
+                <div class="formula-box">\[ x = v_0 \cdot \frac{v - v_0}{a} + \frac{1}{2} a \cdot \left( \frac{v - v_0}{a} \right)^2 \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Simplificación algebraica</strong>
+                <p>Desarrollamos la expresión anterior paso a paso:</p>
+                <div class="formula-box">\[ x = \frac{v_0 (v - v_0)}{a} + \frac{1}{2} a \cdot \frac{(v - v_0)^2}{a^2} = \frac{v_0 (v - v_0)}{a} + \frac{(v - v_0)^2}{2a} \]</div>
+                <p>Sacamos factor común \( \frac{1}{a} \):</p>
+                <div class="formula-box">\[ x = \frac{1}{a} \left[ v_0 (v - v_0) + \frac{(v - v_0)^2}{2} \right] \]</div>
+                <p>Operamos el numerador:</p>
+                <div class="formula-box">\[ v_0 (v - v_0) + \frac{(v - v_0)^2}{2} = \frac{2 v_0 (v - v_0) + (v - v_0)^2}{2} = \frac{(v - v_0) [2 v_0 + (v - v_0)]}{2} = \frac{(v - v_0)(v + v_0)}{2} \]</div>
+                <p>Reconocemos que \( (v - v_0)(v + v_0) = v^2 - v_0^2 \). Por tanto:</p>
+                <div class="formula-box">\[ x = \frac{1}{a} \cdot \frac{v^2 - v_0^2}{2} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Despeje y generalización</strong>
+                <p>Despejamos \( v^2 - v_0^2 \):</p>
+                <div class="formula-box">\[ v^2 - v_0^2 = 2 \cdot a \cdot x \]</div>
+                <p>Si el móvil no parte del origen (\( x_0 \neq 0 \)), sustituimos \( x \) por el desplazamiento \( \Delta x = x - x_0 \):</p>
+                <div class="formula-box">\[ v^2 - v_0^2 = 2 \cdot a \cdot (x - x_0) \]</div>
+                <p>Reordenando, obtenemos la ecuación buscada:</p>
+                <div class="formula-box">\[ v^2 = v_0^2 + 2 \cdot a \cdot (x - x_0) \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Interpretación y utilidad</strong>
+                <p>Esta ecuación relaciona <strong>velocidad, aceleración y desplazamiento</strong> sin incluir el tiempo. Es especialmente útil en situaciones de frenado (donde conocemos la distancia de frenada y la velocidad final) o en caída libre (donde conocemos la altura y queremos la velocidad de impacto). También permite calcular la altura máxima en lanzamientos verticales usando \( v = 0 \).</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[ \boxed{ v^2 = v_0^2 + 2 \cdot a \cdot (x - x_0) } \quad \text{o, equivalentemente,} \quad \boxed{ v^2 = v_0^2 + 2 \cdot a \cdot \Delta x } \]
+            </div>
+            <div class="note">
+                <strong>📌 Observación didáctica:</strong> Esta ecuación es <strong>independiente del tiempo</strong>, lo que la hace especialmente valiosa cuando no disponemos de información temporal. Sin embargo, <strong>no debe aplicarse a movimientos con aceleración variable</strong>. Además, hay que tener cuidado con los signos: \( a \) será negativa si el móvil frena, y \( \Delta x \) será positivo o negativo según el sentido del movimiento.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Ecuación independiente del tiempo en el MRUA</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Distancia de frenado</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un coche circula a \( 30 \, \text{m/s} \) y frena con una aceleración constante de \( -5 \, \text{m/s}^2 \) hasta detenerse.</p>
+                        <ul>
+                            <li>a) ¿Qué distancia recorre durante la frenada?</li>
+                            <li>b) ¿Cuánto tiempo tarda en detenerse? (verifica con la ecuación del tiempo)</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v_0 = 30 \, \text{m/s} \), \( v = 0 \), \( a = -5 \, \text{m/s}^2 \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> Usamos \( v^2 = v_0^2 + 2a \Delta x \Rightarrow 0 = 30^2 + 2(-5) \Delta x \Rightarrow 0 = 900 - 10 \Delta x \Rightarrow \Delta x = 90 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( v = v_0 + a t \Rightarrow 0 = 30 - 5t \Rightarrow t = 6 \, \text{s} \). Verificamos con \( \Delta x = v_0 t + \frac{1}{2} a t^2 = 30 \cdot 6 - 2,5 \cdot 36 = 180 - 90 = 90 \, \text{m} \). Correcto.</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 90 \, \text{m} \) b) \( 6 \, \text{s} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Velocidad de impacto en caída libre</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se deja caer una piedra desde un puente de \( 45 \, \text{m} \) de altura. (\( v_0 = 0 \), \( a = -9,8 \, \text{m/s}^2 \), tomando eje hacia arriba).</p>
+                        <ul>
+                            <li>a) Calcula la velocidad con la que impacta en el agua.</li>
+                            <li>b) ¿Cuánto tarda en llegar? (verifica)</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v_0 = 0 \), \( a = -9,8 \, \text{m/s}^2 \), \( \Delta x = -45 \, \text{m} \) (desciende).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( v^2 = 0 + 2(-9,8)(-45) = 882 \Rightarrow v = \pm 29,7 \, \text{m/s} \). El signo negativo indica que va hacia abajo: \( v = -29,7 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( v = v_0 + a t \Rightarrow -29,7 = 0 - 9,8 t \Rightarrow t = 3,03 \, \text{s} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 29,7 \, \text{m/s} \) hacia abajo b) \( 3,03 \, \text{s} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Altura máxima en lanzamiento vertical</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se lanza una pelota verticalmente hacia arriba con \( v_0 = 20 \, \text{m/s} \).</p>
+                        <ul>
+                            <li>a) ¿Qué altura máxima alcanza?</li>
+                            <li>b) ¿Qué tiempo tarda en alcanzarla?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v_0 = 20 \, \text{m/s} \), \( a = -9,8 \, \text{m/s}^2 \), \( v = 0 \) en la altura máxima.</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( v^2 = v_0^2 + 2a \Delta x \Rightarrow 0 = 20^2 + 2(-9,8) \Delta x \Rightarrow 0 = 400 - 19,6 \Delta x \Rightarrow \Delta x = 400 / 19,6 \approx 20,41 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( v = v_0 + a t \Rightarrow 0 = 20 - 9,8 t \Rightarrow t = 20 / 9,8 \approx 2,04 \, \text{s} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 20,41 \, \text{m} \) b) \( 2,04 \, \text{s} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Cálculo de velocidad inicial a partir de la distancia de frenado</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un vehículo deja marcas de frenada de \( 80 \, \text{m} \) sobre asfalto seco. La aceleración de frenado es \( -6 \, \text{m/s}^2 \).</p>
+                        <ul>
+                            <li>a) ¿Cuál era su velocidad antes de frenar?</li>
+                            <li>b) Si el límite es \( 90 \, \text{km/h} \), ¿iba por encima?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v = 0 \), \( a = -6 \, \text{m/s}^2 \), \( \Delta x = 80 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( 0 = v_0^2 + 2(-6)(80) \Rightarrow v_0^2 = 960 \Rightarrow v_0 = \sqrt{960} \approx 30,98 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> Convertimos: \( 30,98 \, \text{m/s} \times 3,6 = 111,5 \, \text{km/h} \). Supera el límite de \( 90 \, \text{km/h} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( 31 \, \text{m/s} \) (111,5 km/h) b) Sí, supera el límite.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Determinación de aceleración a partir de velocidades y distancia</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un móvil reduce su velocidad de \( 25 \, \text{m/s} \) a \( 15 \, \text{m/s} \) en una distancia de \( 100 \, \text{m} \).</p>
+                        <ul>
+                            <li>a) Calcula su aceleración.</li>
+                            <li>b) ¿Cuánto tiempo ha empleado en ese tramo?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Datos: \( v_0 = 25 \, \text{m/s} \), \( v = 15 \, \text{m/s} \), \( \Delta x = 100 \, \text{m} \).</div>
+                        <div class="paso"><strong>Paso 2 (a):</strong> \( 15^2 = 25^2 + 2a(100) \Rightarrow 225 = 625 + 200a \Rightarrow 200a = -400 \Rightarrow a = -2 \, \text{m/s}^2 \).</div>
+                        <div class="paso"><strong>Paso 3 (b):</strong> \( v = v_0 + a t \Rightarrow 15 = 25 - 2t \Rightarrow t = 5 \, \text{s} \).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) \( -2 \, \text{m/s}^2 \) b) \( 5 \, \text{s} \).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La ecuación \( v^2 = v_0^2 + 2a\Delta x \) es una herramienta potentísima porque <strong>elimina la variable tiempo</strong>, pero muchos estudiantes olvidan que <strong>el signo de la aceleración importa</strong>. En frenadas, \( a \) es negativa, y en caída libre (con eje hacia arriba) también lo es. También es común confundir \( \Delta x \) con la distancia recorrida; en movimientos con cambio de sentido, \( \Delta x \) puede ser cero aunque la distancia recorrida sea grande.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

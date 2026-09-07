@@ -1,0 +1,430 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U06-D04 - Fuerza normal y rozamiento (casos prácticos)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al modelo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto">
+                    <span class="codigo">#U06-D04.-</span>
+                    <span class="texto">Fuerza normal y rozamiento (casos prácticos)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de fuerza normal como la reacción perpendicular de una superficie y de la fuerza de rozamiento como la oposición al deslizamiento, demostrar cómo se calcula la normal en diferentes situaciones físicas (plano inclinado, fuerzas con componente vertical, ascensores) y cómo afecta al valor de la fuerza de rozamiento:</p>
+            <div class="formula-box">\[ F_r = \mu \cdot N \]</div>
+            <p>donde \(N\) debe calcularse a partir del equilibrio o de la segunda ley de Newton en la dirección perpendicular a la superficie de apoyo.</p>
+			<img src="../imagenes/U06c04 - Fuerzas destacadas (normal, rozamiento).png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender que la fuerza normal no siempre es igual al peso y que su cálculo es esencial para determinar correctamente la fuerza de rozamiento. Aprender a descomponer fuerzas y aplicar la segunda ley en la dirección normal para obtener \(N\).</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Caso 1: Superficie horizontal sin aceleración vertical</strong>
+                <p>Si un cuerpo está sobre una superficie horizontal y no hay aceleración en el eje \(y\), la normal equilibra al peso:</p>
+                <div class="formula-box">\[ N = m \cdot g \]</div>
+                <p>En este caso, la fuerza de rozamiento es \(F_r = \mu \cdot m \cdot g\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Caso 2: Plano inclinado</strong>
+                <p>En un plano inclinado un ángulo \(\theta\) respecto a la horizontal, el peso se descompone en una componente paralela al plano (\(mg\sin\theta\)) y otra perpendicular (\(mg\cos\theta\)). La normal equilibra la componente perpendicular del peso:</p>
+                <div class="formula-box">\[ N = m \cdot g \cdot \cos\theta \]</div>
+                <p>La fuerza de rozamiento será \(F_r = \mu \cdot m \cdot g \cdot \cos\theta\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Caso 3: Fuerza aplicada con componente vertical</strong>
+                <p>Si sobre el cuerpo actúa una fuerza \(\vec{F}\) que forma un ángulo \(\alpha\) con la horizontal, su componente vertical modifica la normal.</p>
+                <ul>
+                    <li>Si tira hacia arriba: \(N = mg - F\sin\alpha\)</li>
+                    <li>Si empuja hacia abajo: \(N = mg + F\sin\alpha\)</li>
+                </ul>
+                <div class="formula-box">\[ N = mg \pm F\sin\alpha \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Caso 4: Ascensor (aceleración vertical)</strong>
+                <p>Si el cuerpo está sobre una superficie en un ascensor que acelera verticalmente, la normal cambia según la aceleración \(a_y\):</p>
+                <ul>
+                    <li>Aceleración hacia arriba: \(N = m(g + a)\)</li>
+                    <li>Aceleración hacia abajo: \(N = m(g - a)\)</li>
+                    <li>Caída libre (\(a = g\)): \(N = 0\) (sensación de ingravidez)</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Relación general con el rozamiento</strong>
+                <p>En todos los casos, una vez calculada la normal \(N\), la fuerza de rozamiento se obtiene como:</p>
+                <div class="formula-box">\[ F_r = \mu \cdot N \]</div>
+                <p>donde \(\mu\) es el coeficiente de rozamiento (estático o cinético según corresponda). La "trampa" común es usar \(mg\) como normal sin considerar si hay otras fuerzas verticales.</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[ N = mg \ (\text{horizontal}) \quad;\quad N = mg\cos\theta \ (\text{inclinado}) \quad;\quad N = mg \pm F\sin\alpha \quad;\quad N = m(g \pm a) \]
+                <br><br>
+                \[ F_r = \mu \cdot N \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> El error más frecuente es aplicar \(N = mg\) en todas las situaciones. Es fundamental descomponer fuerzas y aplicar la segunda ley en la dirección perpendicular a la superficie para obtener el valor correcto de \(N\).
+            </div>
+        </div>
+    
+        <!-- BLOQUE DESPLEGABLE -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Fuerza normal y rozamiento</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Plano inclinado con rozamiento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un bloque de 8 kg desciende por un plano inclinado \(30^\circ\) con coeficiente de rozamiento cinético \(\mu_c = 0.2\). Calcula la aceleración del bloque.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(N = mg\cos30 = 8 \cdot 9.8 \cdot 0.866 \approx 67.9\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F_r = \mu_c N = 0.2 \cdot 67.9 \approx 13.6\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(P_x = mg\sin30 = 8 \cdot 9.8 \cdot 0.5 = 39.2\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(a = (P_x - F_r)/m = (39.2 - 13.6)/8 = 25.6/8 = 3.2\,\text{m/s}^2\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(3.2\,\text{m/s}^2\) hacia abajo del plano.</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Fuerza inclinada tirando de un bloque</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un bloque de 20 kg es arrastrado sobre una superficie horizontal por una fuerza de 100 N que forma \(30^\circ\) sobre la horizontal. El coeficiente de rozamiento cinético es \(\mu_c = 0.25\). Calcula la aceleración.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(F_y = 100 \sin30 = 50\,\text{N}\) (hacia arriba).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(N = mg - F_y = 20 \cdot 9.8 - 50 = 196 - 50 = 146\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(F_r = \mu_c N = 0.25 \cdot 146 = 36.5\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(F_x = 100 \cos30 \approx 86.6\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 5:</strong> \(a = (86.6 - 36.5)/20 = 50.1/20 = 2.5\,\text{m/s}^2\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(2.5\,\text{m/s}^2\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Normal en un ascensor</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una persona de 70 kg está en un ascensor que baja con aceleración de \(1.5\,\text{m/s}^2\). Calcula la fuerza normal que el suelo ejerce sobre ella (peso aparente).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Tomamos hacia arriba como positivo: \(N - mg = m(-a)\) (baja acelerando).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(N = mg - ma = 70 \cdot 9.8 - 70 \cdot 1.5 = 686 - 105 = 581\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(N = 581\,\text{N}\) (menos que su peso real de 686 N).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Rozamiento estático en un plano inclinado</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un bloque de 5 kg está en reposo sobre un plano inclinado \(25^\circ\). El coeficiente de rozamiento estático es \(\mu_e = 0.6\). ¿Resbalará?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(P_x = 5 \cdot 9.8 \cdot \sin25 \approx 20.7\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(N = 5 \cdot 9.8 \cdot \cos25 \approx 44.4\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(F_{r,\text{máx}} = \mu_e N = 0.6 \cdot 44.4 \approx 26.6\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Como \(P_x < F_{r,\text{máx}}\), el bloque no resbala.</div>
+                        <div class="paso"><strong>Resultado:</strong> Permanece en reposo.</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Fuerza horizontal con rozamiento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se empuja horizontalmente un cajón de 12 kg con una fuerza de 50 N. El coeficiente de rozamiento cinético es \(\mu_c = 0.3\) y el estático es \(\mu_e = 0.5\). ¿Se mueve? Si se mueve, ¿cuál es su aceleración?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(N = mg = 12 \cdot 9.8 = 117.6\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F_{r,\text{máx}} = \mu_e N = 0.5 \cdot 117.6 = 58.8\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Como \(50 < 58.8\), no se mueve (rozamiento estático lo impide).</div>
+                        <div class="paso"><strong>Resultado:</strong> Permanece en reposo, \(a = 0\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La normal no es una constante; es una fuerza de reacción que se ajusta para mantener el equilibrio (o aceleración) en la dirección perpendicular. Calcular bien la normal es el paso más importante y el que más errores genera en los problemas de rozamiento.
+                </div>
+            </div>
+        </details>
+    
+    </div>
+    </body>
+    </html>

@@ -1,0 +1,583 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T08.05 - Consumo responsable y eficiencia energética</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+    
+            /* =========================================================
+               ESTILOS PARA EL BLOQUE DESPLEGABLE
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+            .boton-inicio {
+                display:inline-block;
+                padding:12px 24px;
+                background:#0078D4;
+                color:white;
+                text-decoration:none;
+                border-radius:12px;
+                font-weight:bold;
+            }
+            .footer-mensaje {
+                font-size: clamp(0.95rem, 3vw, 1.2rem);
+                color: #2d3748;
+                margin-top: 0;
+                margin-bottom: 12px;
+                padding: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="icono">
+                    <span class="codigo">#T08.05.- </span>
+                    <span class="texto">Consumo responsable y eficiencia energética</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>
+                El <strong>consumo responsable</strong> de energía implica utilizar la energía de manera eficiente, minimizando el despilfarro y reduciendo el impacto ambiental. Para ello, es necesario conocer la relación entre potencia, energía y tiempo, así como los factores de emisión de CO₂ y la eficiencia de los dispositivos.
+            </p>
+            <p>
+                A partir de la definición de potencia eléctrica (\(P = E/t\)), se deduce la fórmula de la energía consumida \(E = P \cdot t\). Con el precio del kWh, se calcula el coste económico. Con el factor de emisión, se calcula la cantidad de CO₂ liberada. Además, la eficiencia energética (\(\eta\)) se define como el cociente entre la energía útil y la energía total consumida.
+            </p>
+            <div class="formula-box">
+                \[
+                E = P \cdot t \quad (\text{kWh})
+                \]
+                \[
+                \text{Coste} = E \cdot \text{precio del kWh}
+                \]
+                \[
+                \text{Emisiones CO}_2 = E \cdot \text{factor de emisión (kg CO}_2/\text{kWh)}
+                \]
+                \[
+                \eta = \frac{E_{\text{útil}}}{E_{\text{total}}} \times 100\%
+                \]
+            </div>
+			<img src="../imagenes/U08c05 - Consumo responsable y eficiencia energética.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>
+                Capacitar al alumnado para calcular el consumo energético de aparatos eléctricos, su coste económico y su huella de carbono. Comprender la importancia de la eficiencia energética y las medidas de ahorro para reducir el impacto ambiental y el gasto económico, promoviendo un consumo más sostenible y responsable.
+            </p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Potencia y energía eléctrica</strong>
+                <p>
+                    La potencia eléctrica \(P\) de un aparato es la energía que consume por unidad de tiempo. Se mide en vatios (W) o kilovatios (kW). La energía consumida \(E\) se obtiene multiplicando la potencia por el tiempo de uso:
+                </p>
+                <div class="formula-box">
+                    \[
+                    E = P \cdot t
+                    \]
+                </div>
+                <p>
+                    Si \(P\) está en kW y \(t\) en horas, \(E\) se obtiene en kWh (kilovatios‑hora), que es la unidad habitual en las facturas eléctricas.
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Cálculo del coste económico</strong>
+                <p>
+                    El coste de la energía consumida se calcula multiplicando la energía en kWh por el precio unitario del kWh (que varía según la tarifa y el período horario):
+                </p>
+                <div class="formula-box">
+                    \[
+                    \text{Coste} = E \cdot \text{precio (€/kWh)}
+                    \]
+                </div>
+                <p>
+                    Por ejemplo, si un horno de 2700 W funciona 1,5 h y el precio es 0,1866 €/kWh, el coste será \(2,7 \times 1,5 \times 0,1866 = 0,76\) €.
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Emisiones de CO₂ asociadas</strong>
+                <p>
+                    Cada kWh de electricidad producido a partir de combustibles fósiles emite una cantidad de CO₂. El <em>factor de emisión</em> depende del mix energético. Para el año 2020, el factor medio en España era de aproximadamente 0,25–0,39 kg CO₂/kWh. Las emisiones se calculan como:
+                </p>
+                <div class="formula-box">
+                    \[
+                    \text{CO}_2 = E \cdot f
+                    \]
+                </div>
+                <p>
+                    donde \(f\) es el factor de emisión en kg CO₂/kWh.
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Eficiencia energética (rendimiento)</strong>
+                <p>
+                    La eficiencia o rendimiento \(\eta\) de un dispositivo es la fracción de la energía consumida que se convierte en energía útil. Se expresa en porcentaje:
+                </p>
+                <div class="formula-box">
+                    \[
+                    \eta = \frac{E_{\text{útil}}}{E_{\text{total}}} \times 100\%
+                    \]
+                </div>
+                <p>
+                    Por ejemplo, una bombilla incandescente tiene un rendimiento del 5 % (solo el 5 % de la energía eléctrica se convierte en luz, el 95 % se pierde en calor). Una bombilla LED puede tener un rendimiento superior al 40 %.
+                </p>
+                <p>
+                    Cuanto mayor sea \(\eta\), más eficiente es el aparato y menor es el consumo energético para la misma función.
+                </p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Medidas de ahorro energético</strong>
+                <ul>
+                    <li>Apagar los aparatos en lugar de dejarlos en <em>stand‑by</em> (puede suponer hasta un 10 % del consumo doméstico).</li>
+                    <li>Usar bombillas LED de bajo consumo.</li>
+                    <li>Optimizar el uso de electrodomésticos (lavadora, lavavajillas a carga completa, uso de programas económicos).</li>
+                    <li>Aprovechar la luz natural y aislar correctamente la vivienda.</li>
+                    <li>Elegir electrodomésticos con alta calificación energética (A+++, A++).</li>
+                    <li>Reducir la temperatura de la calefacción y del agua caliente sanitaria.</li>
+                </ul>
+                <p>
+                    Estas medidas reducen el consumo energético, el gasto económico y las emisiones de CO₂, contribuyendo a los Objetivos de Desarrollo Sostenible (ODS 7, 12 y 13).
+                </p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                <strong>Fórmulas clave:</strong>
+                <br><br>
+                \[
+                E = P \cdot t \quad (\text{kWh})
+                \]
+                \[
+                \text{Coste} = E \cdot \text{precio (€/kWh)}
+                \]
+                \[
+                \text{CO}_2 = E \cdot \text{factor de emisión (kg/kWh)}
+                \]
+                \[
+                \eta = \frac{E_{\text{útil}}}{E_{\text{total}}} \times 100\%
+                \]
+                <br>
+                <strong>Consejo:</strong> Un consumo responsable combina la reducción del uso innecesario, la mejora de la eficiencia de los aparatos y la elección de fuentes de energía con bajo factor de emisión.
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> El alumnado suele sorprenderse al calcular el coste anual del <em>stand‑by</em> o las emisiones de CO₂ de sus hábitos diarios. Esta actividad es una excelente oportunidad para conectar la física con la educación ambiental y la economía doméstica, fomentando un cambio de actitud hacia el consumo energético.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Consumo responsable y eficiencia energética</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Consumo de un televisor</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un televisor de 120 W está encendido 4 horas al día. Calcula la energía consumida en un mes (30 días) en kWh y el coste sabiendo que el precio del kWh es 0,15 €.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Potencia en kW: \(120\,\text{W} = 0,12\,\text{kW}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Energía diaria: \(E = 0,12 \times 4 = 0,48\,\text{kWh/día}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Energía mensual: \(0,48 \times 30 = 14,4\,\text{kWh}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Coste: \(14,4 \times 0,15 = 2,16\,\text{€}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(14,4\,\text{kWh}\), coste \(2,16\,\text{€}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Emisiones de CO₂ de un ordenador</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un ordenador portátil consume 50 W y se usa 6 horas diarias. Si el factor de emisión es 0,25 kg CO₂/kWh, ¿cuánto CO₂ emite al año?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Potencia en kW: 0,05 kW.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Energía diaria: \(0,05 \times 6 = 0,3\,\text{kWh}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Energía anual: \(0,3 \times 365 = 109,5\,\text{kWh}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> CO₂ anual: \(109,5 \times 0,25 = 27,375\,\text{kg}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(27,4\,\text{kg CO}_2\) al año.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Comparativa de bombillas</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una bombilla incandescente de 60 W y una LED de 10 W proporcionan la misma luz. Si se usan 5 h al día, calcula el ahorro anual en kWh y en euros (precio 0,15 €/kWh).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Incandescente: \(E = 0,06 \times 5 \times 365 = 109,5\,\text{kWh/año}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> LED: \(E = 0,01 \times 5 \times 365 = 18,25\,\text{kWh/año}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Ahorro energético: \(109,5 - 18,25 = 91,25\,\text{kWh/año}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Ahorro económico: \(91,25 \times 0,15 = 13,69\,\text{€/año}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Ahorro de \(91,25\,\text{kWh}\) y \(13,69\,\text{€}\) al año.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Coste del modo stand‑by</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una videoconsola consume 10 W en modo stand‑by. Si permanece así las 24 h del día durante todo el año, ¿cuánto cuesta al año? (Precio 0,15 €/kWh).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Potencia en kW: 0,01 kW.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Energía anual: \(0,01 \times 24 \times 365 = 87,6\,\text{kWh}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Coste: \(87,6 \times 0,15 = 13,14\,\text{€}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(13,14\,\text{€}\) al año.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Eficiencia de una caldera</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una caldera de gas natural consume 1000 kWh de energía química y produce 850 kWh de calor útil. Calcula su rendimiento. ¿Qué ocurre con el 15 % restante?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(\eta = \frac{850}{1000} \times 100 = 85\%\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> El 15 % restante se pierde en forma de calor no aprovechable (gases de escape, radiación, etc.).</div>
+                        <div class="paso"><strong>Resultado:</strong> Rendimiento del 85 %, 15 % de pérdidas.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Plan de ahorro en el hogar</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una familia reduce su consumo eléctrico de 600 kWh/mes a 480 kWh/mes. Si el precio es 0,15 €/kWh y el factor de emisión 0,25 kg CO₂/kWh, calcula el ahorro anual en euros y en emisiones.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Ahorro mensual: \(600 - 480 = 120\,\text{kWh/mes}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Ahorro anual: \(120 \times 12 = 1440\,\text{kWh/año}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Ahorro económico: \(1440 \times 0,15 = 216\,\text{€/año}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Ahorro de CO₂: \(1440 \times 0,25 = 360\,\text{kg CO}_2\text{/año}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Ahorro de \(216\,\text{€}\) y \(360\,\text{kg CO}_2\) al año.</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La "trampa" mental es pensar que el ahorro energético solo afecta al medio ambiente, cuando también tiene un impacto directo en la economía doméstica. Calcular el coste y las emisiones de los aparatos cotidianos ayuda a tomar decisiones más conscientes. La eficiencia no es solo una etiqueta, sino una relación entre lo que se paga y lo que realmente se aprovecha.
+                </div>
+            </div>
+        </details>
+    
+        <!-- ============================================ -->
+        <!-- BLOQUE "ES HORA DE"                          -->
+        <!-- ============================================ -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p class="footer-mensaje">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" class="boton-inicio">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

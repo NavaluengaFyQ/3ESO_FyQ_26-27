@@ -1,0 +1,529 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U01.01 - El método científico</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+    
+            /* =========================================================
+               ESTILOS PARA EL BLOQUE DESPLEGABLE
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto">
+                    <span class="codigo">#U01.01.- </span>
+                    <span class="texto">El método científico: etapas, hipótesis, experimento, leyes y teorías</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de las definiciones de <strong>observación</strong>, <strong>hipótesis</strong>, <strong>experimentación</strong>, <strong>ley</strong> y <strong>teoría</strong>, describir el método científico como un proceso cíclico que permite obtener conocimiento fiable, destacando las características de cada etapa y las diferencias fundamentales entre leyes y teorías.</p>
+            <div class="formula-box" style="border-color:#4299e1; border-width:2px; background:#ebf8ff;">
+                \[
+                \text{Observación} \rightarrow \text{Hipótesis} \rightarrow \text{Experimentación} \rightarrow \text{Análisis} \rightarrow \text{Leyes / Teorías} \rightarrow \text{Publicación}
+                \]
+                <p style="margin-top:8px; font-size:0.95rem; color:#2b6cb0;"><i class="fas fa-redo-alt"></i> Ciclo continuo (el resultado alimenta nuevas observaciones)</p>
+            </div>
+            <!-- Imagen conceptual (placeholder) -->
+            <img src="../imagenes/U01c01 - Método científico.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender la estructura del método científico, diferenciar claramente cada una de sus etapas, reconocer las condiciones que debe cumplir una hipótesis, distinguir entre observación y experimentación, y aplicar correctamente los conceptos de variable, control, ley y teoría en el análisis de fenómenos cotidianos.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Observación</strong>
+                <p>Es la primera etapa del método. Consiste en analizar un fenómeno sin intervenir en él, con el fin de plantear preguntas y establecer posibles relaciones entre los factores que intervienen. Una observación válida debe ser:</p>
+                <ul>
+                    <li><strong>Cuidadosa:</strong> procurar cometer los mínimos errores.</li>
+                    <li><strong>Exhaustiva:</strong> realizar la medida varias veces para minimizar errores.</li>
+                    <li><strong>Exacta:</strong> intentar obtener el valor real de la magnitud.</li>
+                </ul>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    Ejemplo: observar que un péndulo oscila de forma rítmica y medir su periodo.
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Emisión de hipótesis</strong>
+                <p>Una hipótesis es una posible respuesta formulada a partir de observaciones o datos experimentales. Debe cumplir tres características:</p>
+                <ul>
+                    <li>Referirse a una situación <strong>real o realizable</strong>.</li>
+                    <li>Su enunciado mediante variables debe ser <strong>claro y concreto</strong>.</li>
+                    <li>La relación entre las variables debe ser <strong>observable y medible</strong>.</li>
+                </ul>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    Ejemplo de hipótesis falsa pero válida: <em>«El periodo del péndulo depende del ángulo de lanzamiento»</em> (puede medirse y es falsa, pero es una hipótesis).
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Experimentación</strong>
+                <p>El experimento es el procedimiento controlado para probar la veracidad o falsedad de las hipótesis. En él, el observador tiene control sobre los factores que influyen. Se clasifican en:</p>
+                <ul>
+                    <li><strong>Variables independientes:</strong> las que modificamos a voluntad.</li>
+                    <li><strong>Variables dependientes:</strong> las que se ven afectadas por los cambios en las independientes.</li>
+                    <li><strong>Controles:</strong> factores que mantenemos constantes para que no afecten al resultado.</li>
+                </ul>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    En el péndulo: masa y ángulo son controles, la longitud es variable independiente, el periodo es variable dependiente.
+                </div>
+                <p><strong>Diferencia con la observación:</strong> en la observación no hay control; en el experimento sí se manipulan las variables.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Análisis de datos</strong>
+                <p>Los datos obtenidos se organizan en <strong>tablas</strong> y se representan mediante <strong>gráficas</strong> para visualizar la relación entre variables. Las gráficas permiten identificar el tipo de función que las describe (proporcional, cuadrática, inversa, afín, etc.).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Leyes y teorías</strong>
+                <p>Si las hipótesis son confirmadas, se puede construir:</p>
+                <ul>
+                    <li><strong>Ley:</strong> descripción del fenómeno tal como ocurre siempre, mediante una expresión verbal o matemática. Es una hipótesis confirmada y debe ser cierta sin excepciones (ej. Ley de Hooke).</li>
+                    <li><strong>Teoría:</strong> explica el <em>porqué</em> del fenómeno y las causas que lo provocan. Relaciona múltiples fenómenos y permite hacer predicciones (ej. teoría de la gravitación).</li>
+                </ul>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    La ley dice <em>cómo</em> ocurre; la teoría explica <em>por qué</em> ocurre.
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">6</span>
+                <strong>Publicación: el informe científico</strong>
+                <p>Los resultados se comunican a la comunidad científica para que otros puedan reproducir el experimento, refutar o confirmar las conclusiones. Un informe científico suele incluir: introducción, metodología, resultados, conclusiones y bibliografía.</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                \text{Método científico} =
+                \text{Observación} \rightarrow \text{Hipótesis} \rightarrow \text{Experimentación} \rightarrow \text{Análisis} \rightarrow \text{Ley / Teoría} \rightarrow \text{Publicación}
+                \]
+                <p style="margin-top:8px; font-size:0.95rem; color:#234e52;"><i class="fas fa-sync-alt"></i> Ciclo iterativo: las leyes y teorías generan nuevas preguntas que reinician el proceso.</p>
+            </div>
+            <div class="note">
+                <strong>Observaciones para el profesorado:</strong> El alumnado tiende a confundir hipótesis con creencias. Es clave insistir en que una hipótesis no necesita ser verdadera, solo cumplir los tres requisitos formales. También suele costar distinguir entre ley y teoría; usar ejemplos cotidianos ayuda a fijar la diferencia.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE CON EJERCICIOS RESUELTOS               -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO El método científico</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Identificación de hipótesis</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un estudiante observa que al calentar un globo de aire, este se expande. Propone: <em>«El volumen de un gas aumenta porque el calor hace que las partículas se separen»</em>. ¿Es una hipótesis válida según el método científico? Justifica tu respuesta.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Comprobamos los tres requisitos de una hipótesis:</div>
+                        <div class="paso">🔹 <strong>¿Real o realizable?</strong> Sí, el calentamiento de un gas es una situación real.</div>
+                        <div class="paso">🔹 <strong>¿Clara y concreta?</strong> Sí, relaciona volumen, temperatura y comportamiento de partículas.</div>
+                        <div class="paso">🔹 <strong>¿Observable y medible?</strong> El volumen y la temperatura son medibles, aunque la «separación de partículas» es una explicación, no una variable directa; pero la relación general es contrastable.</div>
+                        <div class="paso"><strong>Conclusión:</strong> Aunque usa una explicación causal, la afirmación es válida como hipótesis porque establece una relación medible (volumen ↔ temperatura).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Diferenciar observación y experimentación</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Clasifica las siguientes situaciones como <strong>observación</strong> o <strong>experimentación</strong>:</p>
+                        <ul>
+                            <li>a) Un astrónomo registra la posición de los planetas con un telescopio.</li>
+                            <li>b) Un biólogo coloca dos plantas en diferentes condiciones de luz para ver su crecimiento.</li>
+                            <li>c) Un meteorólogo mide la temperatura ambiente cada hora.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Recordamos que en la observación no se interviene; en la experimentación se manipulan variables.</div>
+                        <div class="paso"><strong>a)</strong> El astrónomo solo registra sin modificar nada → <strong>Observación</strong>.</div>
+                        <div class="paso"><strong>b)</strong> El biólogo cambia las condiciones de luz (variable independiente) → <strong>Experimentación</strong>.</div>
+                        <div class="paso"><strong>c)</strong> El meteorólogo mide sin alterar el clima → <strong>Observación</strong>.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Variables y controles en un experimento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Para estudiar cómo influye la fuerza aplicada en el alargamiento de un muelle, un alumno cuelga diferentes masas y mide la longitud final. Identifica:</p>
+                        <ul>
+                            <li>a) Variable independiente.</li>
+                            <li>b) Variable dependiente.</li>
+                            <li>c) Controles (al menos dos).</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Definimos cada concepto.</div>
+                        <div class="paso"><strong>a) Variable independiente:</strong> la masa colgada (o la fuerza aplicada), que el alumno modifica a voluntad.</div>
+                        <div class="paso"><strong>b) Variable dependiente:</strong> el alargamiento del muelle (longitud final – inicial).</div>
+                        <div class="paso"><strong>c) Controles:</strong> el tipo de muelle (constante elástica), la temperatura ambiente, el número de espiras, etc. Todo lo que se mantiene fijo para que no afecte al resultado.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Ley vs. Teoría</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Lee las siguientes afirmaciones e indica si corresponden a una <strong>ley</strong> o a una <strong>teoría</strong>:</p>
+                        <ul>
+                            <li>a) «La fuerza que ejerce un muelle es proporcional al alargamiento: \( F = k \cdot \Delta L \).»</li>
+                            <li>b) «Los planetas se mueven alrededor del Sol debido a la curvatura del espacio-tiempo provocada por la masa del Sol.»</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Recordamos que la ley describe <em>cómo</em> ocurre (fórmula o enunciado), mientras que la teoría explica <em>por qué</em>.</div>
+                        <div class="paso"><strong>a)</strong> Es la ley de Hooke, una expresión matemática que describe el comportamiento → <strong>Ley</strong>.</div>
+                        <div class="paso"><strong>b)</strong> Explica la causa del movimiento planetario mediante la relatividad general → <strong>Teoría</strong>.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Diseño de un experimento</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un grupo quiere comprobar si la velocidad de evaporación del agua depende de la superficie expuesta. Diseña un experimento indicando:</p>
+                        <ul>
+                            <li>Hipótesis.</li>
+                            <li>Variable independiente, dependiente y controles.</li>
+                            <li>Procedimiento resumido.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1 (Hipótesis):</strong> «A mayor superficie expuesta, mayor será la velocidad de evaporación del agua».</div>
+                        <div class="paso"><strong>Paso 2 (Variables):</strong></div>
+                        <div class="paso">🔹 <strong>Independiente:</strong> superficie del agua (usar recipientes de diferente diámetro).</div>
+                        <div class="paso">🔹 <strong>Dependiente:</strong> velocidad de evaporación (medir la disminución de altura o masa por unidad de tiempo).</div>
+                        <div class="paso">🔹 <strong>Controles:</strong> misma cantidad de agua inicial, misma temperatura, misma ventilación, mismo tiempo de observación.</div>
+                        <div class="paso"><strong>Paso 3 (Procedimiento):</strong> Colocar la misma cantidad de agua en un vaso alto y en un plato llano, dejar ambos en las mismas condiciones y registrar la pérdida de masa cada 30 minutos durante 3 horas.</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> El método científico no es una lista rígida, sino un proceso flexible. La «trampa» mental más común es creer que una hipótesis debe ser verdadera para ser válida; en realidad, solo necesita ser contrastable. Además, se suele confundir ley con teoría: la ley es descriptiva, la teoría es explicativa.
+                </div>
+            </div>
+        </details>
+    
+        <!-- ============================================ -->
+        <!-- BLOQUE "ES HORA DE" (opcional, manteniendo estilo) -->
+        <!-- ============================================ -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width:100%; padding:15px; margin:10px auto; text-align:center; background:#f8fafc; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color:#2d3748; margin-top:0; margin-bottom:12px; padding:0 10px;">
+                    <br> Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

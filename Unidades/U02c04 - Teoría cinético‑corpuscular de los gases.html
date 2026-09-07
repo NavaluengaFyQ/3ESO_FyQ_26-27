@@ -1,0 +1,517 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T02.04 - Teoría cinético‑corpuscular (conceptos)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al ejemplo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            /* =========================================================
+               BLOQUE DESPLEGABLE (idéntico al ejemplo)
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40">
+                    <span class="codigo">#T02.04.- </span>
+                    <span class="texto">Teoría cinético‑corpuscular (conceptos)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo centro">
+            </div>
+        </div>
+    
+        <!-- ENUNCIADO (adaptado para contenido conceptual) -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Explicar, desde la <strong>teoría cinético‑corpuscular</strong>, los conceptos macroscópicos de <strong>presión</strong>, <strong>temperatura</strong> y <strong>volumen</strong> de un gas en función del comportamiento microscópico de sus partículas (moléculas o átomos).</p>
+            <p>Se trata de conectar el mundo observable (presión, temperatura, volumen) con el mundo de las partículas en movimiento, estableciendo las relaciones fundamentales que permiten comprender las leyes de los gases.</p>
+            <div class="formula-box" style="background: #eef2f7;">
+                <strong>Relaciones clave:</strong><br>
+                \[ p \leftrightarrow \text{colisiones contra las paredes} \]<br>
+                \[ T \leftrightarrow \text{energía cinética media de las partículas} \]<br>
+                \[ V \leftrightarrow \text{espacio disponible para el movimiento} \]
+            </div>
+			<img src="../imagenes/U02c04 - Teoría cinético‑corpuscular de los gases.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Desarrollar una comprensión cualitativa y cuantitativa básica de cómo el comportamiento de las partículas individuales (velocidad, masa, número de colisiones, distancia entre ellas) da lugar a las propiedades medibles de un gas. Esto sienta las bases para explicar por qué se cumplen las leyes de Boyle, Charles y Gay‑Lussac.</p>
+        </div>
+    
+        <!-- PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento (Análisis conceptual)</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Postulados de la teoría cinético‑corpuscular</strong>
+                <p>La teoría se basa en cuatro ideas fundamentales:</p>
+                <ul>
+                    <li><strong>Constitución:</strong> Los gases están formados por un número enorme de partículas (moléculas o átomos) en continuo movimiento.</li>
+                    <li><strong>Movimiento:</strong> Las partículas se mueven en línea recta y a gran velocidad, chocando elásticamente entre sí y contra las paredes del recipiente.</li>
+                    <li><strong>Interacción:</strong> No existen fuerzas de atracción o repulsión entre las partículas (excepto durante los choques).</li>
+                    <li><strong>Energía:</strong> La energía cinética media de las partículas es directamente proporcional a la temperatura absoluta del gas.</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Presión (\(p\)) → Choques contra las paredes</strong>
+                <p>La presión que ejerce un gas sobre las paredes del recipiente es el resultado de los <strong>impactos</strong> de las partículas. Cuanto mayor sea:</p>
+                <ul>
+                    <li>el <strong>número de partículas</strong> por unidad de volumen (densidad),</li>
+                    <li>la <strong>velocidad</strong> de las partículas,</li>
+                    <li>o la <strong>masa</strong> de cada partícula,</li>
+                </ul>
+                <p>mayor será la frecuencia y la fuerza de los impactos, y por tanto mayor la presión.</p>
+                <div class="formula-box">\[ p \propto \frac{N}{V} \cdot m \cdot \bar{v}^2 \]</div>
+                <p>Donde \(N\) es el número de partículas, \(V\) el volumen, \(m\) la masa de cada partícula y \(\bar{v}\) su velocidad media.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Temperatura (\(T\)) → Energía cinética media</strong>
+                <p>La temperatura absoluta de un gas es una medida de la <strong>energía cinética media de traslación</strong> de sus partículas. La expresión que relaciona ambas magnitudes es:</p>
+                <div class="formula-box">\[ \overline{E_c} = \frac{1}{2} m \bar{v}^2 = \frac{3}{2} k_B T \]</div>
+                <p>Donde \(k_B\) es la constante de Boltzmann. Así, a mayor temperatura, las partículas se mueven más deprisa (mayor \(\bar{v}\)), y viceversa.</p>
+                <p><strong>Consecuencia:</strong> Dos gases diferentes a la misma temperatura tienen partículas con la misma energía cinética media, aunque sus velocidades medias sean distintas si sus masas son diferentes.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Volumen (\(V\)) → Espacio libre entre partículas</strong>
+                <p>El volumen de un gas es el espacio que ocupa. Microscópicamente, este espacio está prácticamente <strong>vacío</strong>, ya que el tamaño de las partículas es despreciable comparado con la distancia que las separa. Esta es la razón por la que los gases son compresibles:</p>
+                <ul>
+                    <li>Al reducir el volumen, las partículas se acercan entre sí (aumenta la densidad) y chocan más frecuentemente contra las paredes → <strong>aumenta la presión</strong> (ley de Boyle).</li>
+                    <li>Al aumentar el volumen, las partículas tienen más espacio para moverse sin chocar tanto → <strong>disminuye la presión</strong> (si la temperatura es constante).</li>
+                </ul>
+                <p>El volumen ocupado por las propias partículas se considera despreciable en el modelo de <strong>gas ideal</strong>.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Integración de conceptos: de lo microscópico a lo macroscópico</strong>
+                <p>La teoría cinético‑corpuscular permite interpretar las leyes empíricas de los gases:</p>
+                <ul>
+                    <li><strong>Boyle (T cte):</strong> Si \(V\) disminuye, la densidad \(N/V\) aumenta, hay más colisiones → \(p\) aumenta.</li>
+                    <li><strong>Charles (p cte):</strong> Si \(T\) aumenta, \(\bar{v}\) aumenta. Para que la presión no cambie (mismas colisiones), el volumen debe aumentar para reducir la densidad.</li>
+                    <li><strong>Gay‑Lussac (V cte):</strong> Si \(T\) aumenta, \(\bar{v}\) aumenta, las colisiones son más frecuentes y enérgicas → \(p\) aumenta.</li>
+                </ul>
+                <p>Así, la teoría unifica y da sentido a las leyes experimentales.</p>
+            </div>
+        </div>
+    
+        <!-- RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado (Mapa conceptual resumen)</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa; text-align: left; padding: 20px;">
+                <table style="width:100%; border-collapse: collapse; font-size: 1em;">
+                    <tr style="border-bottom: 2px solid #38b2ac;">
+                        <th style="padding: 8px; text-align: center;">Magnitud macroscópica</th>
+                        <th style="padding: 8px; text-align: center;">Significado microscópico</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; text-align: center;"><strong>Presión (\(p\))</strong></td>
+                        <td style="padding: 8px; text-align: center;">Fuerza ejercida por los impactos de las partículas contra las paredes por unidad de superficie. Depende de la densidad y de la velocidad media.</td>
+                    </tr>
+                    <tr style="background: #f0fafc;">
+                        <td style="padding: 8px; text-align: center;"><strong>Temperatura (\(T\))</strong></td>
+                        <td style="padding: 8px; text-align: center;">Medida de la energía cinética media de traslación de las partículas. \( \overline{E_c} \propto T \).</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; text-align: center;"><strong>Volumen (\(V\))</strong></td>
+                        <td style="padding: 8px; text-align: center;">Espacio disponible para el movimiento de las partículas. El volumen de las partículas es despreciable (gas ideal).</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="note">
+                <strong>🧑‍🏫 Nota didáctica:</strong> La teoría cinético‑corpuscular es un modelo que explica el comportamiento de los gases ideales. A bajas presiones y altas temperaturas, se aproxima muy bien a la realidad. Su principal fortaleza es que <em>explica</em> las leyes, no solo las describe. Es la base para entender fenómenos como la difusión, la efusión y la presión osmótica.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE: EJERCICIOS CONCEPTUALES RESUELTOS     -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Teoría cinético‑corpuscular</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 (conceptual) -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Interpretación de la presión</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Explica, desde el punto de vista microscópico, por qué la presión de un gas aumenta al comprimirlo (ley de Boyle) y por qué también aumenta al calentarlo a volumen constante (ley de Gay‑Lussac).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1 (compresión):</strong> Al comprimir el gas, el volumen disminuye. Como el número de partículas \(N\) no cambia, la densidad \(N/V\) aumenta. Hay más partículas por unidad de volumen, por lo que chocan con las paredes con mayor frecuencia. La presión, que es la fuerza media por unidad de área, aumenta.</div>
+                        <div class="paso"><strong>Paso 2 (calentamiento a V cte):</strong> Al aumentar la temperatura, la energía cinética media de las partículas aumenta (\( \overline{E_c} \propto T \)), por lo que su velocidad media \(\bar{v}\) es mayor. Las partículas chocan contra las paredes más a menudo y, además, cada impacto es más violento (mayor cambio de cantidad de movimiento). Ambos efectos contribuyen a un aumento de la presión.</div>
+                        <div class="paso"><strong>Conclusión:</strong> En ambos casos, la presión aumenta, pero por mecanismos distintos: en la compresión, aumenta la frecuencia de colisiones; en el calentamiento, aumenta tanto la frecuencia como la fuerza de cada colisión.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Comparación de velocidades a la misma temperatura</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Dos recipientes idénticos contienen, respectivamente, gas helio (He, masa molar 4 g/mol) y gas nitrógeno (N₂, masa molar 28 g/mol) a la misma temperatura. ¿Cuál de los dos gases tiene partículas con mayor velocidad media? Razona la respuesta.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> A la misma temperatura, ambos gases tienen la misma energía cinética media de traslación: \(\frac{1}{2} m_1 \bar{v}_1^2 = \frac{1}{2} m_2 \bar{v}_2^2\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Por tanto, \(\bar{v}_1 / \bar{v}_2 = \sqrt{m_2 / m_1}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Como la masa del He (4 u) es menor que la del N₂ (28 u), la velocidad media del helio es mayor: \(\bar{v}_{\text{He}} = \sqrt{28/4} \cdot \bar{v}_{\text{N₂}} = \sqrt{7} \cdot \bar{v}_{\text{N₂}} \approx 2{,}65 \cdot \bar{v}_{\text{N₂}}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Las partículas de helio se mueven aproximadamente 2,65 veces más rápido que las de nitrógeno a la misma temperatura.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Razón de la compresibilidad de los gases</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> ¿Por qué los gases son fácilmente comprimibles, mientras que los líquidos y sólidos prácticamente no lo son? Utiliza la teoría cinético‑corpuscular para explicarlo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> En un gas, las partículas están muy separadas entre sí; el volumen ocupado por las propias partículas es despreciable comparado con el volumen total. La mayor parte del volumen es espacio vacío.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Al aplicar una presión externa, las partículas pueden acercarse mucho sin que sus volúmenes individuales interfieran, reduciendo así el espacio vacío. Por eso el volumen puede disminuir considerablemente.</div>
+                        <div class="paso"><strong>Paso 3:</strong> En líquidos y sólidos, las partículas están muy próximas y las fuerzas intermoleculares son importantes. No hay espacio vacío significativo, por lo que al aplicar presión prácticamente no se reduce el volumen.</div>
+                        <div class="paso"><strong>Conclusión:</strong> La compresibilidad de los gases es una consecuencia directa de la gran distancia entre sus partículas.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Efecto de la masa de las partículas en la presión</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Dos recipientes del mismo volumen contienen el mismo número de partículas de dos gases distintos. El gas A tiene partículas de mayor masa que el gas B, pero ambos están a la misma temperatura. ¿Cuál de los dos ejerce mayor presión? Justifica tu respuesta.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> A la misma temperatura, ambos tienen la misma energía cinética media: \(\frac{1}{2} m_A \bar{v}_A^2 = \frac{1}{2} m_B \bar{v}_B^2\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> La presión es proporcional a \(N \cdot m \cdot \bar{v}^2 / V\). Pero \(m \bar{v}^2\) es proporcional a la energía cinética media, que es la misma para ambos (porque \(T\) es la misma).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Por tanto, si \(N\) y \(V\) son iguales y \(m \bar{v}^2\) es igual, la presión es la misma en ambos recipientes.</div>
+                        <div class="paso"><strong>Resultado:</strong> La presión no depende de la masa de las partículas si la temperatura y el número de partículas por unidad de volumen son los mismos. Las partículas más pesadas se mueven más lentas, pero cada impacto es más enérgico, compensando exactamente el efecto.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Interpretación de la temperatura como energía cinética</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un gas se encuentra a 300 K. ¿Cuál es la energía cinética media de traslación de sus partículas? (Dato: \(k_B = 1{,}38 \times 10^{-23}\ \text{J/K}\)). Si la temperatura se duplica hasta 600 K, ¿cuánto aumenta la velocidad media de las partículas?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(\overline{E_c} = \frac{3}{2} k_B T = 1{,}5 \cdot 1{,}38 \times 10^{-23} \cdot 300 = 6{,}21 \times 10^{-21}\ \text{J}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Si \(T\) se duplica (de 300 a 600 K), \(\overline{E_c}\) también se duplica.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Como \(\overline{E_c} = \frac{1}{2} m \bar{v}^2\), al duplicarse la energía cinética, \(\bar{v}^2\) se duplica, por lo que \(\bar{v}\) se multiplica por \(\sqrt{2} \approx 1{,}41\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La energía cinética media es \(6{,}21 \times 10^{-21}\ \text{J}\). Al duplicar la temperatura, la velocidad media aumenta en un factor \(\sqrt{2} \approx 1{,}41\) (un 41%).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Gas ideal vs gas real</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La teoría cinético‑corpuscular se ajusta bien a los gases ideales. ¿Qué suposiciones se hacen y por qué los gases reales se desvían de este comportamiento a altas presiones y bajas temperaturas?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Suposiciones del gas ideal: partículas puntuales (volumen despreciable), no hay fuerzas intermoleculares, los choques son perfectamente elásticos.</div>
+                        <div class="paso"><strong>Paso 2:</strong> A altas presiones, las partículas están muy próximas. El volumen de las partículas ya no es despreciable frente al volumen total, por lo que el volumen disponible es menor que el del recipiente.</div>
+                        <div class="paso"><strong>Paso 3:</strong> A bajas temperaturas, la energía cinética es pequeña y las fuerzas atractivas entre partículas se vuelven importantes, lo que reduce la presión (las partículas se "pegan" ligeramente).</div>
+                        <div class="paso"><strong>Conclusión:</strong> Para corregir estas desviaciones, se introducen términos de corrección (volumen molecular y presión de atracción) en la ecuación de Van der Waals.</div>
+                    </div>
+                </div>
+    
+                <!-- Clave didáctica -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La teoría cinético‑corpuscular es el "puente" entre el mundo microscópico (partículas) y el macroscópico (mediciones). Su principal valor es que <strong>explica</strong> por qué ocurren los fenómenos, no solo cómo se comportan. Comprender que la presión son impactos y que la temperatura es movimiento permite dar sentido a todas las leyes de los gases.
+                </div>
+    
+            </div>
+        </details>
+    
+        <!-- Bloque "Es hora de..." -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

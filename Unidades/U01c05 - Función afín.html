@@ -1,0 +1,485 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U01.05 - Función afín</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILOS (idénticos al modelo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto">
+                    <span class="codigo">#U01.05.- </span>
+                    <span class="texto">Función afín</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de función lineal y de la representación gráfica, demostrar que una función afín entre dos magnitudes \( x \) e \( y \) se expresa como:</p>
+            <div class="formula-box" style="border-color:#4299e1; border-width:2px; background:#ebf8ff;">
+                \[
+                y = m \cdot x + n
+                \]
+                <p style="margin-top:6px; font-size:0.95rem; color:#2b6cb0;">donde \( m \) es la <strong>pendiente</strong> y \( n \) la <strong>ordenada en el origen</strong> (valor de \( y \) cuando \( x=0 \)).</p>
+            </div>
+            <p>La representación gráfica es una recta que <strong>no pasa necesariamente por el origen</strong>; su intersección con el eje vertical está en \( y = n \).</p>
+            <!-- Imagen placeholder -->
+            <img src="../imagenes/U01c05 - Función afín.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Aprender a identificar una relación afín a partir de su gráfica (recta que no pasa por el origen), determinar la pendiente \( m \) mediante el cociente de incrementos, y la ordenada en el origen \( n \) a partir de la intersección con el eje vertical. Aplicar estos conceptos a situaciones experimentales donde existe un valor inicial o una constante aditiva.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de función afín</strong>
+                <p>Una función afín es una relación lineal de la forma \( y = m x + n \). A diferencia de la función proporcional (\( y = kx \)), aquí el término \( n \) representa un valor constante que se añade, por lo que la recta no pasa por el origen.</p>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    \( n \) se obtiene directamente de la gráfica: es el valor de \( y \) cuando \( x=0 \).
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Cálculo de la pendiente \( m \)</strong>
+                <p>La pendiente mide la variación de \( y \) por unidad de variación de \( x \). Se calcula a partir de dos puntos cualesquiera de la recta \((x_1,y_1)\) y \((x_2,y_2)\):</p>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    \[
+                    m = \frac{\Delta y}{\Delta x} = \frac{y_2 - y_1}{x_2 - x_1}
+                    \]
+                </div>
+                <p>Si la recta es creciente, \( m>0 \); si es decreciente, \( m<0 \); si es horizontal, \( m=0 \).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Obtención de la ordenada en el origen \( n \)</strong>
+                <p>Una vez conocida la pendiente, se puede determinar \( n \) sustituyendo un punto conocido en la ecuación \( y = m x + n \) y despejando:</p>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    \[
+                    n = y_1 - m \cdot x_1
+                    \]
+                </div>
+                <p>También se puede leer directamente de la gráfica en la intersección con el eje vertical.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Representación gráfica</strong>
+                <p>Para representar una función afín, se localiza el punto \((0, n)\) y, a partir de él, se utiliza la pendiente \( m \) para encontrar otro punto: si \( m = \frac{\Delta y}{\Delta x} \), se avanza \( \Delta x \) unidades en horizontal y \( \Delta y \) en vertical.</p>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    Ejemplo: para \( y = 2x + 3 \), el punto de corte es \((0,3)\) y la pendiente 2 (subir 2 por cada 1 de avance en x).
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Interpretación física</strong>
+                <p>En experimentos, la ordenada en el origen suele representar una magnitud inicial (posición inicial, temperatura inicial, etc.) y la pendiente indica la tasa de cambio (velocidad, ritmo de calentamiento, etc.).</p>
+                <div class="formula-box" style="background:#edf2f7; border-color:#a0aec0;">
+                    Ejemplo: la posición de un móvil con velocidad constante \( v \) y posición inicial \( x_0 \) es \( x = v t + x_0 \), una función afín.
+                </div>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                \boxed{y = m \cdot x + n}
+                \]
+                <p style="margin-top:8px; font-size:0.95rem; color:#234e52;">con \( m = \dfrac{\Delta y}{\Delta x} \), \( n = y_1 - m x_1 \). La gráfica es una recta que corta al eje Y en \((0,n)\).</p>
+            </div>
+            <div class="note">
+                <strong>Observaciones para el profesorado:</strong> El alumnado suele confundir la función afín con la proporcional. Es clave insistir en que la afín no pasa por el origen a menos que \( n=0 \). También conviene practicar el cálculo de \( m \) a partir de la gráfica (triángulo de pendiente) y la determinación de \( n \) por lectura directa. A menudo, el término \( n \) se olvida en los problemas; hay que destacar su significado físico.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE CON EJERCICIOS RESUELTOS               -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Función afín</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Determinación de la pendiente y ordenada desde la gráfica</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una recta pasa por los puntos \( A(2, 5) \) y \( B(4, 11) \). Encuentra su pendiente y su ordenada en el origen, y escribe la ecuación.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Pendiente: \( m = \frac{11 - 5}{4 - 2} = \frac{6}{2} = 3 \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Usamos un punto para hallar \( n \): \( 5 = 3 \cdot 2 + n \) → \( 5 = 6 + n \) → \( n = -1 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Ecuación: \( y = 3x - 1 \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Interpolación en una función afín</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La temperatura de un horno varía linealmente con el tiempo. A los 3 minutos marca \( 120^\circ C \), y a los 7 minutos, \( 200^\circ C \). ¿Qué temperatura tendrá a los 5 minutos?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Pendiente: \( m = \frac{200 - 120}{7 - 3} = \frac{80}{4} = 20 \, ^\circ C/\text{min} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Ordenada: \( n = 120 - 20 \cdot 3 = 120 - 60 = 60 \). Función: \( T = 20t + 60 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Para \( t=5 \): \( T = 20 \cdot 5 + 60 = 100 + 60 = 160^\circ C \) (interpolación).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Extrapolación con función afín</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un móvil parte de una posición inicial y su movimiento es uniforme. A los 2 s está en 12 m, y a los 5 s en 27 m. ¿Dónde estará a los 10 s?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Pendiente (velocidad): \( m = \frac{27 - 12}{5 - 2} = \frac{15}{3} = 5 \, \text{m/s} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Ordenada (posición inicial): \( n = 12 - 5 \cdot 2 = 12 - 10 = 2 \, \text{m} \). Función: \( x = 5t + 2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Para \( t=10 \): \( x = 5 \cdot 10 + 2 = 50 + 2 = 52 \, \text{m} \) (extrapolación).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Identificación de función afín a partir de una tabla</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La siguiente tabla muestra el costo total \( C \) (€) de un servicio en función del número de horas \( h \):</p>
+                        <table style="margin:8px auto; border-collapse:collapse; text-align:center;">
+                            <tr><th style="border:1px solid #a0aec0; padding:6px;">\( h \)</th><td style="border:1px solid #a0aec0; padding:6px;">1</td><td style="border:1px solid #a0aec0; padding:6px;">3</td><td style="border:1px solid #a0aec0; padding:6px;">5</td></tr>
+                            <tr><th style="border:1px solid #a0aec0; padding:6px;">\( C \) (€)</th><td style="border:1px solid #a0aec0; padding:6px;">20</td><td style="border:1px solid #a0aec0; padding:6px;">40</td><td style="border:1px solid #a0aec0; padding:6px;">60</td></tr>
+                        </table>
+                        <p>¿Es una función afín? En caso afirmativo, escribe su ecuación.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Calculamos diferencias: \( \Delta C / \Delta h \) entre puntos:</div>
+                        <div class="paso">\( (40-20)/(3-1) = 20/2 = 10 \); \( (60-40)/(5-3) = 20/2 = 10 \). Pendiente \( m=10 \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Ordenada: \( n = 20 - 10 \cdot 1 = 10 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Ecuación: \( C = 10h + 10 \). Es afín porque no pasa por el origen (si \( h=0 \), \( C=10 \)).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Relación entre pendiente y variación</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La recta de la función \( y = -2x + 5 \) tiene pendiente -2. ¿Qué significa eso? Calcula \( y \) para \( x=0, 1, 2, 3 \) y comprueba cómo varía.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Significado: por cada unidad que aumenta \( x \), \( y \) disminuye en 2 unidades (pendiente negativa).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Valores: para \( x=0 \): \( y=5 \); \( x=1 \): \( y=3 \); \( x=2 \): \( y=1 \); \( x=3 \): \( y=-1 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Se comprueba que \( y \) decrece de 2 en 2. La ordenada en el origen es \( n=5 \).</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La «trampa» mental es asumir que toda recta pasa por el origen. La función afín añade una constante, que en problemas suele ser el valor inicial. Es fundamental que el alumnado distinga entre \( y = kx \) (proporcional) y \( y = mx + n \) (afín). La pendiente indica la tasa de cambio, y la ordenada en el origen, el punto de partida.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width:100%; padding:15px; margin:10px auto; text-align:center; background:#f8fafc; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color:#2d3748; margin-top:0; margin-bottom:12px; padding:0 10px;">
+                    <br> Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

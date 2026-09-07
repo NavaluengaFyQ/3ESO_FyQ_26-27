@@ -1,0 +1,510 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T04.07 - Teoría de colisiones y velocidad de reacción</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+            /* Bloque desplegable */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+            .highlight-green {
+                color: #38a169;
+                font-weight: bold;
+            }
+            .highlight-orange {
+                color: #dd6b20;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="icono">
+                    <span class="codigo">#T04.07.- </span>
+                    <span class="texto">Teoría de colisiones y velocidad de reacción</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la teoría cinético-corpuscular (las partículas están en continuo movimiento y chocan entre sí) y del hecho de que una reacción química implica la ruptura de enlaces en los reactivos y la formación de nuevos enlaces en los productos, demostrar que para que una reacción química ocurra las partículas deben colisionar con la <strong>energía suficiente</strong> y con la <strong>orientación adecuada</strong>. A partir de ahí, deducir los factores que afectan a la velocidad de reacción.</p>
+            <div class="formula-box">
+                \[
+                \text{Colisión eficaz} = \text{Energía suficiente} + \text{Orientación adecuada}
+                \]
+                <p style="font-weight:normal; margin-top:8px;">Solo las colisiones eficaces producen reacción química.</p>
+            </div>
+            <p>Ejemplo: en la reacción \( \text{H}_2 + \text{I}_2 \rightarrow 2\text{HI} \), las moléculas deben chocar con suficiente energía y con la orientación adecuada para que se rompan los enlaces H-H e I-I y se formen los enlaces H-I.</p>
+            <img src="../imagenes/U04c07 - Teoría de colisiones y factores que afectan a la velocidad de reacción.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender a nivel microscópico por qué unas reacciones son rápidas y otras lentas, y cómo se puede modificar la velocidad de una reacción variando ciertas condiciones experimentales. Esta teoría es la base para entender la cinética química y sus aplicaciones en la industria, la conservación de alimentos, los medicamentos y los procesos biológicos.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Movimiento de las partículas y colisiones</strong>
+                <p>Según la teoría cinético-corpuscular, las partículas (átomos, moléculas o iones) que forman la materia están en continuo movimiento. Como consecuencia de este movimiento, chocan entre sí y con las paredes del recipiente. En una reacción química, los reactivos deben mezclarse a nivel molecular para que sus partículas puedan interactuar.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Condición 1: Energía de activación (suficiente energía)</strong>
+                <p>Para que una colisión rompa los enlaces existentes en los reactivos, las partículas deben impactar con la suficiente energía. La energía mínima necesaria para que una colisión sea eficaz se denomina <span class="highlight-orange">energía de activación</span> (\(E_a\)). Si la colisión no tiene suficiente energía, las partículas rebotan sin reaccionar.</p>
+                <div class="formula-box">
+                    \[
+                    E_{\text{colisión}} \geq E_a \quad \Rightarrow \quad \text{colisión eficaz (puede reaccionar)}
+                    \]
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Condición 2: Orientación adecuada</strong>
+                <p>No basta con que las partículas tengan suficiente energía; también deben chocar en la orientación correcta. Los enlaces se rompen y forman en direcciones específicas. Si la orientación no es la adecuada, aunque la energía sea suficiente, la colisión no produce reacción.</p>
+                <ul>
+                    <li>Orientación correcta: los átomos que deben enlazarse se aproximan adecuadamente.</li>
+                    <li>Orientaciones incorrectas: las partículas rebotan o no se forman los enlaces esperados.</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Factores que afectan a la velocidad de reacción</strong>
+                <p>La velocidad de una reacción depende del número de colisiones eficaces por unidad de tiempo. Los factores que influyen son:</p>
+                <ul>
+                    <li><span class="highlight-green">Naturaleza de los reactivos:</span> sustancias con enlaces más débiles reaccionan más rápido.</li>
+                    <li><span class="highlight-green">Superficie de contacto:</span> a mayor superficie (partículas más pequeñas), más colisiones eficaces.</li>
+                    <li><span class="highlight-green">Concentración de los reactivos:</span> a mayor concentración, más partículas y más colisiones.</li>
+                    <li><span class="highlight-green">Temperatura:</span> al aumentar la temperatura, las partículas se mueven más rápido, aumentando la energía de las colisiones (más colisiones superan la \(E_a\)).</li>
+                    <li><span class="highlight-green">Catalizadores/Inhibidores:</span> los catalizadores disminuyen la \(E_a\), aumentando la velocidad. Los inhibidores aumentan la \(E_a\) o bloquean sitios activos, disminuyendo la velocidad.</li>
+                </ul>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Representación gráfica</strong>
+                <p>La energía de activación se representa en un diagrama de energía frente al avance de la reacción. La diferencia entre la energía de los reactivos y el punto máximo (complejo activado) es la \(E_a\). Los catalizadores reducen esta barrera energética.</p>
+                <div class="formula-box">
+                    \[
+                    \text{Reactivos} \xrightarrow{E_a} \text{Complejo activado} \xrightarrow{} \text{Productos}
+                    \]
+                </div>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                \boxed{\text{Velocidad de reacción} \propto \text{número de colisiones eficaces por unidad de tiempo}}
+                \]
+                <p style="font-weight:normal; margin-top:8px;">Las colisiones eficaces requieren: energía suficiente (\( \geq E_a \)) y orientación adecuada.</p>
+                <p style="font-weight:normal; font-size:0.9em;">Factores que aumentan la velocidad: mayor temperatura, concentración, superficie de contacto, uso de catalizadores.</p>
+            </div>
+            <div class="note">
+                <strong>Observaciones sobre el alumnado:</strong> La teoría de colisiones explica por qué factores cotidianos (como calentar una comida o triturar un sólido) modifican la velocidad de las reacciones. La "trampa" mental es pensar que cualquier colisión produce reacción; en realidad, solo una pequeña fracción de las colisiones son eficaces. La energía de activación es una barrera que se puede superar aumentando la temperatura o usando catalizadores.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE CON EJERCICIOS RESUELTOS               -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Teoría de colisiones y velocidad de reacción</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Efecto de la temperatura en la velocidad</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La reacción entre el ácido clorhídrico (HCl) y el mármol (CaCO₃) produce CO₂. Explica por qué la reacción es más rápida si se calienta el ácido.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Al aumentar la temperatura, las partículas de HCl y CaCO₃ se mueven más rápido.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Esto provoca un mayor número de colisiones por segundo.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Además, una mayor proporción de las colisiones supera la energía de activación, porque las partículas tienen más energía cinética.</div>
+                        <div class="paso"><strong>Conclusión:</strong> La velocidad aumenta porque hay más colisiones eficaces por unidad de tiempo.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Efecto de la superficie de contacto</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se echan dos trozos de mármol de la misma masa en dos vasos con la misma cantidad de HCl, pero uno está partido en trozos pequeños y el otro en un solo trozo grande. ¿En cuál se produce CO₂ más rápido? Justifica tu respuesta.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> El trozo de mármol partido en trozos pequeños tiene mucha mayor superficie de contacto que el trozo grande.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Mayor superficie significa que más partículas de CaCO₃ están en contacto con el HCl.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Por tanto, hay más colisiones entre los reactivos por unidad de tiempo.</div>
+                        <div class="paso"><strong>Conclusión:</strong> En el vaso con mármol troceado se produce CO₂ más rápido.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Efecto de la concentración</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La reacción entre el zinc (Zn) y el ácido sulfúrico (H₂SO₄) produce hidrógeno. Si se duplica la concentración del ácido, ¿cómo afecta a la velocidad de la reacción?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Al duplicar la concentración de H₂SO₄, hay el doble de partículas de ácido en el mismo volumen.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Esto aumenta la frecuencia de colisiones entre las partículas de Zn y las de H₂SO₄.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Como hay más colisiones por unidad de tiempo, y la proporción de colisiones eficaces es la misma, la velocidad de reacción aumenta (aproximadamente se duplica).</div>
+                        <div class="paso"><strong>Conclusión:</strong> La velocidad aumenta al aumentar la concentración.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Comparación de reacciones: hierro vs oro</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El hierro (Fe) se oxida fácilmente al aire, mientras que el oro (Au) no se oxida. Explica esta diferencia en términos de la teoría de colisiones.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> La oxidación del hierro requiere romper enlaces en el hierro y en el oxígeno para formar óxido de hierro.</div>
+                        <div class="paso"><strong>Paso 2:</strong> El hierro tiene enlaces metálicos que se rompen con relativa facilidad, y la energía de activación para la oxidación es baja.</div>
+                        <div class="paso"><strong>Paso 3:</strong> El oro es un metal noble con enlaces metálicos muy fuertes y una energía de activación muy alta para su oxidación.</div>
+                        <div class="paso"><strong>Paso 4:</strong> A temperatura ambiente, las colisiones entre el oxígeno y el oro no tienen suficiente energía para superar la \(E_a\), por lo que la reacción no ocurre (o es extremadamente lenta).</div>
+                        <div class="paso"><strong>Conclusión:</strong> La naturaleza de los reactivos (fuerza de sus enlaces) determina la energía de activación y, por tanto, la velocidad.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Catalizadores biológicos: enzimas</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La descomposición del peróxido de hidrógeno (H₂O₂) en agua y oxígeno es muy lenta a temperatura ambiente. Sin embargo, al añadir un trozo de patata (que contiene la enzima catalasa), la reacción se acelera mucho. ¿Cómo actúa la enzima?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> La catalasa es una enzima que actúa como catalizador biológico.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Los catalizadores disminuyen la energía de activación (\(E_a\)) de la reacción, ofreciendo un camino alternativo con menor barrera energética.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Al reducir la \(E_a\), un mayor número de colisiones supera la energía necesaria para que la reacción ocurra.</div>
+                        <div class="paso"><strong>Paso 4:</strong> Por tanto, la velocidad de la reacción aumenta sin que el catalizador se consuma.</div>
+                        <div class="paso"><strong>Conclusión:</strong> Los catalizadores aceleran la reacción al disminuir la energía de activación.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Orientación adecuada: ejemplo con yodo e hidrógeno</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> En la reacción \( \text{H}_2 + \text{I}_2 \rightarrow 2\text{HI} \), ¿por qué no todas las colisiones entre H₂ y I₂ producen HI, incluso si tienen suficiente energía?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Para que se forme HI, el enlace H-H debe romperse y el enlace I-I debe romperse, y se deben formar dos enlaces H-I.</div>
+                        <div class="paso"><strong>Paso 2:</strong> La orientación de las moléculas durante la colisión es crucial: el extremo de una molécula de H₂ debe aproximarse al extremo de una molécula de I₂ de manera que los átomos que van a enlazarse queden cerca.</div>
+                        <div class="paso"><strong>Paso 3:</strong> Si la orientación no es la adecuada (por ejemplo, si chocan de forma que los átomos de H quedan lejos de los átomos de I), no se forman los enlaces HI, y las moléculas rebotan sin reaccionar.</div>
+                        <div class="paso"><strong>Conclusión:</strong> La orientación es un requisito indispensable para que una colisión sea eficaz.</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Observaciones claves:</strong> La teoría de colisiones explica por qué las reacciones dependen de factores como temperatura, concentración y superficie de contacto. La "trampa" mental es pensar que cualquier colisión produce reacción; en realidad, solo una pequeña fracción son eficaces. Los catalizadores no se consumen y actúan reduciendo la energía de activación. Los inhibidores hacen lo contrario: aumentan la barrera energética.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br> Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

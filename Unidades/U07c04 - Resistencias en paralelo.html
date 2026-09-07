@@ -1,0 +1,169 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T07.04 - Resistencias en paralelo</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* (Mismo CSS) */
+            .container { max-width: 900px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; margin: 20px auto; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+            .header-left { display: flex; flex-direction: column; justify-content: center; }
+            .header-left h1 { font-size: 1.8em; margin: 0; }
+            .header-left p { margin: 6px 0 0 0; font-size: 1em; }
+            .header-sub { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+            .header-sub img { max-height: 30px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.2); padding: 2px; }
+            .header-sub .codigo { font-weight: 600; font-size: 1.1em; letter-spacing: 0.5px; color: #ffecb0; }
+            .header-sub .texto { font-size: 1em; font-weight: 300; }
+            .header-right img { max-height: 70px; max-width: 180px; object-fit: contain; display: block; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 4px; }
+            .section { padding: 25px 30px; margin: 15px; border-radius: 12px; border-left: 5px solid; }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 { font-size: 1.3em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box { background: #edf2f7; border: 2px solid #cbd5e0; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; font-size: 1.1em; }
+            .step { background: white; border-left: 4px solid #a0aec0; padding: 15px; margin: 12px 0; border-radius: 0 8px 8px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .step-num { display: inline-block; background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+            .note { background: #fffbeb; border: 1px solid #f6e05e; border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 0.95em; color: #744210; }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+            details { margin: 30px 15px 20px 15px; background: #ffffff; border: 2px solid #667eea; border-radius: 20px; padding: 0.2rem 0.2rem 0.5rem 0.2rem; box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2); transition: all 0.2s; }
+            details summary { list-style: none; display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; cursor: pointer; font-size: 1.2rem; font-weight: 600; color: #2d3748; background: #f0f4ff; border-radius: 18px; user-select: none; transition: background 0.2s; }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down { font-size: 1.6rem; color: #667eea; transition: transform 0.3s ease; }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame { background: #667eea; color: white; padding: 0.1rem 0.8rem; border-radius: 40px; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.5px; }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card { background: #f9fcff; border: 1px solid #dce7f2; border-radius: 18px; padding: 1.2rem 1.8rem 1.8rem 1.8rem; margin: 1.8rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+            .exercise-card .ex-title { display: flex; align-items: baseline; gap: 0.5rem; font-weight: 600; font-size: 1.1rem; color: #2d3748; margin-bottom: 0.4rem; }
+            .exercise-card .ex-title .badge { background: #667eea; color: white; border-radius: 40px; padding: 0.05rem 0.9rem; font-size: 0.85rem; }
+            .exercise-card .enunciado { background: #f1f6fd; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.6rem 0 1rem 0; border-left: 4px solid #667eea; }
+            .exercise-card .solucion { background: #eef3f9; padding: 0.8rem 1.5rem; border-radius: 14px; border: 1px solid #d3e0ee; margin-top: 0.8rem; }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica { background: #e6f0fa; padding: 1rem 1.8rem; border-radius: 40px; margin-top: 1.8rem; font-weight: 500; color: #1a365d; border-left: 6px solid #667eea; }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40" height="auto">
+                    <span class="codigo">#T07.04.- </span>
+                    <span class="texto">Resistencia equivalente en paralelo</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la ley de Ohm y de las características de un circuito paralelo (misma tensión, intensidades que se suman), demostrar que la inversa de la resistencia equivalente de \(n\) resistencias en paralelo es la suma de las inversas de cada una.</p>
+            <div class="formula-box">\[ \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \]</div>
+			<img src="../imagenes/U07c04 - Resistencias en paralelo.png" alt="_._._" width="800">
+        </div>
+    
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Obtener la expresión que permite simplificar un circuito paralelo, facilitando el cálculo de la corriente total y la corriente en cada rama. Es esencial para entender las conexiones de los aparatos en el hogar (todos a la misma tensión).</p>
+        </div>
+    
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Circuito paralelo</strong>
+                <p>En una conexión en paralelo, todos los elementos están sometidos a la misma tensión \(V\): \(V = V_1 = V_2 = \cdots = V_n\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Intensidad total</strong>
+                <p>La corriente total que sale del generador se reparte entre las ramas:</p>
+                <div class="formula-box">\[ I = I_1 + I_2 + \cdots + I_n \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Aplicación de la ley de Ohm</strong>
+                <p>Sustituimos cada \(I_i = \frac{V}{R_i}\) (pues la tensión es común):</p>
+                <div class="formula-box">\[ I = \frac{V}{R_1} + \frac{V}{R_2} + \cdots + \frac{V}{R_n} = V \cdot \left( \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \right) \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Resistencia equivalente</strong>
+                <p>Si definimos \(R_{eq}\) como la resistencia que, conectada a la misma tensión \(V\), consume la misma corriente total \(I\), entonces \(I = \frac{V}{R_{eq}}\). Comparando:</p>
+                <div class="formula-box">\[ \frac{V}{R_{eq}} = V \cdot \left( \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \right) \quad \Rightarrow \quad \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \]</div>
+            </div>
+        </div>
+    
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">\[ \frac{1}{R_{eq}} = \sum_{i=1}^{n} \frac{1}{R_i} \]</div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La resistencia equivalente en paralelo es siempre menor que la menor de las resistencias. Esto explica por qué al conectar más aparatos en paralelo, la resistencia total disminuye y la corriente total aumenta (si la tensión es fija). Es el fundamento de los circuitos de iluminación y enchufes en las viviendas.
+            </div>
+        </div>
+    
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Resistencias en paralelo</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 1</span><span>Dos resistencias en paralelo</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Conecta en paralelo \(R_1 = 10\,\Omega\) y \(R_2 = 15\,\Omega\) a una batería de \(12\,\mathrm{V}\). Calcula la resistencia equivalente, la corriente total y la corriente por cada rama.</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(\frac{1}{R_{eq}} = \frac{1}{10} + \frac{1}{15} = \frac{3+2}{30} = \frac{5}{30} \Rightarrow R_{eq} = 6\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(I_{total} = \frac{12}{6} = 2\,\mathrm{A}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(I_1 = \frac{12}{10} = 1.2\,\mathrm{A}\), \(I_2 = \frac{12}{15} = 0.8\,\mathrm{A}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R_{eq}=6\,\Omega\), \(I_{total}=2\,\mathrm{A}\), \(I_1=1.2\,\mathrm{A}\), \(I_2=0.8\,\mathrm{A}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 2</span><span>Tres resistencias en paralelo</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Tres resistencias de \(20\,\Omega\), \(30\,\Omega\) y \(60\,\Omega\) se conectan en paralelo a \(120\,\mathrm{V}\). Halla la corriente total.</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(\frac{1}{R_{eq}} = \frac{1}{20} + \frac{1}{30} + \frac{1}{60} = \frac{3+2+1}{60} = \frac{6}{60} = \frac{1}{10} \Rightarrow R_{eq} = 10\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(I = \frac{120}{10} = 12\,\mathrm{A}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(I_{total} = 12\,\mathrm{A}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 3</span><span>Resistencia desconocida en paralelo</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Una resistencia \(R\) se conecta en paralelo con otra de \(12\,\Omega\) y la combinación se conecta a \(24\,\mathrm{V}\). Si la corriente total es de \(3\,\mathrm{A}\), ¿cuánto vale \(R\)?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(R_{eq} = \frac{24}{3} = 8\,\Omega\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(\frac{1}{8} = \frac{1}{R} + \frac{1}{12} \Rightarrow \frac{1}{R} = \frac{1}{8} - \frac{1}{12} = \frac{3-2}{24} = \frac{1}{24} \Rightarrow R = 24\,\Omega\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R = 24\,\Omega\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La conexión en paralelo asegura que todos los receptores funcionen a la misma tensión, pero la corriente se reparte. Es la base de la instalación eléctrica doméstica: si una bombilla se funde, las demás siguen funcionando, porque cada una está en una rama independiente.
+                </div>
+            </div>
+        </details>
+    </div>
+    </body>
+    </html>

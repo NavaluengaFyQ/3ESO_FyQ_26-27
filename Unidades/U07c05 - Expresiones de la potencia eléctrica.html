@@ -1,0 +1,177 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T07.05 - Expresiones de la potencia eléctrica</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* (Mismo CSS) */
+            .container { max-width: 900px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; margin: 20px auto; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+            .header-left { display: flex; flex-direction: column; justify-content: center; }
+            .header-left h1 { font-size: 1.8em; margin: 0; }
+            .header-left p { margin: 6px 0 0 0; font-size: 1em; }
+            .header-sub { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+            .header-sub img { max-height: 30px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.2); padding: 2px; }
+            .header-sub .codigo { font-weight: 600; font-size: 1.1em; letter-spacing: 0.5px; color: #ffecb0; }
+            .header-sub .texto { font-size: 1em; font-weight: 300; }
+            .header-right img { max-height: 70px; max-width: 180px; object-fit: contain; display: block; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 4px; }
+            .section { padding: 25px 30px; margin: 15px; border-radius: 12px; border-left: 5px solid; }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 { font-size: 1.3em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box { background: #edf2f7; border: 2px solid #cbd5e0; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; font-size: 1.1em; }
+            .step { background: white; border-left: 4px solid #a0aec0; padding: 15px; margin: 12px 0; border-radius: 0 8px 8px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .step-num { display: inline-block; background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+            .note { background: #fffbeb; border: 1px solid #f6e05e; border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 0.95em; color: #744210; }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+            details { margin: 30px 15px 20px 15px; background: #ffffff; border: 2px solid #667eea; border-radius: 20px; padding: 0.2rem 0.2rem 0.5rem 0.2rem; box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2); transition: all 0.2s; }
+            details summary { list-style: none; display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; cursor: pointer; font-size: 1.2rem; font-weight: 600; color: #2d3748; background: #f0f4ff; border-radius: 18px; user-select: none; transition: background 0.2s; }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down { font-size: 1.6rem; color: #667eea; transition: transform 0.3s ease; }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame { background: #667eea; color: white; padding: 0.1rem 0.8rem; border-radius: 40px; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.5px; }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card { background: #f9fcff; border: 1px solid #dce7f2; border-radius: 18px; padding: 1.2rem 1.8rem 1.8rem 1.8rem; margin: 1.8rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+            .exercise-card .ex-title { display: flex; align-items: baseline; gap: 0.5rem; font-weight: 600; font-size: 1.1rem; color: #2d3748; margin-bottom: 0.4rem; }
+            .exercise-card .ex-title .badge { background: #667eea; color: white; border-radius: 40px; padding: 0.05rem 0.9rem; font-size: 0.85rem; }
+            .exercise-card .enunciado { background: #f1f6fd; padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.6rem 0 1rem 0; border-left: 4px solid #667eea; }
+            .exercise-card .solucion { background: #eef3f9; padding: 0.8rem 1.5rem; border-radius: 14px; border: 1px solid #d3e0ee; margin-top: 0.8rem; }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica { background: #e6f0fa; padding: 1rem 1.8rem; border-radius: 40px; margin-top: 1.8rem; font-weight: 500; color: #1a365d; border-left: 6px solid #667eea; }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40" height="auto">
+                    <span class="codigo">#T07.05.- </span>
+                    <span class="texto">Expresiones de la potencia eléctrica</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de potencia eléctrica \(P = V \cdot I\) y de la ley de Ohm \(V = I \cdot R\), deducir las expresiones equivalentes para la potencia disipada en una resistencia.</p>
+            <div class="formula-box">\[ P = V \cdot I = I^2 \cdot R = \frac{V^2}{R} \]</div>
+			<img src="../imagenes/U07c05 - Expresiones de la potencia eléctrica.png" alt="_._._" width="800">
+        </div>
+    
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Mostrar que la potencia eléctrica puede calcularse de tres formas equivalentes, según los datos disponibles (tensión e intensidad, solo intensidad y resistencia, solo tensión y resistencia). Esto permite resolver problemas de forma más eficiente y entender el consumo energético de los aparatos.</p>
+        </div>
+    
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de potencia eléctrica</strong>
+                <p>La potencia es la energía transformada por unidad de tiempo:</p>
+                <div class="formula-box">\[ P = \frac{E}{t} \]</div>
+                <p>En electricidad, la energía es \(E = q \cdot V\), y \(q = I \cdot t\), por lo que:</p>
+                <div class="formula-box">\[ P = \frac{(I \cdot t) \cdot V}{t} = V \cdot I \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Sustitución de la ley de Ohm (primera forma)</strong>
+                <p>Si conocemos la intensidad y la resistencia, usamos \(V = I \cdot R\):</p>
+                <div class="formula-box">\[ P = (I \cdot R) \cdot I = I^2 \cdot R \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Sustitución de la ley de Ohm (segunda forma)</strong>
+                <p>Si conocemos la tensión y la resistencia, usamos \(I = \frac{V}{R}\):</p>
+                <div class="formula-box">\[ P = V \cdot \frac{V}{R} = \frac{V^2}{R} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Equivalencia de las tres expresiones</strong>
+                <p>Todas son algebraicamente equivalentes y su uso depende de los datos disponibles en cada problema.</p>
+            </div>
+        </div>
+    
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">\[ P = V \cdot I = I^2 \cdot R = \frac{V^2}{R} \]</div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> Es frecuente que el alumnado confunda cuándo usar cada expresión. La clave está en identificar las magnitudes conocidas. Por ejemplo, para un aparato conectado a la red (tensión fija y potencia conocida), se usa \(P = V \cdot I\) para calcular la corriente, y \(R = V^2/P\) para la resistencia. Estas relaciones son fundamentales para el cálculo de consumo eléctrico y para diseñar instalaciones seguras.
+            </div>
+        </div>
+    
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO las expresiones de potencia</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 1</span><span>Potencia a partir de V e I</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Una bombilla funciona a \(230\,\mathrm{V}\) y consume \(0.5\,\mathrm{A}\). ¿Cuál es su potencia?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(P = V \cdot I = 230 \cdot 0.5 = 115\,\mathrm{W}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(P = 115\,\mathrm{W}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 2</span><span>Potencia a partir de I y R</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Una resistencia de \(100\,\Omega\) es recorrida por \(2\,\mathrm{A}\). Calcula la potencia disipada.</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(P = I^2 R = 2^2 \cdot 100 = 400\,\mathrm{W}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(P = 400\,\mathrm{W}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 3</span><span>Potencia a partir de V y R</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Un calefactor tiene una resistencia de \(30\,\Omega\) y se conecta a \(220\,\mathrm{V}\). ¿Qué potencia consume?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(P = \frac{V^2}{R} = \frac{220^2}{30} = \frac{48400}{30} \approx 1613.3\,\mathrm{W}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(P \approx 1.61\,\mathrm{kW}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title"><span class="badge">Ejercicio 4</span><span>Comparación de potencias</span></div>
+                    <div class="enunciado"><p><strong>Enunciado:</strong> Dos resistencias, \(R_1 = 20\,\Omega\) y \(R_2 = 80\,\Omega\), se conectan a la misma tensión \(120\,\mathrm{V}\). ¿Cuál consume más potencia?</p></div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(P_1 = \frac{120^2}{20} = \frac{14400}{20} = 720\,\mathrm{W}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(P_2 = \frac{120^2}{80} = \frac{14400}{80} = 180\,\mathrm{W}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La resistencia menor (20 Ω) consume más potencia (720 W vs 180 W). Es decir, a igual tensión, la menor resistencia disipa más potencia.</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La expresión \(P = V^2/R\) muestra que, a tensión constante, una resistencia menor disipa más potencia (y por tanto más calor). Esto es importante para entender por qué los cables de gran sección (baja resistencia) pueden transportar más corriente sin calentarse excesivamente. Por el contrario, \(P = I^2 R\) indica que, a corriente constante, una resistencia mayor disipa más potencia.
+                </div>
+            </div>
+        </details>
+    </div>
+    </body>
+    </html>

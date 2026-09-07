@@ -1,0 +1,422 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U06-D06 - Ley de la palanca (máquinas simples)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al modelo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto">
+                    <span class="codigo">#U06-D06.-</span>
+                    <span class="texto">Ley de la palanca (máquinas simples)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de momento de una fuerza y de la condición de equilibrio de rotación (\(\sum M = 0\)), demostrar la ley de la palanca, que relaciona la potencia (fuerza aplicada) con la resistencia (fuerza a vencer) a través de los brazos de palanca:</p>
+            <div class="formula-box">\[ P \cdot B_p = R \cdot B_r \]</div>
+            <p>donde \(B_p\) es la distancia desde el punto de apoyo hasta la línea de acción de la potencia, y \(B_r\) es la distancia desde el apoyo hasta la línea de acción de la resistencia.</p>
+			<img src="../imagenes/U06c06 - Ley de la palanca (máquinas simples).png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender el funcionamiento de la palanca como máquina simple que permite amplificar la fuerza aplicada (ventaja mecánica) a costa de un mayor desplazamiento. Aprender a identificar los brazos de palanca y aplicar la ley para calcular fuerzas o distancias desconocidas.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de momento de una fuerza</strong>
+                <p>El momento (o torque) de una fuerza \(\vec{F}\) respecto a un punto O se define como el producto del módulo de la fuerza por la distancia perpendicular desde O hasta la línea de acción de la fuerza (brazo):</p>
+                <div class="formula-box">\[ M = F \cdot d \]</div>
+                <p>Su unidad en el SI es el newton-metro (N·m). El momento mide la capacidad de una fuerza para provocar rotación alrededor de un punto.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Condición de equilibrio de rotación</strong>
+                <p>Para que un cuerpo rígido esté en equilibrio de rotación, la suma de todos los momentos de las fuerzas que actúan sobre él debe ser nula:</p>
+                <div class="formula-box">\[ \sum M = 0 \]</div>
+                <p>Tomando como referencia el punto de apoyo (fulcro), los momentos que tienden a girar en un sentido deben compensarse con los que tienden a girar en el sentido opuesto.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Aplicación a la palanca</strong>
+                <p>En una palanca, sobre la barra actúan dos fuerzas principales: la potencia \(P\) (fuerza aplicada) y la resistencia \(R\) (fuerza a vencer). Ambas producen momentos alrededor del fulcro, en sentidos opuestos. El equilibrio exige que:</p>
+                <div class="formula-box">\[ M_P = M_R \quad\Longrightarrow\quad P \cdot B_p = R \cdot B_r \]</div>
+                <p>donde \(B_p\) es el brazo de potencia (distancia desde el fulcro al punto de aplicación de \(P\)) y \(B_r\) es el brazo de resistencia (distancia desde el fulcro al punto de aplicación de \(R\)).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Ventaja mecánica</strong>
+                <p>La ventaja mecánica (VM) de una palanca se define como el cociente entre la resistencia y la potencia:</p>
+                <div class="formula-box">\[ VM = \frac{R}{P} = \frac{B_p}{B_r} \]</div>
+                <p>Si \(B_p > B_r\), entonces \(R > P\): se puede levantar una gran resistencia con poca fuerza (a costa de recorrer más distancia con la potencia). Si \(B_p < B_r\), la palanca reduce la fuerza (útil para precisión).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Tipos de palancas</strong>
+                <p>Según la posición relativa del fulcro, la potencia y la resistencia:</p>
+                <ul>
+                    <li><strong>1.er grado:</strong> Fulcro entre P y R (ejemplo: balancín, tijeras).</li>
+                    <li><strong>2.º grado:</strong> Resistencia entre fulcro y P (ejemplo: carretilla, cascanueces).</li>
+                    <li><strong>3.er grado:</strong> Potencia entre fulcro y R (ejemplo: caña de pescar, pinzas).</li>
+                </ul>
+                <p>En todos los casos se cumple la misma ecuación de equilibrio.</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[ P \cdot B_p = R \cdot B_r \quad\Longleftrightarrow\quad \frac{R}{P} = \frac{B_p}{B_r} \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La confusión más común es no medir los brazos desde el fulcro correctamente (se deben medir perpendiculares a las fuerzas). También se suele olvidar que la palanca no ahorra trabajo, solo permite aplicar menos fuerza a costa de mayor desplazamiento.
+            </div>
+        </div>
+    
+        <!-- BLOQUE DESPLEGABLE -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Ley de la palanca</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Palanca de 1.er grado: equilibrio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una barra de 2 m se usa como palanca de 1.er grado. El fulcro está a 0.5 m de la resistencia, que pesa 600 N. ¿Qué fuerza (potencia) se debe aplicar en el otro extremo para equilibrar la palanca?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(B_r = 0.5\,\text{m}\), \(B_p = 2 - 0.5 = 1.5\,\text{m}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(P \cdot B_p = R \cdot B_r \Rightarrow P \cdot 1.5 = 600 \cdot 0.5\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(P = (600 \cdot 0.5) / 1.5 = 200\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(P = 200\,\text{N}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Palanca de 2.º grado: carretilla</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> En una carretilla, la carga (resistencia) está a 40 cm del eje de la rueda (fulcro). El mango está a 1.2 m del eje. Si se aplica una fuerza de 150 N en el mango, ¿qué peso máximo se puede levantar?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(B_r = 0.4\,\text{m}\), \(B_p = 1.2\,\text{m}\), \(P = 150\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(150 \cdot 1.2 = R \cdot 0.4\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(R = (150 \cdot 1.2) / 0.4 = 450\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R = 450\,\text{N}\) (equivale a unos 46 kg).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Palanca de 3.er grado: caña de pescar</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Con una caña de pescar de 2.5 m, el fulcro está en el extremo (mango). La potencia se aplica a 0.5 m del fulcro y la resistencia (pez) está en el extremo opuesto. Si se aplica una potencia de 100 N, ¿qué peso máximo puede levantar?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(B_p = 0.5\,\text{m}\), \(B_r = 2.5\,\text{m}\), \(P = 100\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(100 \cdot 0.5 = R \cdot 2.5\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(R = (100 \cdot 0.5) / 2.5 = 20\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(R = 20\,\text{N}\) (la fuerza se reduce, pero se gana velocidad).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Determinar la posición del fulcro</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se dispone de una barra de 3 m. Se desea levantar una piedra de 800 N aplicando una fuerza de 200 N. ¿Dónde debe colocarse el fulcro (medido desde la piedra)?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Sea \(x = B_r\) (distancia desde la piedra al fulcro). Entonces \(B_p = 3 - x\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(P \cdot B_p = R \cdot B_r \Rightarrow 200 \cdot (3-x) = 800 \cdot x\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(600 - 200x = 800x \Rightarrow 600 = 1000x \Rightarrow x = 0.6\,\text{m}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Fulcro a 0.6 m de la piedra.</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Ventaja mecánica</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una palanca de 1.er grado tiene un brazo de potencia de 80 cm y un brazo de resistencia de 20 cm. Calcula la ventaja mecánica y la fuerza necesaria para levantar 400 N.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(VM = B_p / B_r = 80/20 = 4\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(P = R / VM = 400 / 4 = 100\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> VM = 4, se necesita \(P = 100\,\text{N}\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La "trampa" es no medir correctamente los brazos (distancias desde el fulcro) o confundir la posición de la potencia y la resistencia. La ley de la palanca es una aplicación directa del equilibrio de momentos, y la ventaja mecánica explica por qué se puede amplificar la fuerza.
+                </div>
+            </div>
+        </details>
+    
+    </div>
+    </body>
+    </html>

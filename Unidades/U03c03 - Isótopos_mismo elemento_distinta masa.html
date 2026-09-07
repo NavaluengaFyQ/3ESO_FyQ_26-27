@@ -1,0 +1,495 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U03c03 - Isótopos: mismo elemento, distinta masa</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al modelo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            /* Desplegable */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="cápsula">
+                    <span class="codigo">#U03c03.- </span>
+                    <span class="texto">Isótopos: mismo elemento, distinta masa (Z invariante)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de número atómico (\(Z\)) como identificador del elemento y de número másico (\(A\)) como suma de protones y neutrones, demostrar que existen átomos de un mismo elemento que tienen distinto número másico (isótopos). La relación fundamental que los define es:</p>
+            <div class="formula-box">
+                \[
+                Z = \text{constante (mismo elemento)} \qquad A = p^+ + n^0 \quad \text{variable}
+                \]
+            </div>
+            <p>Por tanto, los isótopos comparten el número de protones (\(Z\)) y de electrones (en estado neutro), pero difieren en el número de neutrones.</p>
+			<img src="../imagenes/U03c03 - Isótopos_mismo elemento_distinta masa.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender que la identidad de un elemento químico viene dada exclusivamente por su número atómico \(Z\), y que la variación en el número de neutrones da lugar a isótopos del mismo elemento, con propiedades químicas idénticas pero diferente masa. Aprender a reconocer isótopos a partir de su notación y calcular el número de neutrones en cada caso.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Definición de isótopo</strong>
+                <p>Se denominan <strong>isótopos</strong> a los átomos que tienen el mismo número atómico (\(Z\)) pero distinto número másico (\(A\)). Como \(Z\) es el número de protones, todos ellos tienen el mismo número de protones, pero diferente número de neutrones.</p>
+                <div class="formula-box">\[ \text{Isótopos: } Z_1 = Z_2 = \dots = Z \quad \text{y} \quad A_1 \neq A_2 \neq \dots \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Implicación en la composición nuclear</strong>
+                <p>Dado que \(A = p^+ + n^0\) y \(p^+ = Z\) es constante, la variación de \(A\) implica una variación en el número de neutrones:</p>
+                <div class="formula-box">\[ n^0 = A - Z \quad \Rightarrow \quad \text{si } A \text{ varía, } n^0 \text{ varía.} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Notación de isótopos</strong>
+                <p>Los isótopos se representan escribiendo el número másico como superíndice a la izquierda del símbolo del elemento, y el número atómico como subíndice. Por ejemplo, el carbono tiene tres isótopos naturales:</p>
+                <div class="formula-box">\[ ^{12}_{6}\text{C} \quad ^{13}_{6}\text{C} \quad ^{14}_{6}\text{C} \]</div>
+                <p>En estos tres casos, \(Z=6\) (6 protones), pero \(A=12, 13, 14\), lo que implica 6, 7 y 8 neutrones, respectivamente.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Propiedades de los isótopos</strong>
+                <p>Los isótopos de un mismo elemento tienen propiedades químicas prácticamente idénticas (ya que dependen de los electrones, que son los mismos). Sin embargo, sus propiedades físicas (densidad, punto de ebullición, etc.) y su estabilidad nuclear pueden variar. Algunos isótopos son radiactivos (como el \(^{14}\text{C}\)).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Expresión general para identificar isótopos</strong>
+                <p>Dados dos átomos representados como \(^{A_1}_{Z_1}\text{X}\) y \(^{A_2}_{Z_2}\text{Y}\), son isótopos si y solo si:</p>
+                <div class="formula-box">\[ Z_1 = Z_2 \quad \text{y} \quad A_1 \neq A_2 \]</div>
+                <p>En ese caso, pertenecen al mismo elemento, aunque tengan distinta masa.</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                \text{Isótopos: } Z \text{ constante, } A \text{ variable} \quad \Rightarrow \quad n^0 = A - Z \text{ variable}
+                \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> El error más frecuente es pensar que un cambio en el número de neutrones cambia el elemento. Es fundamental recalcar que el elemento lo determina \(Z\). La tabla periódica ordena los elementos por \(Z\), no por \(A\). La existencia de isótopos explica por qué las masas atómicas de los elementos en la tabla no son números enteros (son medias ponderadas).
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Isótopos: mismo elemento, distinta masa</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Identificación de isótopos del carbono</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Dados los siguientes átomos: \(^{12}_{6}\text{C}\), \(^{13}_{6}\text{C}\), \(^{14}_{6}\text{C}\).</p>
+                        <ul>
+                            <li>a) ¿Son isótopos? Justifica tu respuesta.</li>
+                            <li>b) ¿Cuántos protones, neutrones y electrones tiene cada uno (suponiendo átomos neutros)?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Todos tienen \(Z=6\), luego son el mismo elemento (carbono). Tienen \(A=12,13,14\) diferentes, por lo tanto son isótopos.</div>
+                        <div class="paso"><strong>Paso 2:</strong> Para cada uno: \(p^+ = Z = 6\), \(e^- = 6\) (neutros), \(n^0 = A - 6\).</div>
+                        <div class="paso">\(^{12}\text{C}\): \(n^0 = 12-6=6\). \(^{13}\text{C}\): \(n^0=7\). \(^{14}\text{C}\): \(n^0=8\).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) Sí, son isótopos. b) 6 p⁺ y 6 e⁻ en todos; neutrones: 6, 7 y 8 respectivamente.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Isótopos del cloro</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El cloro tiene dos isótopos naturales: \(^{35}_{17}\text{Cl}\) y \(^{37}_{17}\text{Cl}\).</p>
+                        <ul>
+                            <li>a) ¿Cuántos protones y electrones tiene cada uno (neutros)?</li>
+                            <li>b) ¿Cuántos neutrones tiene cada uno?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(Z=17\) para ambos \(\Rightarrow p^+ = 17\), y al ser neutros \(e^- = 17\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Neutrones: \(^{35}\text{Cl}\): \(n^0 = 35-17=18\). \(^{37}\text{Cl}\): \(n^0 = 37-17=20\).</div>
+                        <div class="paso"><strong>Resultados:</strong> a) 17 p⁺ y 17 e⁻ en ambos. b) 18 neutrones (Cl-35) y 20 neutrones (Cl-37).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Determinar si dos átomos son isótopos</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Indica si los siguientes pares son isótopos:</p>
+                        <ul>
+                            <li>a) \(^{24}_{12}\text{Mg}\) y \(^{26}_{12}\text{Mg}\)</li>
+                            <li>b) \(^{40}_{20}\text{Ca}\) y \(^{40}_{19}\text{K}\)</li>
+                            <li>c) \(^{14}_{7}\text{N}\) y \(^{15}_{7}\text{N}\)</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> a) Mismo \(Z=12\) y distinto \(A\) (24 y 26) → son isótopos del magnesio.</div>
+                        <div class="paso"><strong>Paso 2:</strong> b) \(Z\) diferentes (20 y 19) → no son isótopos, son elementos distintos (calcio y potasio).</div>
+                        <div class="paso"><strong>Paso 3:</strong> c) Mismo \(Z=7\) y distinto \(A\) (14 y 15) → son isótopos del nitrógeno.</div>
+                        <div class="paso"><strong>Resultados:</strong> a) Sí, b) No, c) Sí.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Cálculo de neutrones en isótopos del oxígeno</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El oxígeno tiene tres isótopos estables: \(^{16}_{8}\text{O}\), \(^{17}_{8}\text{O}\), \(^{18}_{8}\text{O}\). Calcula el número de neutrones de cada uno.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(Z=8\) para todos, \(p^+ = 8\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(n^0 = A - Z\):</div>
+                        <div class="paso">\(^{16}\text{O}\): \(16-8=8\) neutrones.</div>
+                        <div class="paso">\(^{17}\text{O}\): \(17-8=9\) neutrones.</div>
+                        <div class="paso">\(^{18}\text{O}\): \(18-8=10\) neutrones.</div>
+                        <div class="paso"><strong>Resultados:</strong> 8, 9 y 10 neutrones respectivamente.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Isótopos radiactivos y su notación</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El uranio natural contiene principalmente \(^{238}_{92}\text{U}\) y una pequeña cantidad de \(^{235}_{92}\text{U}\).</p>
+                        <ul>
+                            <li>a) ¿Son isótopos? ¿Por qué?</li>
+                            <li>b) ¿Cuántos neutrones tiene cada uno?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Ambos tienen \(Z=92\), luego son uranio. \(A\) distinto (238 y 235), luego son isótopos.</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(n^0 = A - 92\): \(^{238}\text{U}\): \(238-92=146\) neutrones; \(^{235}\text{U}\): \(235-92=143\) neutrones.</div>
+                        <div class="paso"><strong>Resultados:</strong> a) Sí, son isótopos del uranio. b) 146 y 143 neutrones respectivamente.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Reconocimiento de isótopos a partir de una tabla</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Se tienen los siguientes átomos: A (\(Z=6, A=12\)), B (\(Z=6, A=13\)), C (\(Z=7, A=14\)), D (\(Z=6, A=14\)).</p>
+                        <ul>
+                            <li>a) ¿Cuáles son isótopos entre sí?</li>
+                            <li>b) ¿Cuáles pertenecen al mismo elemento?</li>
+                        </ul>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Los que tienen \(Z=6\): A, B y D. Todos son carbono, pero con A=12, 13 y 14, por lo que son isótopos del carbono.</div>
+                        <div class="paso"><strong>Paso 2:</strong> C tiene \(Z=7\), es nitrógeno, no es isótopo de los anteriores.</div>
+                        <div class="paso"><strong>Resultados:</strong> a) A, B y D son isótopos. b) A, B y D pertenecen al mismo elemento (carbono).</div>
+                    </div>
+                </div>
+    
+                <!-- Clave didáctica -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave:</strong> La "trampa" mental es confundir el número másico \(A\) con el número atómico \(Z\). Dos átomos con el mismo \(Z\) pero distinto \(A\) son el mismo elemento; solo cambian en su número de neutrones. Esto explica por qué la masa atómica de los elementos en la tabla periódica no es un número entero, sino un promedio de las masas de sus isótopos naturales.
+                </div>
+            </div>
+        </details>
+    
+        <!-- Pie de página -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

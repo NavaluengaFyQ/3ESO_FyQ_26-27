@@ -1,0 +1,397 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U06-D01 - Composición de fuerzas concurrentes</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down { transform: rotate(180deg); }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content { padding: 0.5rem 1.8rem 2rem 1.8rem; }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso { margin: 0.5rem 0; }
+            .exercise-card .solucion .paso strong { color: #2b3a67; }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto">
+                    <span class="codigo">#U06-D01.-</span>
+                    <span class="texto">Composición de fuerzas concurrentes</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de fuerza como magnitud vectorial y de la regla del paralelogramo para la suma de vectores, demostrar que la fuerza resultante de dos fuerzas perpendiculares que actúan sobre un mismo punto se calcula mediante el teorema de Pitágoras:</p>
+            <div class="formula-box">\[ F_R = \sqrt{F_1^2 + F_2^2} \]</div>
+            <p>y que su dirección viene dada por el ángulo \(\theta = \arctan\left(\frac{F_2}{F_1}\right)\) respecto a la fuerza \(F_1\).</p>
+			<img src="../imagenes/U06c01 - Composición de fuerzas concurrentes.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender que las fuerzas son vectores y que, por tanto, se suman vectorialmente. Obtener una expresión sencilla para el caso frecuente de fuerzas perpendiculares, lo que permite calcular rápidamente la fuerza neta sobre un cuerpo y predecir su movimiento.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Representación de las fuerzas</strong>
+                <p>Dibujamos dos fuerzas \(\vec{F}_1\) y \(\vec{F}_2\) aplicadas en un mismo punto \(O\). Suponemos que son perpendiculares entre sí, por lo que forman un ángulo recto. Elegimos un sistema de coordenadas con el eje \(x\) en la dirección de \(\vec{F}_1\) y el eje \(y\) en la dirección de \(\vec{F}_2\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Regla del paralelogramo</strong>
+                <p>Para sumar dos vectores con el mismo origen, se construye un paralelogramo trazando paralelas a cada vector desde el extremo del otro. La diagonal que parte del origen común representa la fuerza resultante \(\vec{F}_R\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Componentes de la resultante</strong>
+                <p>En el sistema de coordenadas elegido, las componentes de \(\vec{F}_R\) son simplemente:</p>
+                <div class="formula-box">\[ F_{Rx} = F_1, \qquad F_{Ry} = F_2 \]</div>
+                <p>ya que \(\vec{F}_1\) solo tiene componente \(x\) y \(\vec{F}_2\) solo componente \(y\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Módulo de la resultante</strong>
+                <p>El módulo de un vector a partir de sus componentes se obtiene mediante el teorema de Pitágoras:</p>
+                <div class="formula-box">\[ F_R = \sqrt{F_{Rx}^2 + F_{Ry}^2} = \sqrt{F_1^2 + F_2^2} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Dirección de la resultante</strong>
+                <p>El ángulo \(\theta\) que forma \(\vec{F}_R\) con el eje \(x\) (dirección de \(F_1\)) se calcula mediante la tangente:</p>
+                <div class="formula-box">\[ \tan\theta = \frac{F_{Ry}}{F_{Rx}} = \frac{F_2}{F_1} \quad\Longrightarrow\quad \theta = \arctan\left(\frac{F_2}{F_1}\right) \]</div>
+                <p>Este ángulo mide la inclinación de la fuerza resultante respecto a la fuerza mayor (o a la que se toma como referencia).</p>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[ F_R = \sqrt{F_1^2 + F_2^2} \qquad \text{y} \qquad \theta = \arctan\left(\frac{F_2}{F_1}\right) \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> El alumnado suele olvidar que la fuerza resultante no es la suma aritmética de los módulos, sino la suma vectorial. Este desarrollo refuerza la necesidad de trabajar con componentes y el carácter vectorial de las fuerzas.
+            </div>
+        </div>
+    
+        <!-- BLOQUE DESPLEGABLE -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Composición de fuerzas concurrentes</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Dos fuerzas perpendiculares de 3 N y 4 N</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Sobre un cuerpo actúan dos fuerzas perpendiculares: una de 3 N hacia el este y otra de 4 N hacia el norte. Calcula el módulo y la dirección de la fuerza resultante.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(F_1 = 3\,\text{N}\), \(F_2 = 4\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F_R = \sqrt{3^2 + 4^2} = \sqrt{9+16} = 5\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(\theta = \arctan(4/3) \approx 53.13^\circ\) al norte del este.</div>
+                        <div class="paso"><strong>Resultado:</strong> \(5\,\text{N}\) en dirección \(53.13^\circ\) al norte del este.</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Fuerzas de 6 N y 8 N</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un barco es empujado por dos remolcadores con fuerzas perpendiculares de 6 N y 8 N. ¿Cuál es la fuerza resultante sobre el barco?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(F_1 = 6\), \(F_2 = 8\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F_R = \sqrt{36+64} = \sqrt{100} = 10\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(\theta = \arctan(8/6) \approx 53.13^\circ\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(10\,\text{N}\) a \(53.13^\circ\) de la fuerza de 6 N.</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Fuerza resultante con componentes dadas</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una fuerza resultante de 13 N forma un ángulo de \(22.6^\circ\) con el eje \(x\). Calcula las componentes \(F_x\) y \(F_y\) si son perpendiculares.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(F_R = 13\), \(\theta = 22.6^\circ\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(F_x = F_R \cos\theta = 13 \cos 22.6^\circ \approx 13 \cdot 0.923 = 12.0\,\text{N}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(F_y = F_R \sin\theta = 13 \sin 22.6^\circ \approx 13 \cdot 0.385 = 5.0\,\text{N}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(F_x = 12\,\text{N}\), \(F_y = 5\,\text{N}\).</div>
+                    </div>
+                </div>
+    
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Ángulo de la resultante</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Si \(F_1 = 5\,\text{N}\) y \(F_2 = 12\,\text{N}\) son perpendiculares, ¿qué ángulo forma la resultante con la fuerza de 5 N?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(\tan\theta = F_2/F_1 = 12/5 = 2.4\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(\theta = \arctan(2.4) \approx 67.38^\circ\).</div>
+                        <div class="paso"><strong>Resultado:</strong> \(67.38^\circ\).</div>
+                    </div>
+                </div>
+    
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La composición de fuerzas es la base para entender el equilibrio y la dinámica. La "trampa" mental es sumar módulos sin considerar la dirección. Este ejercicio refuerza el uso de componentes y la regla del paralelogramo.
+                </div>
+            </div>
+        </details>
+    
+    </div>
+    </body>
+    </html>

@@ -1,0 +1,485 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#U03c04 - Cálculo de la masa atómica relativa (media ponderada)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al modelo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            /* Desplegable */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker { display: none; }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="cápsula">
+                    <span class="codigo">#U03c04.- </span>
+                    <span class="texto">Cálculo de la masa atómica relativa (media ponderada)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la existencia de isótopos en la naturaleza con diferentes masas (\(A_i\)) y abundancias relativas (\(x_i\), en porcentaje), demostrar que la masa atómica de un elemento (\(M_a\)) se calcula como la media ponderada de las masas de sus isótopos:</p>
+            <div class="formula-box">
+                \[
+                M_a = \frac{A_1 \cdot x_1 + A_2 \cdot x_2 + \dots + A_n \cdot x_n}{100}
+                \]
+            </div>
+            <p>Para el caso particular de dos isótopos, la expresión se simplifica a:</p>
+            <div class="formula-box">
+                \[
+                M_a = \frac{A_1 \cdot x + A_2 \cdot (100 - x)}{100}
+                \]
+            </div>
+			<img src="../imagenes/U03c04 - Cálculo de la masa atómica relativa.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Comprender por qué la masa atómica de los elementos en la tabla periódica no suele ser un número entero, sino un promedio de las masas de sus isótopos naturales. Aprender a calcular la masa atómica a partir de la abundancia de los isótopos, y resolver problemas de abundancia relativa o de masa de un isótopo cuando se conoce la masa atómica promedio.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Concepto de media ponderada</strong>
+                <p>La masa atómica de un elemento no es la masa de un isótopo concreto, sino el <em>promedio ponderado</em> de las masas de todos sus isótopos naturales, teniendo en cuenta la proporción en que aparecen en la naturaleza (su abundancia relativa).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Planteamiento general</strong>
+                <p>Si un elemento tiene \(n\) isótopos, con números másicos \(A_1, A_2, \dots, A_n\) y abundancias (en porcentaje) \(x_1, x_2, \dots, x_n\), se cumple que la suma de las abundancias es el 100%:</p>
+                <div class="formula-box">\[ x_1 + x_2 + \dots + x_n = 100 \]</div>
+                <p>La masa atómica \(M_a\) se obtiene sumando los productos de cada masa por su fracción porcentual, dividido entre 100:</p>
+                <div class="formula-box">\[ M_a = \frac{A_1 \cdot x_1 + A_2 \cdot x_2 + \dots + A_n \cdot x_n}{100} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Caso de dos isótopos (el más común en los ejercicios)</strong>
+                <p>Si solo hay dos isótopos, llamamos \(x\) a la abundancia del primero. Entonces la del segundo es \(100 - x\). La fórmula queda:</p>
+                <div class="formula-box">\[ M_a = \frac{A_1 \cdot x + A_2 \cdot (100 - x)}{100} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Despeje de la abundancia (\(x\))</strong>
+                <p>Si conocemos \(M_a\), \(A_1\) y \(A_2\), podemos despejar \(x\) resolviendo la ecuación de primer grado:</p>
+                <div class="formula-box">\[ 100 \cdot M_a = A_1 \cdot x + A_2 \cdot (100 - x) \]</div>
+                <div class="formula-box">\[ x = \frac{100 \cdot (M_a - A_2)}{A_1 - A_2} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Despeje de la masa de un isótopo desconocido</strong>
+                <p>Si conocemos \(M_a\) y una de las masas y ambas abundancias, podemos despejar la otra masa (\(A_2\)):</p>
+                <div class="formula-box">\[ A_2 = \frac{100 \cdot M_a - A_1 \cdot x}{100 - x} \]</div>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                M_a = \frac{\sum (A_i \cdot x_i)}{100} \qquad \text{(para dos isótopos: } M_a = \frac{A_1 \cdot x + A_2 \cdot (100 - x)}{100} \text{)}
+                \]
+            </div>
+            <div class="note">
+                <strong>Observación didáctica:</strong> La "trampa" conceptual es confundir la masa atómica con el número másico de un isótopo concreto. La tabla periódica muestra la media ponderada, por eso el cloro tiene 35,45 u (mezcla de Cl-35 y Cl-37) y no 35 o 37. Es importante que el alumnado practique el despeje de ecuaciones lineales en este contexto, ya que relaciona la química con la matemática de la estadística básica.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE                                         -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Cálculo de la masa atómica relativa (media ponderada)</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Masa atómica del litio a partir de sus isótopos</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El litio tiene dos isótopos naturales: \(^{6}\text{Li}\) (masa 6,015 u, abundancia 7,59%) y \(^{7}\text{Li}\) (masa 7,016 u, abundancia 92,41%). Calcula la masa atómica del litio.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Aplicamos \( M_a = \frac{A_1 \cdot x_1 + A_2 \cdot x_2}{100} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Sustituimos: \( M_a = \frac{6,015 \cdot 7,59 + 7,016 \cdot 92,41}{100} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Calculamos: \( 6,015 \cdot 7,59 = 45,65 \); \( 7,016 \cdot 92,41 = 648,35 \). Suma = 694,00.</div>
+                        <div class="paso"><strong>Paso 4:</strong> Dividimos: \( 694,00 / 100 = 6,94 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> La masa atómica del litio es 6,94 u (coincide con la tabla periódica).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Cálculo de la abundancia del cobre</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El cobre tiene dos isótopos: \(^{63}\text{Cu}\) (62,93 u) y \(^{65}\text{Cu}\) (64,93 u). Su masa atómica es 63,55 u. Calcula la abundancia de cada isótopo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Sea \(x\) la abundancia de \(^{63}\text{Cu}\). La de \(^{65}\text{Cu}\) será \(100 - x\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Planteamos: \( 63,55 = \frac{62,93 \cdot x + 64,93 \cdot (100 - x)}{100} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Multiplicamos: \( 6355 = 62,93x + 6493 - 64,93x \).</div>
+                        <div class="paso"><strong>Paso 4:</strong> Simplificamos: \( 6355 = 6493 - 2x \Rightarrow 2x = 138 \Rightarrow x = 69\% \).</div>
+                        <div class="paso"><strong>Resultados:</strong> \(^{63}\text{Cu}\) = 69%; \(^{65}\text{Cu}\) = 31%.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Masa de un isótopo desconocido del rubidio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El rubidio tiene dos isótopos: \(^{85}\text{Rb}\) (abundancia 72,17%) y otro isótopo (abundancia 27,83%). Su masa atómica es 85,47 u. Calcula la masa del segundo isótopo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Sea \(A_2\) la masa del segundo isótopo. Planteamos: \( 85,47 = \frac{85 \cdot 72,17 + A_2 \cdot 27,83}{100} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Multiplicamos: \( 8547 = 85 \cdot 72,17 + 27,83 \cdot A_2 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( 85 \cdot 72,17 = 6134,45 \). Luego \( 8547 - 6134,45 = 2412,55 = 27,83 \cdot A_2 \).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \( A_2 = \frac{2412,55}{27,83} \approx 86,69 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> La masa del isótopo es aproximadamente 86,69 u (se trata del \(^{87}\text{Rb}\)).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Tres isótopos del magnesio</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El magnesio tiene tres isótopos: \(^{24}\text{Mg}\) (23,99 u, 78,99%), \(^{25}\text{Mg}\) (24,99 u, 10,00%) y \(^{26}\text{Mg}\) (25,98 u, 11,01%). Calcula su masa atómica.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M_a = \frac{23,99 \cdot 78,99 + 24,99 \cdot 10,00 + 25,98 \cdot 11,01}{100} \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( 23,99 \cdot 78,99 = 1894,97 \); \( 24,99 \cdot 10,00 = 249,90 \); \( 25,98 \cdot 11,01 = 285,89 \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Suma = 2430,76. Dividimos: \( 2430,76 / 100 = 24,31 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> La masa atómica del magnesio es 24,31 u.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Variación de la abundancia y su efecto en la masa</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El boro tiene dos isótopos: \(^{10}\text{B}\) (10,01 u) y \(^{11}\text{B}\) (11,01 u). Si la abundancia de \(^{10}\text{B}\) fuera del 30% (en lugar del 19,9% real), ¿cuál sería su masa atómica? Compárala con el valor real (10,81 u).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Con 30% de \(^{10}\text{B}\), el \(^{11}\text{B}\) sería 70%.</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_a = \frac{10,01 \cdot 30 + 11,01 \cdot 70}{100} = \frac{300,3 + 770,7}{100} = \frac{1071,0}{100} = 10,71 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Valor real: \( \frac{10,01 \cdot 19,9 + 11,01 \cdot 80,1}{100} \approx 10,81 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> Con 30% da 10,71 u; el real (con 19,9%) es 10,81 u. Al aumentar el isótopo ligero, la masa atómica disminuye.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Determinación de la abundancia a partir de la masa atómica (dos isótopos)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> El galio tiene dos isótopos: \(^{69}\text{Ga}\) (68,93 u) y \(^{71}\text{Ga}\) (70,92 u). Su masa atómica es 69,72 u. Calcula el porcentaje de cada isótopo.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Sea \(x\) la abundancia de \(^{69}\text{Ga}\). \(100 - x\) para \(^{71}\text{Ga}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( 69,72 = \frac{68,93 \cdot x + 70,92 \cdot (100 - x)}{100} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \( 6972 = 68,93x + 7092 - 70,92x \Rightarrow 6972 = 7092 - 1,99x \).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \( 1,99x = 120 \Rightarrow x \approx 60,3\% \).</div>
+                        <div class="paso"><strong>Resultados:</strong> \(^{69}\text{Ga}\) ≈ 60,3%; \(^{71}\text{Ga}\) ≈ 39,7%.</div>
+                    </div>
+                </div>
+    
+                <!-- Clave didáctica -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave:</strong> La "trampa" mental es olvidar que las abundancias deben sumar 100%. Además, al despejar \(x\), hay que tener mucho cuidado con los signos al operar con \(100 - x\). Este tipo de problemas es una excelente práctica de ecuaciones de primer grado aplicadas a la química, y ayuda a entender por qué la tabla periódica tiene decimales.
+                </div>
+            </div>
+        </details>
+    
+        <!-- Pie de página -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

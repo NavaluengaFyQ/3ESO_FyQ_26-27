@@ -1,0 +1,464 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T02.03 - Ley de Gay‑Lussac (deducción cinética)</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS (idéntico al ejemplo)
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p { line-height: 1.7; margin-bottom: 10px; }
+            ul, ol { padding-left: 1.8em; line-height: 1.7; }
+            li { margin-bottom: 6px; }
+    
+            /* =========================================================
+               BLOQUE DESPLEGABLE (idéntico al ejemplo)
+               ========================================================= */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" alt="icono" width="40">
+                    <span class="codigo">#T02.03.- </span>
+                    <span class="texto">Ley de Gay‑Lussac (deducción cinética)</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo centro">
+            </div>
+        </div>
+    
+        <!-- ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la teoría cinético‑corpuscular, donde la presión se debe a los choques de las partículas contra las paredes y la temperatura es una medida de la energía cinética media, demostrar que para una masa fija de gas a volumen constante, la presión y la temperatura absoluta son directamente proporcionales:</p>
+            <div class="formula-box">\[ \frac{p}{T} = \text{cte} \qquad \text{o bien} \qquad \frac{p_1}{T_1} = \frac{p_2}{T_2} \]</div>
+            <p>Se trata de justificar la <strong>ley de Gay‑Lussac</strong> a partir del comportamiento microscópico de las partículas.</p>
+			<img src="../imagenes/u02c03 - Ley de Gay‑Lussac.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Relacionar la temperatura (energía cinética media) con la presión que ejerce el gas cuando el volumen no puede cambiar. Al aumentar la temperatura, las partículas se mueven más rápido, chocan con más frecuencia y con mayor fuerza contra las paredes, lo que incrementa la presión.</p>
+        </div>
+    
+        <!-- PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Volumen constante y densidad fija</strong>
+                <p>El gas está encerrado en un recipiente rígido de volumen \(V\) constante. Por tanto, el número de partículas por unidad de volumen \(N/V\) no cambia.</p>
+                <div class="formula-box">\[ V = \text{cte} \quad \Longrightarrow \quad \frac{N}{V} = \text{cte} \]</div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Temperatura y velocidad media</strong>
+                <p>La temperatura absoluta \(T\) es proporcional a la energía cinética media de traslación:</p>
+                <div class="formula-box">\[ \overline{E_c} = \frac{1}{2} m \bar{v}^2 \propto T \quad \Longrightarrow \quad \bar{v} \propto \sqrt{T} \]</div>
+                <p>Un aumento de \(T\) implica un aumento de la velocidad media \(\bar{v}\) de las partículas.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Frecuencia de colisiones</strong>
+                <p>La presión \(p\) es proporcional a la frecuencia con la que las partículas chocan contra las paredes. Esta frecuencia es directamente proporcional a la densidad de partículas (\(N/V\)) y a su velocidad media \(\bar{v}\):</p>
+                <div class="formula-box">\[ p \propto \frac{N}{V} \cdot \bar{v} \]</div>
+                <p>Como \(N/V\) es constante (volumen fijo), la presión solo depende de \(\bar{v}\).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Relación entre presión y temperatura</strong>
+                <p>Combinando las expresiones anteriores:</p>
+                <div class="formula-box">\[ p \propto \bar{v} \propto \sqrt{T} \]</div>
+                <p>Sin embargo, la dependencia experimental observada por Gay‑Lussac (y confirmada por la teoría cinética más detallada) es que la presión es directamente proporcional a la temperatura absoluta, no a su raíz cuadrada. Esto se debe a que al aumentar \(T\), no solo aumenta la velocidad media, sino también la <strong>fuerza media de cada impacto</strong> (el cambio de cantidad de movimiento es mayor), de modo que el efecto combinado da una proporcionalidad lineal:</p>
+                <div class="formula-box">\[ p \propto T \quad \Longrightarrow \quad \frac{p}{T} = \text{cte} \]</div>
+                <p>Esta es la <strong>ley de Gay‑Lussac</strong>: a volumen constante, la presión de un gas es directamente proporcional a su temperatura absoluta.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">5</span>
+                <strong>Forma matemática de la ley</strong>
+                <p>Introduciendo la constante \(K\) (dependiente de la cantidad de gas y del volumen):</p>
+                <div class="formula-box">\[ p = K \cdot T \quad \Longrightarrow \quad \frac{p}{T} = K \]</div>
+                <p>Para dos estados (1 y 2) de la misma masa de gas a volumen constante:</p>
+                <div class="formula-box">\[ \frac{p_1}{T_1} = \frac{p_2}{T_2} \]</div>
+                <p>que es la expresión habitual de la <strong>ley de Gay‑Lussac</strong>.</p>
+            </div>
+        </div>
+    
+        <!-- RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[ \frac{p}{T} = \text{cte} \qquad \text{y} \qquad \frac{p_1}{T_1} = \frac{p_2}{T_2} \]
+            </div>
+            <div class="note">
+                <strong>🧑‍🏫 Nota didáctica:</strong> La ley de Gay‑Lussac es válida solo si el volumen se mantiene constante. Es fundamental expresar la temperatura en kelvin. Un error común es pensar que al duplicar la temperatura en °C se duplica la presión; esto solo se cumple si se usa la escala absoluta (K).
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE: EJERCICIOS RESUELTOS                  -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Ley de Gay‑Lussac</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Calentamiento de una bombona rígida</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Una bombona de gas contiene aire a 2,0 atm y 20 °C. Si se calienta hasta 80 °C sin que varíe el volumen, ¿cuál será la nueva presión?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Convertir temperaturas a K: \(T_1 = 20 + 273 = 293\ \text{K}\), \(T_2 = 80 + 273 = 353\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> Datos: \(p_1 = 2{,}0\ \text{atm}\), \(T_1 = 293\ \text{K}\), \(T_2 = 353\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> Aplicamos Gay‑Lussac: \(\dfrac{p_1}{T_1} = \dfrac{p_2}{T_2}\).</div>
+                        <div class="paso"><strong>Paso 4:</strong> \(p_2 = \dfrac{p_1 \cdot T_2}{T_1} = \dfrac{2{,}0 \cdot 353}{293} \approx 2{,}41\ \text{atm}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La presión final es \(2{,}41\ \text{atm}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Enfriamiento de un aerosol</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un aerosol contiene un gas a 3,0 atm y 27 °C. Si se enfría hasta –23 °C (volumen constante), ¿cuál es la presión final?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(T_1 = 27 + 273 = 300\ \text{K}\), \(T_2 = -23 + 273 = 250\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(p_1 = 3{,}0\ \text{atm}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(p_2 = \dfrac{3{,}0 \cdot 250}{300} = 2{,}5\ \text{atm}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La presión baja a \(2{,}5\ \text{atm}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Determinación de temperatura a partir de la presión</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un gas a 15 °C ejerce una presión de 1,8 atm. Si la presión aumenta a 2,7 atm sin cambiar el volumen, ¿cuál es la nueva temperatura en °C?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(T_1 = 15 + 273 = 288\ \text{K}\), \(p_1 = 1{,}8\ \text{atm}\), \(p_2 = 2{,}7\ \text{atm}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(\dfrac{p_1}{T_1} = \dfrac{p_2}{T_2}\) → \(T_2 = \dfrac{p_2 \cdot T_1}{p_1} = \dfrac{2{,}7 \cdot 288}{1{,}8} = 432\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(T_2(°\text{C}) = 432 - 273 = 159\ °\text{C}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La temperatura final es \(159\ °\text{C}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Presión en un neumático al rodar</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un neumático de coche tiene una presión de 2,2 atm a 10 °C. Después de un largo viaje, la temperatura del aire interior sube a 50 °C. Si el volumen del neumático apenas cambia, ¿qué presión marcará el manómetro?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(T_1 = 10 + 273 = 283\ \text{K}\), \(T_2 = 50 + 273 = 323\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(p_1 = 2{,}2\ \text{atm}\). \(p_2 = \dfrac{2{,}2 \cdot 323}{283} \approx 2{,}51\ \text{atm}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> La presión aumenta a \(2{,}51\ \text{atm}\).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Límite de presión en un recipiente</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un recipiente rígido soporta una presión máxima de 5,0 atm. Si contiene gas a 1,5 atm y 20 °C, ¿hasta qué temperatura (en °C) se puede calentar sin que explote?</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \(p_1 = 1{,}5\ \text{atm}\), \(T_1 = 20 + 273 = 293\ \text{K}\), \(p_{\text{máx}} = 5{,}0\ \text{atm}\).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \(T_{\text{máx}} = \dfrac{p_{\text{máx}} \cdot T_1}{p_1} = \dfrac{5{,}0 \cdot 293}{1{,}5} \approx 976{,}7\ \text{K}\).</div>
+                        <div class="paso"><strong>Paso 3:</strong> \(T_{\text{máx}}(°\text{C}) = 976{,}7 - 273 \approx 703{,}7\ °\text{C}\).</div>
+                        <div class="paso"><strong>Resultado:</strong> Se puede calentar hasta \(704\ °\text{C}\) aproximadamente.</div>
+                    </div>
+                </div>
+    
+                <!-- Clave didáctica -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Clave didáctica:</strong> La ley de Gay‑Lussac es una proporcionalidad directa entre \(p\) y \(T\) (en kelvin). El error más frecuente es olvidar que el volumen debe ser constante. También es importante recordar que la presión absoluta (no la presión manométrica) es la que sigue esta ley.
+                </div>
+    
+            </div>
+        </details>
+    
+        <!-- Bloque "Es hora de..." -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br>  Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">
+                        Volver al inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>

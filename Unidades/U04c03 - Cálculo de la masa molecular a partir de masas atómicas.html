@@ -1,0 +1,478 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#T04.03 - Cálculo de la masa molecular</title>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* ============================================
+               ESTILO DE CAJAS PARA SECCIONES INFORMATIVAS
+               ============================================ */
+            .container {
+                max-width: 900px;
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                margin: 20px auto;
+                font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .header-left h1 {
+                font-size: 1.8em;
+                margin: 0;
+            }
+            .header-left p {
+                margin: 6px 0 0 0;
+                font-size: 1em;
+            }
+            .header-sub {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 6px;
+            }
+            .header-sub img {
+                max-height: 30px;
+                width: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.2);
+                padding: 2px;
+            }
+            .header-sub .codigo {
+                font-weight: 600;
+                font-size: 1.1em;
+                letter-spacing: 0.5px;
+                color: #ffecb0;
+            }
+            .header-sub .texto {
+                font-size: 1em;
+                font-weight: 300;
+            }
+            .header-right img {
+                max-height: 70px;
+                max-width: 180px;
+                object-fit: contain;
+                display: block;
+                background: rgba(255,255,255,0.15);
+                border-radius: 8px;
+                padding: 4px;
+            }
+            .section {
+                padding: 25px 30px;
+                margin: 15px;
+                border-radius: 12px;
+                border-left: 5px solid;
+            }
+            .enunciado { background: #f7fafc; border-color: #a0aec0; }
+            .objetivo  { background: #fffaf0; border-color: #ed8936; }
+            .procedimiento { background: #f0fff4; border-color: #48bb78; }
+            .resultado { background: #ebf8ff; border-color: #4299e1; }
+            .section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .enunciado h2 { color: #4a5568; }
+            .objetivo h2  { color: #c05621; }
+            .procedimiento h2 { color: #276749; }
+            .resultado h2 { color: #2b6cb0; }
+            .formula-box {
+                background: #edf2f7;
+                border: 2px solid #cbd5e0;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 15px 0;
+                text-align: center;
+                font-size: 1.1em;
+            }
+            .step {
+                background: white;
+                border-left: 4px solid #a0aec0;
+                padding: 15px;
+                margin: 12px 0;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .step-num {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            .note {
+                background: #fffbeb;
+                border: 1px solid #f6e05e;
+                border-radius: 8px;
+                padding: 12px;
+                margin-top: 15px;
+                font-size: 0.95em;
+                color: #744210;
+            }
+            p {
+                line-height: 1.7;
+                margin-bottom: 10px;
+            }
+            ul, ol {
+                padding-left: 1.8em;
+                line-height: 1.7;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+            /* Bloque desplegable */
+            details {
+                margin: 30px 15px 20px 15px;
+                background: #ffffff;
+                border: 2px solid #667eea;
+                border-radius: 20px;
+                padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+                box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+                transition: all 0.2s;
+            }
+            details summary {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 1.5rem;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #2d3748;
+                background: #f0f4ff;
+                border-radius: 18px;
+                user-select: none;
+                transition: background 0.2s;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+            details summary .fa-chevron-circle-down {
+                font-size: 1.6rem;
+                color: #667eea;
+                transition: transform 0.3s ease;
+            }
+            details[open] summary .fa-chevron-circle-down {
+                transform: rotate(180deg);
+            }
+            details summary .icon-pulsame {
+                background: #667eea;
+                color: white;
+                padding: 0.1rem 0.8rem;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+            }
+            details .details-content {
+                padding: 0.5rem 1.8rem 2rem 1.8rem;
+            }
+            .exercise-card {
+                background: #f9fcff;
+                border: 1px solid #dce7f2;
+                border-radius: 18px;
+                padding: 1.2rem 1.8rem 1.8rem 1.8rem;
+                margin: 1.8rem 0;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            }
+            .exercise-card .ex-title {
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: #2d3748;
+                margin-bottom: 0.4rem;
+            }
+            .exercise-card .ex-title .badge {
+                background: #667eea;
+                color: white;
+                border-radius: 40px;
+                padding: 0.05rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            .exercise-card .enunciado {
+                background: #f1f6fd;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                margin: 0.6rem 0 1rem 0;
+                border-left: 4px solid #667eea;
+            }
+            .exercise-card .solucion {
+                background: #eef3f9;
+                padding: 0.8rem 1.5rem;
+                border-radius: 14px;
+                border: 1px solid #d3e0ee;
+                margin-top: 0.8rem;
+            }
+            .exercise-card .solucion .paso {
+                margin: 0.5rem 0;
+            }
+            .exercise-card .solucion .paso strong {
+                color: #2b3a67;
+            }
+            .clave-didactica {
+                background: #e6f0fa;
+                padding: 1rem 1.8rem;
+                border-radius: 40px;
+                margin-top: 1.8rem;
+                font-weight: 500;
+                color: #1a365d;
+                border-left: 6px solid #667eea;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <!-- CABECERA -->
+        <div class="header">
+            <div class="header-left">
+                <h1>IES Valle del Alberche</h1>
+                <div class="header-sub">
+                    <img src="../img_comunes/Cápsula.png" width="40" height="auto" alt="icono">
+                    <span class="codigo">#T04.03.- </span>
+                    <span class="texto">Cálculo de la masa molecular a partir de masas atómicas</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="../img_comunes/Valle del Alberche v2-Small.png" alt="Logo del centro" width="1000">
+            </div>
+        </div>
+    
+        <!-- SECCIÓN ENUNCIADO -->
+        <div class="section enunciado">
+            <h2>📋 Enunciado</h2>
+            <p>Partiendo de la definición de masa atómica (expresada en unidades de masa atómica, u) y del concepto de fórmula molecular como expresión que indica el número y tipo de átomos que constituyen una sustancia, demostrar que la masa molecular (o masa-fórmula) de un compuesto se obtiene sumando las masas atómicas de todos los átomos que aparecen en su fórmula, multiplicadas por sus respectivos subíndices.</p>
+            <div class="formula-box">
+                \[
+                M_m = \sum_{i} n_i \cdot A_i
+                \]
+                <p style="margin-top:8px; font-weight:normal;">donde \( n_i \) es el número de átomos del elemento \( i \) en la fórmula y \( A_i \) su masa atómica.</p>
+            </div>
+            <p>Ejemplo general: para un compuesto de fórmula \( A_a B_b C_c \), la masa molecular es \( M_m = a \cdot A_A + b \cdot A_B + c \cdot A_C \).</p>
+            <img src="../imagenes/U04c03 - Cálculo de la masa molecular a partir de masas atómicas.png" alt="_._._" width="800">
+        </div>
+    
+        <!-- SECCIÓN OBJETIVO -->
+        <div class="section objetivo">
+            <h2>🎯 Objetivo</h2>
+            <p>Establecer el procedimiento sistemático para calcular la masa de una molécula a partir de la tabla periódica, lo que permite relacionar la escala microscópica (átomos y moléculas) con la escala macroscópica (gramos) mediante el concepto de mol. Es fundamental para la estequiometría y los cálculos en reacciones químicas.</p>
+        </div>
+    
+        <!-- SECCIÓN PROCEDIMIENTO -->
+        <div class="section procedimiento">
+            <h2>⚙️ Procedimiento</h2>
+    
+            <div class="step">
+                <span class="step-num">1</span>
+                <strong>Identificar los elementos y sus subíndices</strong>
+                <p>Dada la fórmula química de una sustancia, se debe identificar cada elemento presente y el número de átomos de cada uno (subíndice). Si no hay subíndice, se sobreentiende que es 1. Para grupos entre paréntesis, el subíndice exterior multiplica a todos los átomos dentro del paréntesis.</p>
+                <p>Ejemplo: \( \text{Al}_2(\text{SO}_4)_3 \) contiene Al (2), S (1×3 = 3) y O (4×3 = 12).</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">2</span>
+                <strong>Obtener las masas atómicas de la tabla periódica</strong>
+                <p>Se buscan las masas atómicas (en unidades u) de cada elemento en la tabla periódica. Suelen expresarse con decimales (ej. C = 12.01 u, H = 1.008 u, O = 16.00 u). Para nivel de 3º ESO, se suelen redondear a números enteros o con un decimal.</p>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">3</span>
+                <strong>Multiplicar y sumar</strong>
+                <p>Se multiplica la masa atómica de cada elemento por su subíndice y se suman todos los productos para obtener la masa molecular.</p>
+                <div class="formula-box">
+                    \[
+                    M_m = (\text{subíndice}_1 \times A_1) + (\text{subíndice}_2 \times A_2) + \cdots
+                    \]
+                </div>
+            </div>
+    
+            <div class="step">
+                <span class="step-num">4</span>
+                <strong>Expresión en gramos (conversión mediante el número de Avogadro)</strong>
+                <p>La masa molecular en u se puede convertir a gramos usando la equivalencia \( 1 \, \text{u} = 1.66 \times 10^{-24} \, \text{g} \), o bien recordando que 1 mol de sustancia tiene una masa en gramos numéricamente igual a su masa molecular en u.</p>
+                <div class="formula-box">
+                    \[
+                    m_{\text{molécula (g)}} = M_m (\text{u}) \times 1.66 \times 10^{-24} \, \text{g/u}
+                    \]
+                </div>
+            </div>
+        </div>
+    
+        <!-- SECCIÓN RESULTADO -->
+        <div class="section resultado">
+            <h2>📊 Resultado</h2>
+            <div class="formula-box" style="border-color: #38b2ac; border-width: 3px; background: #e6fffa;">
+                \[
+                M_m = \sum (\text{subíndice} \times \text{masa atómica})
+                \]
+                <p style="margin-top:8px; font-weight:normal;">Ejemplo: \( M_m(\text{H}_2\text{O}) = 2 \times 1 + 1 \times 16 = 18 \, \text{u} \).</p>
+                <p style="font-weight:normal;">1 mol de \( \text{H}_2\text{O} \) pesa 18 g.</p>
+            </div>
+            <div class="note">
+                <strong>Observaciones sobre el alumnado:</strong> El error más común es sumar las masas atómicas sin multiplicar por los subíndices, o confundir subíndices con coeficientes estequiométricos. Es importante practicar con fórmulas que contienen paréntesis y grupos poliatómicos (como \( (\text{SO}_4) \), \( (\text{NO}_3) \), etc.). También se debe insistir en la diferencia entre masa molecular (para sustancias covalentes) y masa-fórmula (para redes iónicas), aunque el cálculo es idéntico.
+            </div>
+        </div>
+    
+        <!-- ========================================================= -->
+        <!-- BLOQUE DESPLEGABLE CON EJERCICIOS RESUELTOS               -->
+        <!-- ========================================================= -->
+        <details>
+            <summary>
+                <i class="fas fa-chevron-circle-down"></i>
+                <span>🧪 DESMITIFICANDO Cálculo de la masa molecular</span>
+                <span class="icon-pulsame"><i class="fas fa-hand-pointer"></i> Pulsame</span>
+            </summary>
+            <div class="details-content">
+    
+                <!-- EJERCICIO 1 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 1</span>
+                        <span>Masa molecular del amoniaco (NH₃)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Calcula la masa molecular del amoniaco, \( \text{NH}_3 \). Masas atómicas: N = 14 u, H = 1 u.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Identificar átomos: 1 N, 3 H.</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_m = 1 \times 14 + 3 \times 1 = 14 + 3 = 17 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> \( 17 \, \text{u} \). 1 mol de NH₃ pesa 17 g.</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 2 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 2</span>
+                        <span>Masa molecular del ácido sulfúrico (H₂SO₄)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Calcula la masa molecular del ácido sulfúrico, \( \text{H}_2\text{SO}_4 \). Masas: H = 1 u, S = 32 u, O = 16 u.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Átomos: 2 H, 1 S, 4 O.</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_m = 2 \times 1 + 1 \times 32 + 4 \times 16 = 2 + 32 + 64 = 98 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> \( 98 \, \text{u} \) (1 mol pesa 98 g).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 3 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 3</span>
+                        <span>Masa molecular del nitrato de cobre(II) (Cu(NO₃)₂)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Calcula la masa molecular del \( \text{Cu(NO}_3)_2 \). Masas: Cu = 63.5 u, N = 14 u, O = 16 u. (Redondea a 64, 14, 16).</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Identificar: Cu = 1, N = 2, O = 6 (porque dentro del paréntesis hay 1 N y 3 O, y el subíndice 2 multiplica: 1×2 = 2 N, 3×2 = 6 O).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_m = 1 \times 64 + 2 \times 14 + 6 \times 16 = 64 + 28 + 96 = 188 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> \( 188 \, \text{u} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 4 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 4</span>
+                        <span>Masa molecular de la glucosa (C₆H₁₂O₆)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> La glucosa tiene fórmula \( \text{C}_6\text{H}_{12}\text{O}_6 \). Calcula su masa molecular. Masas: C = 12 u, H = 1 u, O = 16 u.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Átomos: C = 6, H = 12, O = 6.</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_m = 6 \times 12 + 12 \times 1 + 6 \times 16 = 72 + 12 + 96 = 180 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> \( 180 \, \text{u} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 5 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 5</span>
+                        <span>Masa molecular del sulfato de aluminio (Al₂(SO₄)₃)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Calcula la masa molecular del \( \text{Al}_2(\text{SO}_4)_3 \). Masas: Al = 27 u, S = 32 u, O = 16 u.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> Átomos: Al = 2, S = 3 (porque dentro del paréntesis hay 1 S y subíndice 3), O = 12 (4×3).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( M_m = 2 \times 27 + 3 \times 32 + 12 \times 16 = 54 + 96 + 192 = 342 \, \text{u} \).</div>
+                        <div class="paso"><strong>Resultado:</strong> \( 342 \, \text{u} \).</div>
+                    </div>
+                </div>
+    
+                <!-- EJERCICIO 6 -->
+                <div class="exercise-card">
+                    <div class="ex-title">
+                        <span class="badge">Ejercicio 6</span>
+                        <span>Determinación de la fórmula a partir de masas moleculares (inverso)</span>
+                    </div>
+                    <div class="enunciado">
+                        <p><strong>Enunciado:</strong> Un compuesto tiene fórmula \( X_2\text{O}_3 \) y su masa molecular es 102 u. Si la masa atómica del oxígeno es 16 u, ¿cuál es la masa atómica del elemento X? Identifica el elemento.</p>
+                    </div>
+                    <div class="solucion">
+                        <div class="paso"><strong>Paso 1:</strong> \( M_m = 2 \times A_X + 3 \times 16 = 102 \).</div>
+                        <div class="paso"><strong>Paso 2:</strong> \( 2A_X + 48 = 102 \) → \( 2A_X = 54 \) → \( A_X = 27 \, \text{u} \).</div>
+                        <div class="paso"><strong>Paso 3:</strong> La masa atómica 27 u corresponde al aluminio (Al). La fórmula es \( \text{Al}_2\text{O}_3 \).</div>
+                    </div>
+                </div>
+    
+                <!-- Pie didáctico -->
+                <div class="clave-didactica">
+                    <i class="fas fa-lightbulb" style="margin-right: 0.6rem; color: #f1c40f;"></i>
+                    <strong>Observaciones claves:</strong> La masa molecular es una suma ponderada. El "truco" es leer bien la fórmula: los subíndices solo afectan al elemento que los precede, a menos que haya paréntesis, en cuyo caso el subíndice exterior multiplica a todo el grupo. Practicar con varias fórmulas ayuda a interiorizar el procedimiento. La masa en gramos de una molécula es extremadamente pequeña; por eso se usa el mol como puente a la escala macroscópica.
+                </div>
+            </div>
+        </details>
+    
+        <!-- BLOQUE "ES HORA DE" -->
+        <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
+            <div style="max-width: 100%; padding: 15px; margin: 10px auto; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-size: clamp(0.95rem, 3vw, 1.2rem); color: #2d3748; margin-top: 0; margin-bottom: 12px; padding: 0 10px;">
+                    <br> Con un par de multiplicaciones y algo de práctica, esto es más fácil de lo que parece.<br>
+                    <i>(Los detalles sobre lo que entra en las pruebas escritas se publicarán periódicamente en M.Teams).</i>
+                </p>
+                <div style="text-align:center;">
+                    <a href="../index.html" target="_blank" style="display:inline-block; padding:12px 24px; background:#0078D4; color:white; text-decoration:none; border-radius:12px; font-weight:bold;">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    
+    </div> <!-- fin container -->
+    </body>
+    </html>
