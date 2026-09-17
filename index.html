@@ -290,6 +290,99 @@
             border-radius: 50%;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------- ACCESO A PDFs ---------- */
+.acceso-pdf {
+    margin: 30px 20px 10px 20px;
+}
+.pdf-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 18px 24px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pdf-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(102, 126, 234, 0.45);
+}
+.pdf-card > i:first-child {
+    font-size: 2em;
+}
+.pdf-texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+.pdf-titulo {
+    font-size: 1.3em;
+    font-weight: 700;
+}
+.pdf-sub {
+    font-size: 0.9em;
+    opacity: 0.85;
+}
+.pdf-flecha {
+    font-size: 1.2em;
+    transition: transform 0.2s ease;
+}
+.pdf-card:hover .pdf-flecha {
+    transform: translateX(6px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /* ---------- RESPONSIVE ---------- */
         @media (max-width: 640px) {
             .header {
@@ -341,6 +434,47 @@
 
         <!-- Aquí se inyectará la lista generada por JavaScript -->
         <div id="listaUnidades"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================================
+     ACCESO A LA CARPETA DE PDFs
+     ============================================ -->
+<div class="acceso-pdf">
+    <a href="PDF/" target="_blank" rel="noopener" class="pdf-card">
+        <i class="fas fa-file-pdf"></i>
+        <span class="pdf-texto">
+            <span class="pdf-titulo">PDFs</span>
+            <span class="pdf-sub">Documentos vinculados con las unidades didácticas</span>
+        </span>
+        <i class="fas fa-arrow-right pdf-flecha"></i>
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- ============================================
              CIERRE ESTÉTICO (sin texto)
