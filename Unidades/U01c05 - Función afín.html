@@ -250,6 +250,229 @@
                 height: auto;
                 max-width: 100%;
             }
+/* ============================================
+   BLOQUE DESPLEGABLE: SIMULACIONES
+   ============================================ */
+
+details.simulaciones {
+    margin: 30px 20px 20px 20px;
+    background: #f0fdfa;
+    border-radius: 16px;
+    border: 2px solid #b2f5ea;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* Desplegable general de SIMULACIONES */
+details.simulaciones > summary {
+    list-style: none;
+    padding: 18px 24px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #234e52;
+    background: #e6fffa;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+details.simulaciones > summary::-webkit-details-marker {
+    display: none;
+}
+
+details.simulaciones > summary:hover {
+    background: #d4f5f0;
+}
+
+details.simulaciones > summary .fa-chevron-circle-down {
+    transition: transform 0.3s ease;
+    font-size: 1.3em;
+    color: #2c7a7b;
+}
+
+details.simulaciones[open] > summary .fa-chevron-circle-down {
+    transform: rotate(180deg);
+}
+
+details.simulaciones .contenido {
+    padding: 20px 24px 24px 24px;
+    background: white;
+    border-radius: 0 0 14px 14px;
+}
+
+
+/* ============================================
+   CADA SIMULACIÓN = DESPLEGABLE INDIVIDUAL
+   ============================================ */
+
+details.sim-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+
+/* Cabecera de cada simulación */
+details.sim-card > summary {
+    list-style: none;
+    cursor: pointer;
+    background: #e6fffa;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+
+/* Quitar el triángulo automático del navegador */
+details.sim-card > summary::-webkit-details-marker {
+    display: none;
+}
+
+
+/* Efecto al pasar el ratón */
+details.sim-card > summary:hover {
+    background: #d4f5f0;
+}
+
+
+/* Flecha de cada simulación */
+details.sim-card > summary::after {
+    content: "▼";
+    margin-left: auto;
+    font-size: 0.85em;
+    color: #2c7a7b;
+    transition: transform 0.3s ease;
+}
+
+
+/* Girar la flecha cuando está abierta */
+details.sim-card[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+
+/* Número de la simulación */
+details.sim-card > summary .num {
+    font-weight: 700;
+    color: #2c7a7b;
+    font-size: 1.1em;
+}
+
+
+/* Título de la simulación */
+details.sim-card > summary .titulo {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 1.05em;
+}
+
+
+/* Contenido de cada simulación */
+details.sim-card .sim-body {
+    padding: 16px 20px 18px 20px;
+    background: white;
+}
+
+
+/* Párrafos */
+details.sim-card .sim-body p {
+    margin-top: 0;
+}
+
+
+/* ============================================
+   CONTENEDOR RESPONSIVO PARA GEOGEBRA
+   ============================================ */
+
+.ggb-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 62%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #cbd5e0;
+    background: #f7fafc;
+    margin: 14px 0;
+}
+
+.ggb-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+
+/* ============================================
+   BOTÓN DE ENLACE EXTERNO
+   ============================================ */
+
+.sim-link {
+    display: inline-block;
+    padding: 9px 18px;
+    background: #2c7a7b;
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.sim-link:hover {
+    background: #285e61;
+    transform: translateY(-1px);
+}
+
+.sim-link i {
+    margin-right: 8px;
+}
+
+
+/* ============================================
+   MÓVILES
+   ============================================ */
+
+@media (max-width: 600px) {
+
+    details.simulaciones > summary {
+        font-size: 1em;
+        padding: 14px 16px;
+    }
+
+    details.sim-card > summary {
+        padding: 12px 16px;
+    }
+
+    details.sim-card > summary .titulo {
+        font-size: 1em;
+    }
+
+    .sim-body {
+        padding: 14px 16px;
+    }
+
+    .ggb-wrap {
+        padding-bottom: 80%;
+    }
+}
+
+
+
         </style>
     </head>
     <body>
@@ -464,7 +687,129 @@
                 </div>
             </div>
         </details>
-    
+
+        
+
+
+
+
+
+
+
+
+
+
+
+<!-- ======================================================== -->
+<!-- BLOQUE: SIMULACIONES INTERACTIVAS                       -->
+<!-- ======================================================== -->
+
+<details class="simulaciones">
+
+    <!-- DESPLEGABLE GENERAL -->
+    <summary>
+        <i class="fas fa-chevron-circle-down"></i>
+        <span>🖱️ Púlsame 👉 📐 SIMULACIONES INTERACTIVAS</span>
+    </summary>
+
+    <div class="contenido">
+
+        <!-- ================================================== -->
+        <!-- SIMULACIÓN 1                                      -->
+        <!-- ================================================== -->
+
+        <details class="sim-card">
+
+            <!-- CABECERA / TÍTULO DE LA SIMULACIÓN -->
+            <summary>
+                <span class="num">Simulación 1</span>
+                <span class="titulo">Función afin</span>
+            </summary>
+
+            <!-- CONTENIDO DE LA SIMULACIÓN -->
+            <div class="sim-body">
+
+                <!-- Simulación GeoGebra -->
+                <div class="ggb-wrap">
+                    <iframe
+                        src="https://www.geogebra.org/material/iframe/id/H84RJVAH/width/900/height/560/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/true/rc/false/ld/false/sdz/true/ctl/false"
+                        title="Simulación GeoGebra: Función afin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- Enlace directo a GeoGebra -->
+                <a class="sim-link"
+                   href="https://www.geogebra.org/m/H84RJVAH"
+                   target="_blank"
+                   rel="noopener">
+                    <i class="fas fa-external-link-alt"></i>
+                    Abrir en GeoGebra
+                </a>
+
+            </div>
+
+        </details>
+
+
+        <!-- ================================================== -->
+        <!-- AQUÍ PUEDES AÑADIR MÁS SIMULACIONES               -->
+        <!-- ================================================== -->
+
+
+        <!-- 
+        <details class="sim-card">
+
+            <summary>
+                <span class="num">Simulación 2</span>
+                <span class="titulo">Nombre de la segunda simulación</span>
+            </summary>
+
+            <div class="sim-body"> 
+        -->
+
+                <!-- Contenido de la simulación 2 -->
+
+        <!--    
+            </div>
+
+        </details>
+
+
+        <details class="sim-card">
+
+            <summary>
+                <span class="num">Simulación 3</span>
+                <span class="titulo">Nombre de la tercera simulación</span>
+            </summary>
+
+            <div class="sim-body">
+        -->
+
+                <!-- Contenido de la simulación 3 -->
+        <!-- 
+            </div>
+
+        </details>
+         -->
+
+
+    </div>
+    <!-- fin .contenido -->
+
+</details>
+
+<!-- ======================================================== -->
+
+
+
+
+
+
+
+
+
+
         <!-- BLOQUE "ES HORA DE" -->
         <div style="padding: 25px 15px; text-align: center; background: white; margin: 20px;">
             <div style="max-width:100%; padding:15px; margin:10px auto; text-align:center; background:#f8fafc; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
